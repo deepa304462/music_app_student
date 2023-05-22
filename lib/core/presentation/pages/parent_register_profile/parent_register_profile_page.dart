@@ -1,22 +1,20 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
-import 'package:music_app_student/core/presentation/pages/profile/controller/profile_controller.dart';
+import 'package:music_app_student/core/presentation/pages/parent_register_profile/controller/parent_register_profile_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
-  final controller = Get.put(ProfileController());
+class ParentRegisterProfilePage extends StatelessWidget {
+  ParentRegisterProfilePage({super.key});
+  final controller = Get.put(ParentRegisterProfileController());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
-      builder: (context) => Scaffold(
+    return GetBuilder<ParentRegisterProfileController>(
+      builder: (controller) => Scaffold(
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -69,32 +67,32 @@ class ProfilePage extends StatelessWidget {
                   ),
                   4.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.nameController,
-                    hintText: "Full Name",
+                    controller: controller.parentNameController,
+                    hintText: "Parent Name",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.emailController,
-                    hintText: "Username/Email",
+                    controller: controller.parentEmailController,
+                    hintText: "Parent Email id",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.genderController,
-                    hintText: "Gender",
+                    controller: controller.parentPhoneNumberController,
+                    hintText: "Parent Phone Number",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.altPhoneNumberController,
-                    hintText: "Alternate phone number",
+                    controller: controller.parentPhoneNumberController,
+                    hintText: "Academic School/College Name",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.addressLineFirstController,
+                    controller: controller.parentAddressLineFirstController,
                     hintText: "Address Line 1",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.addressLineSecondController,
+                    controller: controller.parentAddressLineSecondController,
                     hintText: "Address Line 2",
                   ),
                   2.h.heightBox,
@@ -102,15 +100,15 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
-                          controller: controller.cityController,
-                          hintText: "City",
+                          controller: controller.parentPinCodeController,
+                          hintText: "Pincode",
                         ),
                       ),
                       4.w.widthBox,
                       Expanded(
                         child: TextFormFieldView(
-                          controller: controller.pinCodeController,
-                          hintText: "Pincode",
+                          controller: controller.parentDistrictController,
+                          hintText: "District",
                         ),
                       )
                     ],
@@ -120,14 +118,14 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
-                          controller: controller.stateController,
+                          controller: controller.parentStateController,
                           hintText: "State",
                         ),
                       ),
                       4.w.widthBox,
                       Expanded(
                         child: TextFormFieldView(
-                          controller: controller.countryController,
+                          controller: controller.parentCountryController,
                           hintText: "Country",
                         ),
                       )
@@ -135,7 +133,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.dobController,
+                    controller: controller.parentDobController,
                     hintText: "Date Of Birth",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -148,7 +146,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.instrumentsController,
+                    controller: controller.parentInstrumentsController,
                     hintText: "Instruments",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -160,7 +158,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.typeOfSessionController,
+                    controller: controller.parentTypeOfSessionController,
                     hintText: "Type of session",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -172,7 +170,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.skillLevelController,
+                    controller: controller.parentSkillLevelController,
                     hintText: "Skill Level",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -184,7 +182,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.classFrequencyController,
+                    controller: controller.parentClassFrequencyController,
                     hintText: "Class Frequency",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -196,7 +194,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.modelOfClassController,
+                    controller: controller.parentModelOfClassController,
                     hintText: "Mode of Class",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -208,7 +206,8 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.preferredPaymentScheduleController,
+                    controller:
+                        controller.parentPreferredPaymentScheduleController,
                     hintText: "Preferred Payment schedule",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -220,7 +219,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.dojoiningController,
+                    controller: controller.parentDojoiningController,
                     hintText: "Date Of joining",
                     suffixIcon: InkWell(
                       onTap: () {},
@@ -240,7 +239,7 @@ class ProfilePage extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      log(controller.nameController.toString());
+                      // log(controller.nameController.toString());
                     },
                     child: Text(
                       "Register",

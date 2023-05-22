@@ -5,74 +5,72 @@ import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class TeacherProfilePage extends StatelessWidget {
-  const TeacherProfilePage({super.key});
+class StudentHybridProfilePage extends StatelessWidget {
+  const StudentHybridProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _header(),
-            4.h.heightBox,
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+      body: Column(
+        children: [
+          _header(),
+          _textField(),
+        ],
+      ),
+    );
+  }
+
+  Padding _textField({
+    TextEditingController? controller,
+    String? title,
+    String? Function(String?)? validator,
+    void Function(String?)? onSaved,
+    void Function(String)? onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "$title",
+            style: TextStyle(
+              color: AppColor.white255,
+              fontFamily: AppTextStyle.textStylePoppins,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
                 color: AppColor.white255,
               ),
-              child: Column(
-                children: [
-                  Text(
-                    "About Me",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleInter,
-                      fontSize: 14.82,
-                      color: AppColor.black,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Text(
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleInter,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
-                ],
-              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: MaterialButton(
-                color: AppColor.blue224,
-                height: 60,
-                minWidth: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36),
-                ),
-                onPressed: () {},
-                child: Text(
-                  "Select",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontSize: 24,
-                    color: AppColor.white255,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),
+            child: TextFormField(
+              cursorColor: AppColor.white255,
+              controller: controller,
+              style: TextStyle(
+                color: AppColor.white255,
+                fontFamily: AppTextStyle.textStylePoppins,
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+              ),
+              decoration: const InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
                 ),
               ),
-            )
-          ],
-        ),
+              validator: validator,
+              onSaved: onSaved,
+              onChanged: onChanged,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -89,7 +87,7 @@ class TeacherProfilePage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage("assets/images/bg.png"),
+                image: AssetImage("assets/images/profile_bg.png"),
               ),
             ),
           ),

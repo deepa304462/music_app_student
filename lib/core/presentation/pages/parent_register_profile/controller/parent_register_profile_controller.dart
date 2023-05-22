@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ParentProfileController extends GetxController {
+class ParentRegisterProfileController extends GetxController {
   GlobalKey<FormFieldState> formKey = GlobalKey<FormFieldState>();
 
   TextEditingController parentNameController = TextEditingController();

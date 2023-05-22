@@ -6,7 +6,7 @@ class AppRoutes {
   static const profilePage = "/profile_page";
   static const eBookPage = "/ebook_page";
   static const examRegistrationPage = "/exam_registration_page";
-  static const parentProfilePage = "/parent_profile_page";
+  static const parentEditProfilePage = "/parent_edit_profile_page";
   static const loginTemplatePage = "/login_template_page";
   static const editProfilePage = "/edit_profile_page";
   static const editProfilePenPage = "/edit_profile_pen_page";
@@ -28,4 +28,11 @@ class AppRoutes {
   static const myGuitarClassPage = "/my_guitar_classes_page.dart";
   static const myGuitarClassDetailPage = "/my_guitar_classes_detail_page.dart";
   static const teacherProfilePage = "/teacher_profile_page";
+  static const parentRegisterProfilePage = "/parent_register_profile_page.dart";
+  static const registerProfilePage = "/register_profile_page.dart";
+  static const studentHybridProfilePage = "/student_hybrid_profile_page.dart";
+  static const studentOnlineProfilePage = "/student_Online_profile_page.dart";
+  static const parentProfilePage = "/parent_profile_page.dart";
+  static const teacherExpProfilePage = "/teacher_with_exp_profile_page.dart";
+  static const studyMaterialPage = "/study_material_page.dart";
 }

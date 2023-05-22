@@ -18,15 +18,20 @@ import 'package:music_app_student/core/presentation/pages/live/live_streaming_pa
 import 'package:music_app_student/core/presentation/pages/marksheets/my_marksheet_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_detail_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_page.dart';
+import 'package:music_app_student/core/presentation/pages/my_profile/parent_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/my_profile/student_hybrid_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/my_profile/student_online_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/notification_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/payment_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/notification_template.dart';
-import 'package:music_app_student/core/presentation/pages/parent_profile/parent_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/parent_register_profile/parent_register_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/policy/terms_condition_page.dart';
-import 'package:music_app_student/core/presentation/pages/profile/profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/register_profile/register_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/schedule/schedule_classes_page.dart';
 import 'package:music_app_student/core/presentation/pages/splash/splash_page.dart';
-import 'package:music_app_student/core/presentation/pages/teacher_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/study_material/study_material_page.dart';
+import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_with_exp_profile_page.dart';
 
 class AppPage {
   static final List<GetPage> page = [
@@ -59,12 +64,12 @@ class AppPage {
       page: () => CreateAccountPage(),
     ),
     GetPage(
-      name: AppRoutes.profilePage,
-      page: () => ProfilePage(),
+      name: AppRoutes.registerProfilePage,
+      page: () => RegisterProfilePage(),
     ),
     GetPage(
-      name: AppRoutes.parentProfilePage,
-      page: () => ParentProfilePage(),
+      name: AppRoutes.parentRegisterProfilePage,
+      page: () => ParentRegisterProfilePage(),
     ),
     GetPage(
       name: AppRoutes.examRegistrationPage,
@@ -137,6 +142,26 @@ class AppPage {
     GetPage(
       name: AppRoutes.teacherProfilePage,
       page: () => TeacherProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.studentHybridProfilePage,
+      page: () => StudentHybridProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.studentOnlineProfilePage,
+      page: () => StudentOnlineProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.parentProfilePage,
+      page: () => ParentProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.teacherExpProfilePage,
+      page: () => TeacherWithExpProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.studyMaterialPage,
+      page: () => StudyMaterialPage(),
     ),
   ];
 }
