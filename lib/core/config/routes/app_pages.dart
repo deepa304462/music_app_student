@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login/login_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login/login_template_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login_option/login_option_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/signup/create_account_page.dart';
+import 'package:music_app_student/core/presentation/pages/communication/communication_page.dart';
 import 'package:music_app_student/core/presentation/pages/download/download_page.dart';
 import 'package:music_app_student/core/presentation/pages/ebook/ebook_page.dart';
 import 'package:music_app_student/core/presentation/pages/edit_profile/edit_profile_page.dart';
@@ -12,15 +14,17 @@ import 'package:music_app_student/core/presentation/pages/edit_profile/edit_prof
 import 'package:music_app_student/core/presentation/pages/exam/change_course_exam_registration_page.dart';
 import 'package:music_app_student/core/presentation/pages/exam/exam_registration_page.dart';
 import 'package:music_app_student/core/presentation/pages/feedback/previous_feedback_page.dart';
+import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
 import 'package:music_app_student/core/presentation/pages/intro/intro_page.dart';
 import 'package:music_app_student/core/presentation/pages/join/join_class_page.dart';
 import 'package:music_app_student/core/presentation/pages/live/live_streaming_page.dart';
 import 'package:music_app_student/core/presentation/pages/marksheets/my_marksheet_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_detail_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_page.dart';
-import 'package:music_app_student/core/presentation/pages/my_profile/parent_profile_page.dart';
-import 'package:music_app_student/core/presentation/pages/my_profile/student_hybrid_profile_page.dart';
-import 'package:music_app_student/core/presentation/pages/my_profile/student_online_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/progress/my_progress_page.dart';
+import 'package:music_app_student/core/presentation/pages/ps_profile/parent_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/ps_profile/student_hybrid_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/ps_profile/student_online_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/notification_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/payment_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/notification_template.dart';
@@ -42,6 +46,14 @@ class AppPage {
     GetPage(
       name: AppRoutes.loginOptionPage,
       page: () => LoginOptionPage(),
+    ),
+    GetPage(
+      name: AppRoutes.newBottomNavigationBar,
+      page: () => NewBottomNavigationBar(),
+    ),
+    GetPage(
+      name: AppRoutes.homePage,
+      page: () => HomePage(),
     ),
     GetPage(
       name: AppRoutes.introPage,
@@ -162,6 +174,18 @@ class AppPage {
     GetPage(
       name: AppRoutes.studyMaterialPage,
       page: () => StudyMaterialPage(),
+    ),
+    GetPage(
+      name: AppRoutes.newBottomNavigationBar,
+      page: () => NewBottomNavigationBar(),
+    ),
+    GetPage(
+      name: AppRoutes.myProgressPage,
+      page: () => MyProgressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.communicationPage,
+      page: () => CommunicationPage(),
     ),
   ];
 }
