@@ -96,7 +96,9 @@ class JoinClassPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _circleButton(
-            onTap: () {},
+            onTap: () {
+              joinController.ratingDiloag();
+            },
             backgroundColor: AppColor.red0,
             icon: Icon(
               Icons.call_end,

@@ -1,4 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:music_app_student/core/config/helpers/app_color.dart';
+import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:sizer/sizer.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ScheduleClassesController extends GetxController {
   String dayDropdownvalue = 'Tuesday';
@@ -61,5 +67,176 @@ class ScheduleClassesController extends GetxController {
   onChangeTimeItem_3(dynamic value) {
     timeDropdownvalue_3 = value;
     update();
+  }
+
+  studentDiloagBox() {
+    update();
+    return Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          height: 430,
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: 3,
+                itemBuilder: (context, index) => Container(
+                  height: 60,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColor.black29)),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColor.black29,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SvgPicture.asset("assets/svg/person.svg"),
+                      ),
+                      4.w.widthBox,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Student 1",
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.black29,
+                            ),
+                          ),
+                          Text(
+                            "21 years Old",
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.black29,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              2.h.heightBox,
+              MaterialButton(
+                height: 60,
+                minWidth: double.infinity,
+                color: AppColor.blue224,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {
+                  addAnotherStudentDiloagBox();
+                },
+                child: Text(
+                  "Done",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              2.h.heightBox,
+              MaterialButton(
+                height: 60,
+                minWidth: double.infinity,
+                color: AppColor.blue224,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {},
+                child: Text(
+                  "Change",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  addAnotherStudentDiloagBox() {
+    update();
+    return Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          height: 430,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MaterialButton(
+                height: 60,
+                minWidth: double.infinity,
+                color: AppColor.blue224,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {},
+                child: Text(
+                  "Add Another Student",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              2.h.heightBox,
+              MaterialButton(
+                height: 60,
+                minWidth: double.infinity,
+                color: AppColor.blue224,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {},
+                child: Text(
+                  "Submit",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

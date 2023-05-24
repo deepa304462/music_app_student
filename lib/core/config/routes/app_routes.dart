@@ -38,4 +38,6 @@ class AppRoutes {
   static const newBottomNavigationBar = "/new_bottom_navigation_bar";
   static const myProgressPage = "/my_progress_page";
   static const communicationPage = "/communication_page";
+  static const examPaymentPage = "/exam_payment_page";
+  static const periodPaymentPage = "/period_payment_page";
 }

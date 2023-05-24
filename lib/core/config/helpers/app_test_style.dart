@@ -6,5 +6,6 @@ class AppTextStyle {
   static String? textStyleMulish = GoogleFonts.mulish().fontFamily;
   static String? textStyleRobote = GoogleFonts.roboto().fontFamily;
   static String? textStyleNunito = GoogleFonts.nunito().fontFamily;
+  static String? textStyleNunitoSans = GoogleFonts.nunitoSans().fontFamily;
   static String? textStyleRaleway = GoogleFonts.raleway().fontFamily;
 }

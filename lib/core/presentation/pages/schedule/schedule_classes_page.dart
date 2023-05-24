@@ -18,7 +18,7 @@ class ScheduleClassesPage extends StatelessWidget {
         appBar: CustomAppBar(
           onBackPressed: () {},
           centerTitle: true,
-          title: "Assign to Another Teacher",
+          title: "Schedule Classes",
           fontFamily: AppTextStyle.textStyleMulish,
           fontWeight: FontWeight.w900,
           fontSize: 20,
@@ -253,7 +253,9 @@ class ScheduleClassesPage extends StatelessWidget {
                 ),
                 height: 60,
                 minWidth: double.infinity,
-                onPressed: () {},
+                onPressed: () {
+                  controller.studentDiloagBox();
+                },
                 child: Text(
                   "Register",
                   textAlign: TextAlign.center,

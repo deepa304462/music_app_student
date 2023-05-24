@@ -21,6 +21,8 @@ import 'package:music_app_student/core/presentation/pages/live/live_streaming_pa
 import 'package:music_app_student/core/presentation/pages/marksheets/my_marksheet_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_detail_page.dart';
 import 'package:music_app_student/core/presentation/pages/my_guitar/my_guitar_classes_page.dart';
+import 'package:music_app_student/core/presentation/pages/payment/exam_payment_page.dart';
+import 'package:music_app_student/core/presentation/pages/payment/period_payment_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/my_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/ps_profile/parent_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/ps_profile/student_hybrid_profile_page.dart';
@@ -186,6 +188,14 @@ class AppPage {
     GetPage(
       name: AppRoutes.communicationPage,
       page: () => CommunicationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.examPaymentPage,
+      page: () => ExamPaymentPage(),
+    ),
+    GetPage(
+      name: AppRoutes.periodPaymentPage,
+      page: () => PeriodPaymentPage(),
     ),
   ];
 }
