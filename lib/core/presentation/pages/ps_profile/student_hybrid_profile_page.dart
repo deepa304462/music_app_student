@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
+import 'package:music_app_student/core/config/helpers/app_constant.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -17,138 +18,147 @@ class StudentHybridProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Image.asset("assets/images/hybrid_bg.png"),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              child: Column(
-                children: [
-                  _header(),
-                  4.h.heightBox,
-                  _levelTwoCard(),
-                  2.h.heightBox,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
+              children: [
+                _header(),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Column(
                     children: [
-                      1.h.heightBox,
-                      RichText(
-                        text: TextSpan(
-                          text: "MEDALS",
-                          style: TextStyle(
-                            fontFamily: AppTextStyle.textStylePoppins,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.white255,
-                            letterSpacing: 0.02,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "53",
+                      _levelTwoCard(),
+                      2.h.heightBox,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          1.h.heightBox,
+                          RichText(
+                            text: TextSpan(
+                              text: "MEDALS",
                               style: TextStyle(
                                 fontFamily: AppTextStyle.textStylePoppins,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: AppColor.white255.withOpacity(0.5),
+                                color: AppColor.white255,
                                 letterSpacing: 0.02,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      1.h.heightBox,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: _medalsCard(
-                              image: SvgPicture.asset("assets/svg/gold.svg"),
-                              color: AppColor.yellow82,
-                              isBoxShadow: true,
-                              title: "Gold",
-                              subTitle: "18",
+                              children: [
+                                TextSpan(
+                                  text: "\t53",
+                                  style: TextStyle(
+                                    fontFamily: AppTextStyle.textStylePoppins,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.white255.withOpacity(0.5),
+                                    letterSpacing: 0.02,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child: _medalsCard(
-                              image: SvgPicture.asset("assets/svg/silver.svg"),
-                              title: "Silver",
-                              subTitle: "18",
-                              color: AppColor.grey132,
-                            ),
-                          ),
-                          Expanded(
-                            child: _medalsCard(
-                              image: SvgPicture.asset("assets/svg/Bronze.svg"),
-                              title: "Bronze",
-                              subTitle: "18",
-                              color: AppColor.brown131,
-                            ),
+                          1.h.heightBox,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: _medalsCard(
+                                  image:
+                                      SvgPicture.asset("assets/svg/gold.svg"),
+                                  color: AppColor.yellow82,
+                                  isBoxShadow: true,
+                                  title: "Gold",
+                                  subTitle: "18",
+                                ),
+                              ),
+                              Expanded(
+                                child: _medalsCard(
+                                  image:
+                                      SvgPicture.asset("assets/svg/silver.svg"),
+                                  title: "Silver",
+                                  subTitle: "18",
+                                  color: AppColor.grey132,
+                                ),
+                              ),
+                              Expanded(
+                                child: _medalsCard(
+                                  image:
+                                      SvgPicture.asset("assets/svg/Bronze.svg"),
+                                  title: "Bronze",
+                                  subTitle: "18",
+                                  color: AppColor.brown131,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                      2.h.heightBox,
+                      _badgesCard(),
+                      2.h.heightBox,
+                      _myMusicClass(
+                        onTap: () {},
+                        text: "My Guitar Class",
+                        imagePath: "assets/images/guitar-1.png",
+                      ),
+                      2.h.heightBox,
+                      _myMusicClass(
+                        onTap: () {},
+                        text: "My Piano Class",
+                        imagePath: "assets/images/piano.png",
+                      ),
+                      4.h.heightBox,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: MaterialButton(
+                          color: AppColor.blue224,
+                          minWidth: double.infinity,
+                          height: 44,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(76.67),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "Discontinue Course ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 20,
+                              color: AppColor.white255,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                      3.h.heightBox,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: MaterialButton(
+                          color: AppColor.blue224,
+                          minWidth: double.infinity,
+                          height: 44,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(76.67),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "Change Course",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 20,
+                              color: AppColor.white255,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                      20.h.heightBox,
                     ],
                   ),
-                  2.h.heightBox,
-                  _badgesCard(),
-                  2.h.heightBox,
-                  2.h.heightBox,
-                  _myGuitarClass(
-                    onTap: () {},
-                  ),
-                  2.h.heightBox,
-                  _myGuitarClass(
-                    onTap: () {},
-                  ),
-                  4.h.heightBox,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: MaterialButton(
-                      color: AppColor.blue224,
-                      minWidth: double.infinity,
-                      height: 44,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(76.67),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "Discontinue Course ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: AppTextStyle.textStyleMulish,
-                          fontSize: 20,
-                          color: AppColor.white255,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
-                  3.h.heightBox,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: MaterialButton(
-                      color: AppColor.blue224,
-                      minWidth: double.infinity,
-                      height: 44,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(76.67),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "Change Course",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: AppTextStyle.textStyleMulish,
-                          fontSize: 20,
-                          color: AppColor.white255,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
-                  20.h.heightBox,
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -305,8 +315,10 @@ class StudentHybridProfilePage extends StatelessWidget {
     );
   }
 
-  _myGuitarClass({
+  _myMusicClass({
     void Function()? onTap,
+    String? text,
+    String? imagePath,
   }) {
     return InkWell(
       onTap: onTap,
@@ -328,7 +340,7 @@ class StudentHybridProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Image.asset(
-                      'assets/images/guitar-1.png',
+                      '$imagePath',
                       height: 88.81,
                       width: 90.9,
                     ),
@@ -366,7 +378,7 @@ class StudentHybridProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "My Guitar Class",
+                      "$text",
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStylePoppins,
                         fontSize: 24,
@@ -487,14 +499,14 @@ class StudentHybridProfilePage extends StatelessWidget {
                 SingleChildScrollView(
                   child: Column(
                     children: List.generate(
-                      controller.badgesList.length,
+                      AppConstant.badgesList.length,
                       (index) => Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         height: 60,
                         child: Row(
                           children: [
                             SvgPicture.asset(
-                              "${controller.badgesList[index]['image']}",
+                              "${AppConstant.badgesList[index]['image']}",
                               height: 40,
                               width: 40,
                             ),
@@ -504,7 +516,7 @@ class StudentHybridProfilePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${controller.badgesList[index]['name']}",
+                                  "${AppConstant.badgesList[index]['name']}",
                                   style: TextStyle(
                                     fontFamily: AppTextStyle.textStyleInter,
                                     fontSize: 15.57,
