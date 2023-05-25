@@ -28,7 +28,7 @@ class MyProgressPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          _myGuitarClass(
+          _myMusicClass(
             onTap: () {
               Get.to(GuitarProgressPage());
             },
@@ -36,7 +36,7 @@ class MyProgressPage extends StatelessWidget {
             text: "My Guitar Class",
           ),
           4.h.heightBox,
-          _myGuitarClass(
+          _myMusicClass(
             onTap: () {
               Get.to(PianoProgressPage());
             },
@@ -48,7 +48,7 @@ class MyProgressPage extends StatelessWidget {
     );
   }
 
-  _myGuitarClass({
+  _myMusicClass({
     void Function()? onTap,
     String? imagePath,
     String? text,

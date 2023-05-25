@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -152,7 +153,9 @@ class RegisterProfilePage extends StatelessWidget {
                     controller: controller.instrumentsController,
                     hintText: "Instruments",
                     suffixIcon: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        DiloagBox.instrumentDiloagBox();
+                      },
                       child: Icon(
                         Icons.arrow_drop_down,
                         color: AppColor.white255,

@@ -38,6 +38,8 @@ import 'package:music_app_student/core/presentation/pages/splash/splash_page.dar
 import 'package:music_app_student/core/presentation/pages/study_material/study_material_page.dart';
 import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_profile_page.dart';
 import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_with_exp_profile_page.dart';
+import 'package:music_app_student/core/presentation/pages/videos/imp_videos_lesson_page.dart';
+import 'package:music_app_student/core/presentation/pages/videos/videos_lesson_page.dart';
 
 class AppPage {
   static final List<GetPage> page = [
@@ -196,6 +198,14 @@ class AppPage {
     GetPage(
       name: AppRoutes.periodPaymentPage,
       page: () => PeriodPaymentPage(),
+    ),
+    GetPage(
+      name: AppRoutes.videosLessonPage,
+      page: () => VideosLessonPage(),
+    ),
+    GetPage(
+      name: AppRoutes.impVideosLessonPage,
+      page: () => ImpVideosLessonPage(),
     ),
   ];
 }

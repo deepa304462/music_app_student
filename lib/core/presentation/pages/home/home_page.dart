@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/pages/home/controller/home_controller.dart';
+import 'package:music_app_student/core/presentation/pages/progress/guitar_progress_page.dart';
+import 'package:music_app_student/core/presentation/pages/progress/piano_progress_page.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,15 +19,490 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (context) {
       return Scaffold(
-        body: Column(
+        body: Stack(
           children: [
-            _header(),
-            2.h.heightBox,
-            _feesTimeCalender(),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _header(),
+                  2.h.heightBox,
+                  _feesTimeCalender(),
+                  2.h.heightBox,
+                  _classesRemaining(),
+                  2.h.heightBox,
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    decoration: BoxDecoration(
+                      color: AppColor.appThemeColor,
+                      border: Border.all(color: AppColor.white255),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        CalendarCarousel(
+                          weekFormat: false,
+                          height: 420.0,
+                          inactiveDaysTextStyle: TextStyle(
+                            color: AppColor.yellow,
+                          ),
+                          inactiveWeekendTextStyle: TextStyle(
+                            color: AppColor.yellow,
+                          ),
+                          selectedDateTime: DateTime.now(),
+                          daysHaveCircularBorder: false,
+                        ),
+                      ],
+                    ),
+                  ),
+                  2.h.heightBox,
+                  _myMusicClass(
+                    onTap: () {
+                      Get.to(GuitarProgressPage());
+                    },
+                    imagePath: 'assets/images/guitar-1.png',
+                    text: "My Guitar Class",
+                  ),
+                  4.h.heightBox,
+                  _myMusicClass(
+                    onTap: () {
+                      Get.to(PianoProgressPage());
+                    },
+                    imagePath: 'assets/images/piano.png',
+                    text: "My Piano Class",
+                  ),
+                  4.h.heightBox,
+                  lessionClasses(),
+                  2.h.heightBox,
+                  registrationExamViewOnBottom(),
+                  20.h.heightBox,
+                ],
+              ),
+            ),
+            _bottomSheetBtn(),
           ],
         ),
       );
     });
+  }
+
+  SizedBox lessionClasses() {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Videos Lession",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColor.yellow29,
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.28,
+                ),
+              ),
+            ),
+          ),
+          2.h.heightBox,
+          SizedBox(
+            height: 204,
+            child: ListView.builder(
+              itemCount: 10,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => Container(
+                height: 204,
+                width: 225,
+                margin: const EdgeInsets.only(left: 30),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColor.white255,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 127,
+                      child: Image.asset("assets/images/guitar-post.png"),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tutor Name: Loren Ipsum",
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: -0.28,
+                              color: AppColor.white255.withOpacity(0.5),
+                            ),
+                          ),
+                          Text(
+                            "Total Lessons: 10",
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: -0.28,
+                              color: AppColor.white255.withOpacity(0.5),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          4.h.heightBox,
+        ],
+      ),
+    );
+  }
+
+  registrationExamViewOnBottom() {
+    return SizedBox(
+      height: 151,
+      child: Row(
+        children: [
+          SizedBox(
+            height: 151,
+            width: 202,
+            child: Image.asset("assets/images/book_library.png"),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Registration of Exam",
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.28,
+                    color: AppColor.yellow29,
+                  ),
+                ),
+                Text(
+                  "Your Upcoming class will be on Sunday, on guitar tuning lesson on 12 PM-3 PM.",
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 10,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.white255,
+                  ),
+                ),
+                MaterialButton(
+                  height: 30,
+                  minWidth: 174,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(76.67),
+                  ),
+                  color: AppColor.yellow29,
+                  onPressed: () {},
+                  child: Text(
+                    "Register Now",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppTextStyle.textStyleMulish,
+                      fontSize: 12,
+                      color: AppColor.white255,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _classesRemaining() {
+    return Container(
+      width: double.infinity,
+      height: 406,
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      // padding: const EdgeInsets.symmetric(vertical: 3),
+      decoration: BoxDecoration(
+        color: AppColor.white255,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "Classes Attended",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Text(
+                      "3",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.yellow29,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 67,
+                  width: 1,
+                  color: AppColor.black.withOpacity(0.3),
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Uninformed/Late",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Text(
+                      "1",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.yellow29,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            color: AppColor.black.withOpacity(0.3),
+            height: 1,
+          ),
+          4.h.heightBox,
+          Align(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SimpleCircularProgressBar(
+                // valueNotifier: ValueNotifier,
+                mergeMode: true,
+                size: 150,
+
+                backStrokeWidth: 10,
+                progressStrokeWidth: 20,
+                progressColors: [AppColor.blue224],
+                onGetText: (double value) {
+                  return Text(
+                    '08',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.yellow29,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          2.h.heightBox,
+          Stack(
+            children: [
+              MaterialButton(
+                color: AppColor.yellow29,
+                height: 31,
+                minWidth: 176,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {
+                  DiloagBox.coverClassDiloagBox();
+                },
+                child: Text(
+                  "apply for Cover Class",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 11,
+                    color: AppColor.white255,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 10,
+                top: 5,
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.blue224,
+                    border: Border.all(color: AppColor.white255, width: 2),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          0.9.h.heightBox,
+          Container(
+            width: double.infinity,
+            color: AppColor.black.withOpacity(0.3),
+            height: 1,
+            margin: const EdgeInsets.only(top: 10),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      "Approved Leave",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Text(
+                      "3",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.yellow29,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 67,
+                width: 1,
+                color: AppColor.black.withOpacity(0.3),
+              ),
+              Expanded(
+                child: Container(
+                  height: 66,
+                  decoration: BoxDecoration(
+                    color: AppColor.black.withOpacity(0.1),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Classes Consumed",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      Text(
+                        "4",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor.yellow29,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Align _bottomSheetBtn() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        height: 90,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MaterialButton(
+              color: AppColor.blue224,
+              height: 60,
+              minWidth: 170,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36),
+              ),
+              onPressed: () {
+                controller.showDatePickView();
+              },
+              child: Text(
+                "Apply Leave",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 20,
+                  color: AppColor.white255,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+            MaterialButton(
+              color: AppColor.blue224,
+              height: 60,
+              minWidth: 170,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36),
+              ),
+              onPressed: () {},
+              child: Text(
+                "Reschedule ",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 20,
+                  color: AppColor.white255,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Container _feesTimeCalender() {
@@ -263,7 +743,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _header({BuildContext? context}) {
+  _header() {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16, top: 40),
       child: Column(
@@ -387,6 +867,158 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  _myMusicClass({
+    void Function()? onTap,
+    String? imagePath,
+    String? text,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 184,
+        margin: const EdgeInsets.symmetric(horizontal: 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.9),
+          color: AppColor.white255,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
+                      "$imagePath",
+                      height: 88.81,
+                      width: 90.9,
+                    ),
+                    MaterialButton(
+                      minWidth: 88,
+                      color: AppColor.blue224,
+                      height: 40,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          13.25,
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        "Join Online\nClass",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStylePoppins,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.22,
+                          color: AppColor.white255,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$text",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStylePoppins,
+                        fontSize: 24,
+                        color: AppColor.yellow29,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.28,
+                      ),
+                    ),
+                    1.h.heightBox,
+                    Text(
+                      "Mentor Name : Loren ipsum",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        letterSpacing: -0.23,
+                        color: AppColor.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    0.4.h.heightBox,
+                    Text(
+                      "Class Timings: 12 PM-3 PM",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        letterSpacing: -0.23,
+                        color: AppColor.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    1.h.heightBox,
+                    SizedBox(
+                      width: 210,
+                      child: Text(
+                        "Your Upcoming class will be on Sunday, on guitar tuning lesson on 12 PM-3 PM.",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -0.23,
+                          color: AppColor.black.withOpacity(0.5),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    1.h.heightBox,
+                    SizedBox(
+                      width: 210,
+                      child: Text(
+                        "Current Level: Level 8",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -0.23,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    0.4.h.heightBox,
+                    SizedBox(
+                      width: 210,
+                      child: Text(
+                        "Badges Collected: 20 badges",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -0.23,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    1.h.heightBox,
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

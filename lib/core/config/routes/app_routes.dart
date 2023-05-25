@@ -40,4 +40,6 @@ class AppRoutes {
   static const communicationPage = "/communication_page";
   static const examPaymentPage = "/exam_payment_page";
   static const periodPaymentPage = "/period_payment_page";
+  static const videosLessonPage = "/videos_lesson_page";
+  static const impVideosLessonPage = "/imp_videos_lesson_page";
 }
