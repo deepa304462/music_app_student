@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_constant.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/ps_profile/controller/student_online_profile_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -133,7 +134,10 @@ class StudentOnlineProfilePage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(76.67),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(
+                                AppRoutes.changeCourseExamRegistrationPage);
+                          },
                           child: Text(
                             "Change Course",
                             textAlign: TextAlign.center,
@@ -262,7 +266,9 @@ class StudentOnlineProfilePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(11.9),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.editProfilePage);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -381,15 +387,20 @@ class StudentOnlineProfilePage extends StatelessWidget {
                       ),
                     ),
                     1.h.heightBox,
-                    Text(
-                      "Mentor Name : Loren ipsum",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStyleMulish,
-                        fontSize: 10,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -0.23,
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w500,
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.teacherExpProfilePage);
+                      },
+                      child: Text(
+                        "Mentor Name : Loren ipsum",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -0.23,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     0.4.h.heightBox,

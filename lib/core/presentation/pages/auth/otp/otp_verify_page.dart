@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -128,7 +129,7 @@ class OtpVerifyPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   onPressed: () {
-                    Get.to(OtpVerifyPage());
+                    Get.to(NewBottomNavigationBar());
                   },
                   child: Text(
                     "Verify",

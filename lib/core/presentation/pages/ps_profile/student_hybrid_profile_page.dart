@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_constant.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -18,147 +19,152 @@ class StudentHybridProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Column(
-              children: [
-                _header(),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  child: Column(
-                    children: [
-                      _levelTwoCard(),
-                      2.h.heightBox,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          1.h.heightBox,
-                          RichText(
-                            text: TextSpan(
-                              text: "MEDALS",
-                              style: TextStyle(
-                                fontFamily: AppTextStyle.textStylePoppins,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.white255,
-                                letterSpacing: 0.02,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _header(),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10),
+                    child: Column(
+                      children: [
+                        _levelTwoCard(),
+                        2.h.heightBox,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            1.h.heightBox,
+                            RichText(
+                              text: TextSpan(
+                                text: "MEDALS",
+                                style: TextStyle(
+                                  fontFamily: AppTextStyle.textStylePoppins,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.white255,
+                                  letterSpacing: 0.02,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "\t53",
+                                    style: TextStyle(
+                                      fontFamily: AppTextStyle.textStylePoppins,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.white255.withOpacity(0.5),
+                                      letterSpacing: 0.02,
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
+                            1.h.heightBox,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                TextSpan(
-                                  text: "\t53",
-                                  style: TextStyle(
-                                    fontFamily: AppTextStyle.textStylePoppins,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor.white255.withOpacity(0.5),
-                                    letterSpacing: 0.02,
+                                Expanded(
+                                  child: _medalsCard(
+                                    image:
+                                        SvgPicture.asset("assets/svg/gold.svg"),
+                                    color: AppColor.yellow82,
+                                    isBoxShadow: true,
+                                    title: "Gold",
+                                    subTitle: "18",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _medalsCard(
+                                    image: SvgPicture.asset(
+                                        "assets/svg/silver.svg"),
+                                    title: "Silver",
+                                    subTitle: "18",
+                                    color: AppColor.grey132,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _medalsCard(
+                                    image: SvgPicture.asset(
+                                        "assets/svg/Bronze.svg"),
+                                    title: "Bronze",
+                                    subTitle: "18",
+                                    color: AppColor.brown131,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          1.h.heightBox,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: _medalsCard(
-                                  image:
-                                      SvgPicture.asset("assets/svg/gold.svg"),
-                                  color: AppColor.yellow82,
-                                  isBoxShadow: true,
-                                  title: "Gold",
-                                  subTitle: "18",
-                                ),
+                          ],
+                        ),
+                        2.h.heightBox,
+                        _badgesCard(),
+                        2.h.heightBox,
+                        _myMusicClass(
+                          onTap: () {},
+                          text: "My Guitar Class",
+                          imagePath: "assets/images/guitar-1.png",
+                        ),
+                        2.h.heightBox,
+                        _myMusicClass(
+                          onTap: () {},
+                          text: "My Piano Class",
+                          imagePath: "assets/images/piano.png",
+                        ),
+                        4.h.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: MaterialButton(
+                            color: AppColor.blue224,
+                            minWidth: double.infinity,
+                            height: 44,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(76.67),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Discontinue Course ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTextStyle.textStyleMulish,
+                                fontSize: 20,
+                                color: AppColor.white255,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w800,
                               ),
-                              Expanded(
-                                child: _medalsCard(
-                                  image:
-                                      SvgPicture.asset("assets/svg/silver.svg"),
-                                  title: "Silver",
-                                  subTitle: "18",
-                                  color: AppColor.grey132,
-                                ),
-                              ),
-                              Expanded(
-                                child: _medalsCard(
-                                  image:
-                                      SvgPicture.asset("assets/svg/Bronze.svg"),
-                                  title: "Bronze",
-                                  subTitle: "18",
-                                  color: AppColor.brown131,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      2.h.heightBox,
-                      _badgesCard(),
-                      2.h.heightBox,
-                      _myMusicClass(
-                        onTap: () {},
-                        text: "My Guitar Class",
-                        imagePath: "assets/images/guitar-1.png",
-                      ),
-                      2.h.heightBox,
-                      _myMusicClass(
-                        onTap: () {},
-                        text: "My Piano Class",
-                        imagePath: "assets/images/piano.png",
-                      ),
-                      4.h.heightBox,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: MaterialButton(
-                          color: AppColor.blue224,
-                          minWidth: double.infinity,
-                          height: 44,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(76.67),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Discontinue Course ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppTextStyle.textStyleMulish,
-                              fontSize: 20,
-                              color: AppColor.white255,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),
-                      ),
-                      3.h.heightBox,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: MaterialButton(
-                          color: AppColor.blue224,
-                          minWidth: double.infinity,
-                          height: 44,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(76.67),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Change Course",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppTextStyle.textStyleMulish,
-                              fontSize: 20,
-                              color: AppColor.white255,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w800,
+                        3.h.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: MaterialButton(
+                            color: AppColor.blue224,
+                            minWidth: double.infinity,
+                            height: 44,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(76.67),
+                            ),
+                            onPressed: () {
+                              Get.toNamed(
+                                  AppRoutes.changeCourseExamRegistrationPage);
+                            },
+                            child: Text(
+                              "Change Course",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTextStyle.textStyleMulish,
+                                fontSize: 20,
+                                color: AppColor.white255,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      20.h.heightBox,
-                    ],
+                        20.h.heightBox,
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -269,7 +275,9 @@ class StudentHybridProfilePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(11.9),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.editProfileePage);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -388,15 +396,20 @@ class StudentHybridProfilePage extends StatelessWidget {
                       ),
                     ),
                     1.h.heightBox,
-                    Text(
-                      "Mentor Name : Loren ipsum",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStyleMulish,
-                        fontSize: 10,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -0.23,
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w500,
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.teacherExpProfilePage);
+                      },
+                      child: Text(
+                        "Mentor Name : Loren ipsum",
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: -0.23,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     0.4.h.heightBox,

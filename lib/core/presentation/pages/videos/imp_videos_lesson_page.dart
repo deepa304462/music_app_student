@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_video_progress/smooth_video_progress.dart';
@@ -22,7 +23,9 @@ class ImpVideosLessonPage extends StatelessWidget {
         appBar: CustomAppBar(
           centerTitle: true,
           title: "Video Lessons",
-          onBackPressed: () {},
+          onBackPressed: () {
+            Get.to(NewBottomNavigationBar());
+          },
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -156,7 +159,7 @@ class ImpVideosLessonPage extends StatelessWidget {
           ),
           1.h.heightBox,
           Container(
-            height: 110,
+            height: 130,
             margin: const EdgeInsets.symmetric(vertical: 10),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             width: double.infinity,
@@ -282,8 +285,8 @@ class ImpVideosLessonPage extends StatelessWidget {
                 ),
                 child: Icon(
                   controller.controller.value.isPlaying
-                      ? Icons.play_arrow_outlined
-                      : Icons.pause,
+                      ? Icons.pause
+                      : Icons.play_arrow_outlined,
                   color: AppColor.white255,
                   size: 40,
                 ),

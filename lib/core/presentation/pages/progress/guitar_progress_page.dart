@@ -392,7 +392,9 @@ class GuitarProgressPage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   materialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.showBottomModelSheetBox();
+                    },
                     text: "Upload assignment",
                   ),
                   materialButton(

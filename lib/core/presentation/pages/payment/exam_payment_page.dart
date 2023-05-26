@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/ebook/ebook_page.dart';
 import 'package:music_app_student/core/presentation/pages/payment/controller/exam_payment_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -76,7 +77,9 @@ class ExamPaymentPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(84),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(EBookPage());
+                  },
                   child: Text(
                     "Pay",
                     style: TextStyle(

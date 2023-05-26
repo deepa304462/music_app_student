@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/presentation/pages/join/controller/join_class_controller.dart';
+import 'package:music_app_student/core/presentation/pages/progress/controller/guitar_progress_controller.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,6 +16,8 @@ import 'controller/piano_progress_controller.dart';
 class PianoProgressPage extends StatelessWidget {
   PianoProgressPage({super.key});
   final controller = Get.put(PianoProgressController());
+  final guitarController = Get.put(GuitarProgressController());
+  final joinClassesController = Get.put(JoinClassController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -392,15 +397,21 @@ class PianoProgressPage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   materialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      guitarController.showBottomModelSheetBox();
+                    },
                     text: "Upload assignment",
                   ),
                   materialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.previousFeedBackPage);
+                    },
                     text: "View previous Feedback",
                   ),
                   materialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      joinClassesController.ratingDiloag();
+                    },
                     text: "Review the teacher",
                   ),
                   4.h.heightBox,

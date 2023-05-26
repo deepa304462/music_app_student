@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/presentation/pages/ps_profile/controller/student_hybrid_profile_controller.dart';
+import 'package:music_app_student/core/presentation/pages/ps_profile/student_hybrid_profile_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -261,7 +263,9 @@ class ParentProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   _headerCard(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.studentHybridProfilePage);
+                    },
                     image: Image.asset(
                       "assets/images/lora.png",
                     ),
@@ -269,7 +273,9 @@ class ParentProfilePage extends StatelessWidget {
                   ),
                   1.h.heightBox,
                   _headerCard(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.studentOnlineProfilePage);
+                    },
                     image: Image.asset(
                       "assets/images/jack.png",
                     ),
@@ -289,7 +295,9 @@ class ParentProfilePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(11.9),
                             ),
                             color: AppColor.blue224,
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.parentRegisterProfilePage);
+                            },
                             child: Text(
                               "Add Another Student",
                               textAlign: TextAlign.center,
@@ -306,7 +314,9 @@ class ParentProfilePage extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed(AppRoutes.editProfilePenPage);
+                            },
                             child: Container(
                               width: 51.36,
                               height: 48,

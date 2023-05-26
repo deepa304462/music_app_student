@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -148,8 +150,8 @@ class DiloagBox {
           height: 333,
           width: double.infinity,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              2.h.heightBox,
               Text(
                 "Cover Class",
                 style: TextStyle(
@@ -183,7 +185,9 @@ class DiloagBox {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDatePickerCalender();
+                      },
                       icon: const Icon(Icons.calendar_month),
                     ),
                   ],
@@ -212,7 +216,9 @@ class DiloagBox {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        DiloagBox.showDatePickerCalender();
+                      },
                       icon: SvgPicture.asset("assets/svg/drop_down.svg"),
                     ),
                   ],
@@ -226,7 +232,9 @@ class DiloagBox {
                 color: AppColor.blue224,
                 minWidth: 270,
                 height: 60,
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 child: Text(
                   "Submit",
                   textAlign: TextAlign.center,
@@ -240,6 +248,35 @@ class DiloagBox {
                 ),
               )
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // show calendar_month
+  static showDatePickerCalender() {
+    return Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: 300,
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+            color: AppColor.white255,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: CalendarCarousel(
+            weekFormat: false,
+            height: 420.0,
+            inactiveDaysTextStyle: TextStyle(
+              color: AppColor.yellow,
+            ),
+            inactiveWeekendTextStyle: TextStyle(
+              color: AppColor.yellow,
+            ),
+            selectedDateTime: DateTime.now(),
+            daysHaveCircularBorder: false,
           ),
         ),
       ),

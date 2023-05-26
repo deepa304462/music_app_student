@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/presentation/pages/parent_register_profile/parent_register_profile_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -161,7 +163,9 @@ class ScheduleClassesController extends GetxController {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(36),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 child: Text(
                   "Change",
                   textAlign: TextAlign.center,
@@ -190,49 +194,59 @@ class ScheduleClassesController extends GetxController {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           height: 430,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MaterialButton(
-                height: 60,
-                minWidth: double.infinity,
-                color: AppColor.blue224,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36),
-                ),
-                onPressed: () {},
-                child: Text(
-                  "Add Another Student",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontSize: 24,
-                    color: AppColor.white255,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              SizedBox(
+                height: 200,
+                child: Image.asset("assets/images/circle_animated_gif.gif"),
               ),
-              2.h.heightBox,
-              MaterialButton(
-                height: 60,
-                minWidth: double.infinity,
-                color: AppColor.blue224,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36),
-                ),
-                onPressed: () {},
-                child: Text(
-                  "Submit",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontSize: 24,
-                    color: AppColor.white255,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
+              Column(
+                children: [
+                  MaterialButton(
+                    height: 60,
+                    minWidth: double.infinity,
+                    color: AppColor.blue224,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(36),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      "Add Another Student",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 24,
+                        color: AppColor.white255,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              )
+                  2.h.heightBox,
+                  MaterialButton(
+                    height: 60,
+                    minWidth: double.infinity,
+                    color: AppColor.blue224,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(36),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Submit",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 24,
+                        color: AppColor.white255,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),

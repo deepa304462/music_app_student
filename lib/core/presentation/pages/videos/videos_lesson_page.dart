@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/pages/videos/controller/videos_lesson_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
 import 'package:sizer/sizer.dart';
@@ -21,7 +23,9 @@ class VideosLessonPage extends StatelessWidget {
         appBar: CustomAppBar(
           centerTitle: true,
           title: "Video Lessons",
-          onBackPressed: () {},
+          onBackPressed: () {
+            Get.to(NewBottomNavigationBar());
+          },
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -59,45 +63,50 @@ class VideosLessonPage extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 3,
             shrinkWrap: true,
-            itemBuilder: (context, index) => Container(
-              height: 72,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColor.blue224,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: ListTile(
-                leading: Container(
-                  height: 32,
-                  width: 32,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColor.yellow29,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                Get.toNamed(AppRoutes.impVideosLessonPage);
+              },
+              child: Container(
+                height: 72,
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColor.blue224,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: ListTile(
+                  leading: Container(
+                    height: 32,
+                    width: 32,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColor.yellow29,
+                    ),
+                    child: Text(
+                      "1",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStylePoppins,
+                        fontSize: 20,
+                        color: AppColor.white255,
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    "1",
+                  title: Text(
+                    "Music Theory 2",
                     style: TextStyle(
                       fontFamily: AppTextStyle.textStylePoppins,
-                      fontSize: 20,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.28,
                       color: AppColor.white255,
                     ),
                   ),
-                ),
-                title: Text(
-                  "Music Theory 2",
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStylePoppins,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: -0.28,
+                  trailing: Icon(
+                    Icons.play_circle,
                     color: AppColor.white255,
                   ),
-                ),
-                trailing: Icon(
-                  Icons.play_circle,
-                  color: AppColor.white255,
                 ),
               ),
             ),
@@ -234,8 +243,8 @@ class VideosLessonPage extends StatelessWidget {
                 ),
                 child: Icon(
                   controller.controller.value.isPlaying
-                      ? Icons.play_arrow_outlined
-                      : Icons.pause,
+                      ? Icons.pause
+                      : Icons.play_arrow_outlined,
                   color: AppColor.white255,
                   size: 40,
                 ),

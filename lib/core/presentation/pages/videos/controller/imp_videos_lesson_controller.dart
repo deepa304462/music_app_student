@@ -27,6 +27,7 @@ class ImpVideosLessonController extends GetxController {
 
   onPlayButton() {
     controller.value.isPlaying ? controller.pause() : controller.play();
+
     update();
   }
 

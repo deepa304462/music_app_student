@@ -1,8 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_app_student/core/presentation/pages/auth/login_option/login_option_page.dart';
+import 'package:music_app_student/core/presentation/pages/auth/login/login_template_page.dart';
 
 class IntroController extends GetxController {
   int counter = 2;
@@ -11,7 +10,7 @@ class IntroController extends GetxController {
 
   void nextPage() {
     selectedIndex + 1 == introListData.length
-        ? Get.to(() => LoginOptionPage())
+        ? Get.to(() => const LoginTamplatePage())
         : pageController.nextPage(
             duration: const Duration(seconds: 1),
             curve: Curves.linear,

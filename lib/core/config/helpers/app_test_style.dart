@@ -8,4 +8,5 @@ class AppTextStyle {
   static String? textStyleNunito = GoogleFonts.nunito().fontFamily;
   static String? textStyleNunitoSans = GoogleFonts.nunitoSans().fontFamily;
   static String? textStyleRaleway = GoogleFonts.raleway().fontFamily;
+  static String? textStyleMontserrat = GoogleFonts.montserrat().fontFamily;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/schedule/controller/schedule_classes_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
 
@@ -283,136 +284,142 @@ class ScheduleClassesPage extends StatelessWidget {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Container(
-            height: 170,
-            width: 180,
-            margin: const EdgeInsets.only(left: 10),
-            child: Stack(
-              children: [
-                Container(
-                  width: 172,
-                  height: 83.33,
-                  margin: const EdgeInsets.only(
-                    top: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.67),
-                    border: Border.all(
-                      color: AppColor.white255,
+          return InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.teacherProfilePage);
+            },
+            child: Container(
+              height: 170,
+              width: 180,
+              margin: const EdgeInsets.only(left: 10),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 172,
+                    height: 83.33,
+                    margin: const EdgeInsets.only(
+                      top: 8,
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 59,
-                        width: 59,
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.33),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/teacher.png"),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.67),
+                      border: Border.all(
+                        color: AppColor.white255,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 59,
+                          width: 59,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.33),
+                            image: const DecorationImage(
+                              image: AssetImage("assets/images/teacher.png"),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            RichText(
-                              maxLines: 2,
-                              text: TextSpan(
-                                text: "Andy Raj",
-                                style: TextStyle(
-                                  fontFamily: AppTextStyle.textStyleMulish,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 13.33,
-                                  color: AppColor.white255,
-                                ),
-                                children: const [
-                                  TextSpan(text: "\n"),
-                                  TextSpan(text: "Kapoor"),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                VxRating(
-                                  onRatingUpdate: (value) {},
-                                  value: 1,
-                                  size: 10,
-                                  count: 1,
-                                  selectionColor: AppColor.yellow,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text: "4.5",
-                                    style: TextStyle(
-                                      fontFamily: AppTextStyle.textStyleMulish,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 5.7,
-                                      color: AppColor.white255,
-                                      letterSpacing: -0.16,
-                                    ),
-                                    children: const [
-                                      TextSpan(text: "(1000)"),
-                                    ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RichText(
+                                maxLines: 2,
+                                text: TextSpan(
+                                  text: "Andy Raj",
+                                  style: TextStyle(
+                                    fontFamily: AppTextStyle.textStyleMulish,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 13.33,
+                                    color: AppColor.white255,
                                   ),
+                                  children: const [
+                                    TextSpan(text: "\n"),
+                                    TextSpan(text: "Kapoor"),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/guitar_red.png",
-                                  height: 16.67,
-                                  width: 16.28,
-                                ),
-                                1.w.widthBox,
-                                RichText(
-                                  text: TextSpan(
-                                    text: "Exp:",
-                                    style: TextStyle(
+                              ),
+                              Row(
+                                children: [
+                                  VxRating(
+                                    onRatingUpdate: (value) {},
+                                    value: 1,
+                                    size: 10,
+                                    count: 1,
+                                    selectionColor: AppColor.yellow,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "4.5",
+                                      style: TextStyle(
                                         fontFamily:
                                             AppTextStyle.textStyleMulish,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 8.33,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 5.7,
                                         color: AppColor.white255,
-                                        letterSpacing: -0.23),
-                                    children: const [
-                                      TextSpan(text: " 10 Years"),
-                                    ],
+                                        letterSpacing: -0.16,
+                                      ),
+                                      children: const [
+                                        TextSpan(text: "(1000)"),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/guitar_red.png",
+                                    height: 16.67,
+                                    width: 16.28,
+                                  ),
+                                  1.w.widthBox,
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "Exp:",
+                                      style: TextStyle(
+                                          fontFamily:
+                                              AppTextStyle.textStyleMulish,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 8.33,
+                                          color: AppColor.white255,
+                                          letterSpacing: -0.23),
+                                      children: const [
+                                        TextSpan(text: " 10 Years"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                index == 0
-                    ? Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          height: 24,
-                          width: 24,
-                          margin: const EdgeInsets.only(right: 2, top: 2),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColor.green63,
+                  index == 0
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            height: 24,
+                            width: 24,
+                            margin: const EdgeInsets.only(right: 2, top: 2),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColor.green63,
+                            ),
+                            child: Icon(
+                              Icons.check,
+                              size: 20,
+                              color: AppColor.white255,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.check,
-                            size: 20,
-                            color: AppColor.white255,
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
           );
         },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/auth/login/login_template_page.dart';
 import 'package:music_app_student/core/presentation/pages/intro/controller/intro_controller.dart';
 
 class IntroPage extends StatelessWidget {
@@ -36,7 +37,9 @@ class IntroPage extends StatelessWidget {
                   fontFamily: AppTextStyle.textStylePoppins,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(const LoginTamplatePage());
+              },
             )
           ],
         ),

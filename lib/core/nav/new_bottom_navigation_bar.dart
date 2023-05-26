@@ -3,8 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/nav/controller/new_bottom_navigation_controller.dart';
+import 'package:music_app_student/core/presentation/pages/chat/chat_contact_page.dart';
+import 'package:music_app_student/core/presentation/pages/communication/communication_page.dart';
+import 'package:music_app_student/core/presentation/pages/community/community_page.dart';
 import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/my_progress_page.dart';
+import 'package:music_app_student/core/presentation/pages/study_material/study_material_page.dart';
 
 class NewBottomNavigationBar extends StatelessWidget {
   NewBottomNavigationBar({super.key});
@@ -19,9 +23,9 @@ class NewBottomNavigationBar extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             HomePage(),
-            Scaffold(),
-            Scaffold(),
-            Scaffold(),
+            CommunityPage(),
+            StudyMaterialPage(),
+            CommunicationPage(),
             MyProgressPage(),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/auth/login/login_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/signup/create_account_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -118,25 +119,30 @@ class LoginTamplatePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                height: 60,
-                width: 294,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: AppColor.blue224,
+              InkWell(
+                onTap: () {
+                  Get.to(LoginPage());
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  height: 60,
+                  width: 294,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: AppColor.blue224,
+                    ),
                   ),
-                ),
-                child: Text(
-                  "Login in",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.blue224,
+                  child: Text(
+                    "Login in",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppTextStyle.textStyleMulish,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blue224,
+                    ),
                   ),
                 ),
               ),

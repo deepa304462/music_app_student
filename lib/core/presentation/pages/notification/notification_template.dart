@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/pages/notification/controller/notification_template_controller.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/notification_page.dart';
 import 'package:music_app_student/core/presentation/pages/notification/fragment/payment_page.dart';
@@ -17,7 +19,9 @@ class NotificationTemplate extends StatelessWidget {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
             icon: Icon(
               Icons.arrow_back,
               color: AppColor.white255,

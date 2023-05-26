@@ -18,8 +18,10 @@ class EBookPage extends StatelessWidget {
         child: Column(
           children: [
             Align(
-              child: SvgPicture.asset(
-                "assets/svg/check_view.svg",
+              child: SizedBox(
+                height: 150,
+                width: 150,
+                child: Image.asset("assets/images/animated_gif.gif"),
               ),
             ),
             10.h.heightBox,

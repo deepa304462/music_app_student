@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/pages/parent_register_profile/controller/parent_register_profile_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:sizer/sizer.dart';
@@ -136,7 +138,9 @@ class ParentRegisterProfilePage extends StatelessWidget {
                     controller: controller.parentDobController,
                     hintText: "Date Of Birth",
                     suffixIcon: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        DiloagBox.showDatePickerCalender();
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child:
@@ -222,7 +226,9 @@ class ParentRegisterProfilePage extends StatelessWidget {
                     controller: controller.parentDojoiningController,
                     hintText: "Date Of joining",
                     suffixIcon: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        DiloagBox.showDatePickerCalender();
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child:
@@ -240,6 +246,7 @@ class ParentRegisterProfilePage extends StatelessWidget {
                     height: 60,
                     onPressed: () {
                       // log(controller.nameController.toString());
+                      Get.toNamed(AppRoutes.scheduleClassesPage);
                     },
                     child: Text(
                       "Register",

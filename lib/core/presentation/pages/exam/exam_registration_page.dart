@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/presentation/pages/notification/fragment/payment_page.dart';
+import 'package:music_app_student/core/presentation/pages/payment/exam_payment_page.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -82,6 +84,7 @@ class ExamRegistrationPage extends StatelessWidget {
                           height: 60,
                           onPressed: () {
                             // log(controller.nameController.toString());
+                            Get.to(ExamPaymentPage());
                           },
                           child: Text(
                             "Pay Now",

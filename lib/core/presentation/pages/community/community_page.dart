@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/community/controller/community_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -285,27 +286,32 @@ class CommunityPage extends StatelessWidget {
                     2.w.widthBox,
                     Expanded(
                       flex: 3,
-                      child: Container(
-                        height: 57,
-                        decoration: BoxDecoration(
-                          color: AppColor.blue224,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "Go Live",
-                              style: TextStyle(
-                                fontFamily: AppTextStyle.textStylePoppins,
-                                fontSize: 16,
-                                color: AppColor.white255,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: -0.28,
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.liveStreamingPage);
+                        },
+                        child: Container(
+                          height: 57,
+                          decoration: BoxDecoration(
+                            color: AppColor.blue224,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Go Live",
+                                style: TextStyle(
+                                  fontFamily: AppTextStyle.textStylePoppins,
+                                  fontSize: 16,
+                                  color: AppColor.white255,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: -0.28,
+                                ),
                               ),
-                            ),
-                            SvgPicture.asset("assets/svg/go_live.svg"),
-                          ],
+                              SvgPicture.asset("assets/svg/go_live.svg"),
+                            ],
+                          ),
                         ),
                       ),
                     )

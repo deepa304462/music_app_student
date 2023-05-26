@@ -1,13 +1,14 @@
+import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/pages/home/controller/home_controller.dart';
 import 'package:music_app_student/core/presentation/pages/progress/guitar_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/piano_progress_page.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/rescheduale_diloag_box.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,28 +31,13 @@ class HomePage extends StatelessWidget {
                   2.h.heightBox,
                   _classesRemaining(),
                   2.h.heightBox,
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    decoration: BoxDecoration(
-                      color: AppColor.appThemeColor,
-                      border: Border.all(color: AppColor.white255),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        CalendarCarousel(
-                          weekFormat: false,
-                          height: 420.0,
-                          inactiveDaysTextStyle: TextStyle(
-                            color: AppColor.yellow,
-                          ),
-                          inactiveWeekendTextStyle: TextStyle(
-                            color: AppColor.yellow,
-                          ),
-                          selectedDateTime: DateTime.now(),
-                          daysHaveCircularBorder: false,
-                        ),
-                      ],
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.myGuitarClassDetailPage);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: Image.asset("assets/images/calender-1.png"),
                     ),
                   ),
                   2.h.heightBox,
@@ -114,53 +100,58 @@ class HomePage extends StatelessWidget {
               itemCount: 10,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => Container(
-                height: 204,
-                width: 225,
-                margin: const EdgeInsets.only(left: 30),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColor.white255,
+              itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.videosLessonPage);
+                },
+                child: Container(
+                  height: 204,
+                  width: 225,
+                  margin: const EdgeInsets.only(left: 30),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColor.white255,
+                    ),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 127,
-                      child: Image.asset("assets/images/guitar-post.png"),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tutor Name: Loren Ipsum",
-                            style: TextStyle(
-                              fontFamily: AppTextStyle.textStyleMulish,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: -0.28,
-                              color: AppColor.white255.withOpacity(0.5),
-                            ),
-                          ),
-                          Text(
-                            "Total Lessons: 10",
-                            style: TextStyle(
-                              fontFamily: AppTextStyle.textStyleMulish,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: -0.28,
-                              color: AppColor.white255.withOpacity(0.5),
-                            ),
-                          )
-                        ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 127,
+                        child: Image.asset("assets/images/guitar-post.png"),
                       ),
-                    ),
-                  ],
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Tutor Name: Loren Ipsum",
+                              style: TextStyle(
+                                fontFamily: AppTextStyle.textStyleMulish,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: -0.28,
+                                color: AppColor.white255.withOpacity(0.5),
+                              ),
+                            ),
+                            Text(
+                              "Total Lessons: 10",
+                              style: TextStyle(
+                                fontFamily: AppTextStyle.textStyleMulish,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: -0.28,
+                                color: AppColor.white255.withOpacity(0.5),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -212,7 +203,9 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(76.67),
                   ),
                   color: AppColor.yellow29,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.examRegistrationPage);
+                  },
                   child: Text(
                     "Register Now",
                     textAlign: TextAlign.center,
@@ -308,27 +301,37 @@ class HomePage extends StatelessWidget {
             height: 1,
           ),
           4.h.heightBox,
-          Align(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: SimpleCircularProgressBar(
-                // valueNotifier: ValueNotifier,
-                mergeMode: true,
-                size: 150,
-
-                backStrokeWidth: 10,
-                progressStrokeWidth: 20,
-                progressColors: [AppColor.blue224],
-                onGetText: (double value) {
-                  return Text(
-                    '08',
+          SizedBox(
+            height: 150,
+            width: 150,
+            child: CircleProgressBar(
+              foregroundColor: Colors.blue,
+              backgroundColor: Colors.black12,
+              strokeWidth: 20,
+              value: 0.7,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "08",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: AppColor.yellow29,
                     ),
-                  );
-                },
+                  ),
+                  Text(
+                    "Classes\nRemaining",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppTextStyle.textStylePoppins,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -372,7 +375,7 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          0.9.h.heightBox,
+          1.6.h.heightBox,
           Container(
             width: double.infinity,
             color: AppColor.black.withOpacity(0.3),
@@ -457,45 +460,52 @@ class HomePage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MaterialButton(
-              color: AppColor.blue224,
-              height: 60,
-              minWidth: 170,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(36),
-              ),
-              onPressed: () {
-                controller.showDatePickView();
-              },
-              child: Text(
-                "Apply Leave",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: AppTextStyle.textStyleMulish,
-                  fontSize: 20,
-                  color: AppColor.white255,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
+            Expanded(
+              child: MaterialButton(
+                color: AppColor.blue224,
+                height: 60,
+                minWidth: 170,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {
+                  controller.leaveDiloagBox();
+                },
+                child: Text(
+                  "Apply Leave",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 20,
+                    color: AppColor.white255,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             ),
-            MaterialButton(
-              color: AppColor.blue224,
-              height: 60,
-              minWidth: 170,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(36),
-              ),
-              onPressed: () {},
-              child: Text(
-                "Reschedule ",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: AppTextStyle.textStyleMulish,
-                  fontSize: 20,
-                  color: AppColor.white255,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
+            2.w.widthBox,
+            Expanded(
+              child: MaterialButton(
+                color: AppColor.blue224,
+                height: 60,
+                minWidth: 170,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                onPressed: () {
+                  Get.dialog(const RescheduleDiloagBox());
+                },
+                child: Text(
+                  "Reschedule ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 20,
+                    color: AppColor.white255,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             )
@@ -786,7 +796,9 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(AppRoutes.parentProfilePage);
+                },
                 child: const SizedBox(
                   height: 55,
                   width: 55,
@@ -832,7 +844,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(AppRoutes.notificationTemplate);
+                },
                 child: Container(
                   height: 41,
                   width: 41,

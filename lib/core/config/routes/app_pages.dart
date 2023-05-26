@@ -5,6 +5,7 @@ import 'package:music_app_student/core/presentation/pages/auth/login/login_page.
 import 'package:music_app_student/core/presentation/pages/auth/login/login_template_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login_option/login_option_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/signup/create_account_page.dart';
+import 'package:music_app_student/core/presentation/pages/chat/conversation_screen_ui.dart';
 import 'package:music_app_student/core/presentation/pages/communication/communication_page.dart';
 import 'package:music_app_student/core/presentation/pages/download/download_page.dart';
 import 'package:music_app_student/core/presentation/pages/ebook/ebook_page.dart';
@@ -206,6 +207,10 @@ class AppPage {
     GetPage(
       name: AppRoutes.impVideosLessonPage,
       page: () => ImpVideosLessonPage(),
+    ),
+    GetPage(
+      name: AppRoutes.conversationScreenUi,
+      page: () => ConversationScreenUi(),
     ),
   ];
 }

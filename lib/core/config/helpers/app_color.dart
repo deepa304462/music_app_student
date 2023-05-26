@@ -34,4 +34,5 @@ class AppColor {
   static Color brown29 = const Color.fromRGBO(238, 129, 29, 1);
   static Color white249 = const Color.fromRGBO(226, 222, 249, 1);
   static Color white226 = const Color.fromRGBO(226, 226, 226, 1);
+  static Color white242 = const Color.fromRGBO(242, 242, 242, 1);
 }

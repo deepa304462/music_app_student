@@ -122,7 +122,9 @@ class ChangeCourseExamRegistrationPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.back();
+            },
             child: Icon(
               Icons.arrow_back,
               color: AppColor.white255,

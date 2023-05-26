@@ -42,4 +42,5 @@ class AppRoutes {
   static const periodPaymentPage = "/period_payment_page";
   static const videosLessonPage = "/videos_lesson_page";
   static const impVideosLessonPage = "/imp_videos_lesson_page";
+  static const conversationScreenUi = "/conversation_screen_ui";
 }
