@@ -58,7 +58,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: "Enter 6 - digit verification code sent to your\n",
+                      text: "Enter 4 - digit verification code sent to your\n",
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStyleRobote,
                         fontSize: 14,
@@ -109,7 +109,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                     enableActiveFill: true,
                     appContext: context,
                     // controller: controller.otpController,
-                    length: 6,
+                    length: 4,
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
                     cursorHeight: 18,
