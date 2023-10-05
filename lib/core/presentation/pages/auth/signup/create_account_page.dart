@@ -10,9 +10,22 @@ import 'package:music_app_student/core/presentation/pages/auth/signup/controller
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class CreateAccountPage extends StatelessWidget {
+import '../../../../../models/register_model.dart';
+import '../../../../../repository/auth_repository.dart';
+import '../../../../../utils/utils.dart';
+
+class CreateAccountPage extends StatefulWidget {
   CreateAccountPage({super.key});
+
+  @override
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
+}
+
+class _CreateAccountPageState extends State<CreateAccountPage> {
+  bool _isLoading = false;
   final controller = Get.put(CreateAccountController());
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CreateAccountController>(
@@ -21,156 +34,160 @@ class CreateAccountPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Container(
             margin: const EdgeInsets.only(top: 60, right: 16, left: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: AppColor.white255,
-                  ),
-                ),
-                4.h.heightBox,
-                Text(
-                  "Create your\nAccount",
-                  style: TextStyle(
-                    fontSize: 45.12,
-                    color: AppColor.white255,
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                8.h.heightBox,
-                _textField(controller: controller.phoneController),
-                6.h.heightBox,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Checkbox(
-                      value: controller.isCheckBtn,
-                      activeColor: AppColor.blue224,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      side: BorderSide(
-                        color: AppColor.blue224,
-                      ),
-                      onChanged: controller.onChangeStatus,
-                    ),
-                    Text(
-                      "Remember Me",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStyleMulish,
-                        fontSize: 15,
-                        color: AppColor.white255,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )
-                  ],
-                ),
-                2.h.heightBox,
-                MaterialButton(
-                  height: 60,
-                  minWidth: double.infinity,
-                  color: AppColor.blue224,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  onPressed: () {
-                    Get.to(OtpVerifyPage());
-                  },
-                  child: Text(
-                    "Sign up",
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleMulish,
-                      fontSize: 24,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
                       color: AppColor.white255,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                8.h.heightBox,
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: AppColor.white255,
-                      ),
+                  4.h.heightBox,
+                  Text(
+                    "Create your\nAccount",
+                    style: TextStyle(
+                      fontSize: 45.12,
+                      color: AppColor.white255,
+                      fontFamily: AppTextStyle.textStyleMulish,
+                      fontWeight: FontWeight.w900,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "or continue with",
+                  ),
+                  8.h.heightBox,
+                  _textField(controller: controller.phoneController),
+                  6.h.heightBox,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: controller.isCheckBtn,
+                        activeColor: AppColor.blue224,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        side: BorderSide(
+                          color: AppColor.blue224,
+                        ),
+                        onChanged: controller.onChangeStatus,
+                      ),
+                      Text(
+                        "Remember Me",
                         style: TextStyle(
                           fontFamily: AppTextStyle.textStyleMulish,
-                          fontSize: 16,
+                          fontSize: 15,
+                          color: AppColor.white255,
                           fontWeight: FontWeight.w700,
-                          color: AppColor.white255,
                         ),
-                      ),
+                      )
+                    ],
+                  ),
+                  2.h.heightBox,
+                  _isLoading?Center(child: CircularProgressIndicator()): MaterialButton(
+                    height: 60,
+                    minWidth: double.infinity,
+                    color: AppColor.blue224,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
                     ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                      onTapSignUp();}
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 24,
                         color: AppColor.white255,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-                Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        height: 60,
-                        width: 80,
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: BoxDecoration(
+                  ),
+                  8.h.heightBox,
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 1,
                           color: AppColor.white255,
-                          borderRadius: BorderRadius.circular(15),
                         ),
-                        child: SvgPicture.asset("assets/svg/google.svg"),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        height: 60,
-                        width: 80,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 20),
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: BoxDecoration(
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "or continue with",
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: AppColor.white255,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 1,
                           color: AppColor.white255,
-                          borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Image.asset("assets/images/facebook.png"),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        height: 60,
-                        width: 80,
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: BoxDecoration(
-                          color: AppColor.white255,
-                          borderRadius: BorderRadius.circular(15),
+                    ],
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          decoration: BoxDecoration(
+                            color: AppColor.white255,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: SvgPicture.asset("assets/svg/google.svg"),
                         ),
-                        child: SvgPicture.asset("assets/svg/apple.svg"),
                       ),
-                    )
-                  ],
-                ),
-              ],
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          decoration: BoxDecoration(
+                            color: AppColor.white255,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Image.asset("assets/images/facebook.png"),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          decoration: BoxDecoration(
+                            color: AppColor.white255,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: SvgPicture.asset("assets/svg/apple.svg"),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -236,9 +253,19 @@ class CreateAccountPage extends StatelessWidget {
             color: AppColor.white255,
           ),
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your phone number';
+                }
+                if (!isValidPhoneNumber(value)) {
+                  return 'Please enter a valid phone number';
+                }
+                return null; // Return null if the input is valid.
+              },
               style: TextStyle(color: AppColor.white255),
               controller: controller,
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
                 hintText: "Phone Number",
@@ -257,5 +284,41 @@ class CreateAccountPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  onTapSignUp() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, String> data = {
+      'mobileNumber': controller.phoneController.text,
+    };
+    print(data);
+    final authRepository = AuthRepository();
+    final response = await authRepository.signUpApi(data);
+    //Navigator.pop(context);
+    RegisterModel registerModel = RegisterModel.fromJson(response);
+    if (registerModel.status == 201) {
+      setState(() {
+        _isLoading = false;
+      });
+      debugPrint(registerModel.user!.otp);
+      Utils.toastMassage(registerModel.user!.otp.toString());
+      Get.to(OtpVerifyPage(otp:registerModel.user!.otp,phone: registerModel.user!.otp.toString() ,));
+
+    } else {
+      Utils.toastMassage(response['error']);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  bool isValidPhoneNumber(String phoneNumber) {
+    // Define a regular expression for phone number validation
+    final phoneRegExp = RegExp(r'^\d{10}$');
+    return phoneRegExp.hasMatch(phoneNumber);
   }
 }

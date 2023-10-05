@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
-import 'package:music_app_student/core/presentation/pages/ps_profile/controller/student_hybrid_profile_controller.dart';
-import 'package:music_app_student/core/presentation/pages/ps_profile/student_hybrid_profile_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 

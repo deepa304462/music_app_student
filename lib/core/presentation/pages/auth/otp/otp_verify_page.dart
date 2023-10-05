@@ -9,9 +9,20 @@ import 'package:velocity_x/velocity_x.dart';
 
 import 'controller/otp_verify_controller.dart';
 
-class OtpVerifyPage extends StatelessWidget {
-  OtpVerifyPage({super.key});
+class OtpVerifyPage extends StatefulWidget {
+  String? phone;
+  String? otp;
+  OtpVerifyPage({this.otp,this.phone,super.key});
+
+  @override
+  State<OtpVerifyPage> createState() => _OtpVerifyPageState();
+}
+
+class _OtpVerifyPageState extends State<OtpVerifyPage> {
+
+
   final controller = Get.put(OtpVerifyController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OtpVerifyController>(
@@ -47,7 +58,7 @@ class OtpVerifyPage extends StatelessWidget {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: "Enter 4 - digit verification code sent to your\n",
+                      text: "Enter 6 - digit verification code sent to your\n",
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStyleRobote,
                         fontSize: 14,
@@ -65,7 +76,7 @@ class OtpVerifyPage extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: "\t+9695956958\t",
+                          text: widget.phone,
                           style: TextStyle(
                             fontFamily: AppTextStyle.textStyleRobote,
                             fontSize: 14,
@@ -97,8 +108,8 @@ class OtpVerifyPage extends StatelessWidget {
                   child: PinCodeTextField(
                     enableActiveFill: true,
                     appContext: context,
-                    controller: controller.otpController,
-                    length: 4,
+                    // controller: controller.otpController,
+                    length: 6,
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
                     cursorHeight: 18,

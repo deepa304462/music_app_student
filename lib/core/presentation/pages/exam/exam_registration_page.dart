@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
-import 'package:music_app_student/core/presentation/pages/notification/fragment/payment_page.dart';
 import 'package:music_app_student/core/presentation/pages/payment/exam_payment_page.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:sizer/sizer.dart';
@@ -110,7 +109,7 @@ class ExamRegistrationPage extends StatelessWidget {
     );
   }
 
-  Container _appBar() {
+  Widget _appBar() {
     return Container(
       margin: const EdgeInsets.only(top: 50, right: 16, left: 16),
       child: Row(
