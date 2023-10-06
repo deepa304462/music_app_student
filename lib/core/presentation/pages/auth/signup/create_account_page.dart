@@ -306,7 +306,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       });
       debugPrint(registerModel.user!.otp);
       Utils.toastMassage(registerModel.user!.otp.toString());
-      Get.to(OtpVerifyPage(otp:registerModel.user!.otp,phone: registerModel.user!.otp.toString() ,));
+      Get.to(OtpVerifyPage(otp:registerModel.user!.otp,phone: registerModel.user!.mobileNumber ,));
 
     } else {
       Utils.toastMassage(response['error']);

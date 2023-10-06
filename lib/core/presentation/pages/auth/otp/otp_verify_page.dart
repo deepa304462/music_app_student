@@ -3,25 +3,30 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
+import 'package:music_app_student/models/register_otp_model.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../../repository/auth_repository.dart';
+import '../../../../../utils/utils.dart';
+import '../../../../utils/constants/constants.dart';
 import 'controller/otp_verify_controller.dart';
 
 class OtpVerifyPage extends StatefulWidget {
   String? phone;
   String? otp;
-  OtpVerifyPage({this.otp,this.phone,super.key});
+
+  OtpVerifyPage({this.otp, this.phone, super.key});
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
 }
 
 class _OtpVerifyPageState extends State<OtpVerifyPage> {
-
-
   final controller = Get.put(OtpVerifyController());
+  bool _isLoading = false;
+  String otpId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +91,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                           ),
                         ),
                         TextSpan(
-                          text: "Edit",
+                          text: "  Edit",
                           style: TextStyle(
                             fontFamily: AppTextStyle.textStyleRobote,
                             fontSize: 14,
@@ -108,8 +113,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   child: PinCodeTextField(
                     enableActiveFill: true,
                     appContext: context,
-                    // controller: controller.otpController,
-                    length: 4,
+                    controller: controller.otpController,
+                    length: 6,
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
                     cursorHeight: 18,
@@ -132,7 +137,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   ),
                 ),
                 2.h.heightBox,
-                MaterialButton(
+                _isLoading ?Center(child: CircularProgressIndicator(),):MaterialButton(
                   height: 60,
                   minWidth: double.infinity,
                   color: AppColor.blue224,
@@ -140,7 +145,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   onPressed: () {
-                    Get.to(NewBottomNavigationBar());
+                    onTapVerify(context);
                   },
                   child: Text(
                     "Verify",
@@ -197,4 +202,39 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       ),
     );
   }
+
+  void onTapVerify(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    final authRepository = AuthRepository();
+    final response = await authRepository.signUpOtpApi(widget.otp);
+
+    if (response != null) {
+      RegisterOtpModel registerOtpModel = RegisterOtpModel.fromJson(response);
+
+      if (registerOtpModel.message != null) {
+        setState(() {
+          _isLoading = false;
+        });
+        await Utils.saveToSharedPreference(
+            Constants.accessToken, registerOtpModel.token);
+        debugPrint(registerOtpModel.message);
+        debugPrint(registerOtpModel.token);
+        Utils.toastMassage(widget.otp.toString());
+        Get.to(NewBottomNavigationBar());
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        Utils.toastMassage(response["error"]);
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      Utils.toastMassage("Response is null"); // Handle the case when the response is null
+    }
+  }
+
 }

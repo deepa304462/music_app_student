@@ -20,4 +20,26 @@ class AuthRepository{
 
   }
 
+  Future<dynamic>signUpOtpApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.registerOtpUrl,data);
+      return response;
+    }catch(e){
+      throw e;;
+    }
+
+  }
+
+  Future<dynamic>logInApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.loginUrl,data);
+      return response;
+    }catch(e){
+      throw e;;
+    }
+
+  }
+
 }

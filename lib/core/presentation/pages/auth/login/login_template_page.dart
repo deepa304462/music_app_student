@@ -8,9 +8,16 @@ import 'package:music_app_student/core/presentation/pages/auth/signup/create_acc
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class LoginTamplatePage extends StatelessWidget {
+class LoginTamplatePage extends StatefulWidget {
   const LoginTamplatePage({super.key});
 
+  @override
+  State<LoginTamplatePage> createState() => _LoginTamplatePageState();
+}
+
+class _LoginTamplatePageState extends State<LoginTamplatePage> {
+
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +130,7 @@ class LoginTamplatePage extends StatelessWidget {
                 onTap: () {
                   Get.to(LoginPage());
                 },
-                child: Container(
+                child: _isLoading?Center(child: CircularProgressIndicator(),):Container(
                   margin: const EdgeInsets.only(top: 30),
                   height: 60,
                   width: 294,
@@ -212,4 +219,6 @@ class LoginTamplatePage extends StatelessWidget {
       ),
     );
   }
+
+
 }

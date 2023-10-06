@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
   static void fieldFocusChange(
@@ -68,20 +69,20 @@ class Utils {
     );
   }
 
-  // static Future<void> saveToSharedPreference(String key, dynamic value) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   if (value is String) {
-  //     preferences.setString(key, value);
-  //   } else if (value is bool) {
-  //     preferences.setBool(key, value);
-  //   } else if (value is double) {
-  //     preferences.setDouble(key, value);
-  //   } else if (value is int) {
-  //     preferences.setInt(key, value);
-  //   } else if (value is List<String>) {
-  //     preferences.setStringList(key, value);
-  //   }
-  // }
+  static Future<void> saveToSharedPreference(String key, dynamic value) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (value is String) {
+      preferences.setString(key, value);
+    } else if (value is bool) {
+      preferences.setBool(key, value);
+    } else if (value is double) {
+      preferences.setDouble(key, value);
+    } else if (value is int) {
+      preferences.setInt(key, value);
+    } else if (value is List<String>) {
+      preferences.setStringList(key, value);
+    }
+  }
 
   // static Future<dynamic> getFromSharedPreference(String key) async {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();

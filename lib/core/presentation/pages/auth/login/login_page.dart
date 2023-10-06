@@ -11,9 +11,17 @@ import 'package:music_app_student/core/presentation/pages/auth/otp/otp_verify_pa
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final controller = Get.put(LoginController());
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
@@ -242,4 +250,6 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
+
 }

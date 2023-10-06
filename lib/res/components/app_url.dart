@@ -3,5 +3,9 @@ class AppUrl{
 
   static var registerUrl = '${baseUrl}api/user/signup';
 
+  static var registerOtpUrl ='${baseUrl}api/user/signup/verify';
+
+  static var loginUrl = '${baseUrl}api/user/login';
+
 
 }
