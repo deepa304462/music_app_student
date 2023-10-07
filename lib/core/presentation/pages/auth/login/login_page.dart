@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(100),
                         ),
                         onPressed: () {
-                          Get.to(OtpVerifyPage());
+                          Get.to(OtpVerifyPage(isFromLogin: true,));
                         },
                         child: Text(
                           "Log in",

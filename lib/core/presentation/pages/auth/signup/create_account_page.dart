@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -12,7 +14,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../models/register_model.dart';
 import '../../../../../repository/auth_repository.dart';
-import '../../../../../utils/utils.dart';
+import '../../../../utils/constants/constants.dart';
+import '../../../../utils/utils.dart';
 
 class CreateAccountPage extends StatefulWidget {
   CreateAccountPage({super.key});
@@ -25,6 +28,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   bool _isLoading = false;
   final controller = Get.put(CreateAccountController());
   final _formKey = GlobalKey<FormState>();
+  File? pic;
 
   @override
   Widget build(BuildContext context) {
@@ -304,9 +308,11 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       setState(() {
         _isLoading = false;
       });
+      await Utils.saveToSharedPreference(
+          Constants.userId, registerModel.user!.id);
       debugPrint(registerModel.user!.otp);
       Utils.toastMassage(registerModel.user!.otp.toString());
-      Get.to(OtpVerifyPage(otp:registerModel.user!.otp,phone: registerModel.user!.mobileNumber ,));
+      Get.to(OtpVerifyPage(otp:registerModel.user!.otp,phone: registerModel.user!.mobileNumber ,isFromLogin: false,));
 
     } else {
       Utils.toastMassage(response['error']);

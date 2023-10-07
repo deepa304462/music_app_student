@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music_app_student/core/presentation/pages/auth/signup/create_account_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
@@ -84,22 +85,22 @@ class Utils {
     }
   }
 
-  // static Future<dynamic> getFromSharedPreference(String key) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   return preferences.get(key);
-  // }
+  static Future<dynamic> getFromSharedPreference(String key) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.get(key);
+  }
 
-  // static Future<void> logOut(BuildContext context) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   List<String> keys = preferences.getKeys().toList();
-  //
-  //   for (String key in keys) {
-  //     await preferences.remove(key);
-  //   }
-  //   if (context.mounted) {
-  //     pushToNewRouteAndClearAll(context, SignUpScreen());
-  //   }
-  // }
+  static Future<void> logOut(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> keys = preferences.getKeys().toList();
+
+    for (String key in keys) {
+      await preferences.remove(key);
+    }
+    if (context.mounted) {
+      pushToNewRouteAndClearAll(context, CreateAccountPage());
+    }
+  }
 
   static void pushToNewRoute(BuildContext context, Widget routeName) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => routeName));

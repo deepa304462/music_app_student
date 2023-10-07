@@ -1,19 +1,40 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
+import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
+import 'package:music_app_student/models/get_instrument_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../repository/auth_repository.dart';
 import 'controller/register_profile_controller.dart';
 
-class RegisterProfilePage extends StatelessWidget {
+class RegisterProfilePage extends StatefulWidget {
   RegisterProfilePage({super.key});
+
+  @override
+  State<RegisterProfilePage> createState() => _RegisterProfilePageState();
+}
+
+class _RegisterProfilePageState extends State<RegisterProfilePage> {
   final controller = Get.put(RegisterProfileController());
+  bool _isLoading = false;
+  File? pic;
+  List<Subjects> allInstrumentList = [];
+  String selectedInstrument = "instrument";
+
+  @override
+  void initState() {
+    getInstruments();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterProfileController>(
@@ -150,10 +171,15 @@ class RegisterProfilePage extends StatelessWidget {
                   2.h.heightBox,
                   TextFormFieldView(
                     controller: controller.instrumentsController,
-                    hintText: "Instruments",
+                    hintText: selectedInstrument,
                     suffixIcon: InkWell(
                       onTap: () {
-                        DiloagBox.instrumentDiloagBox();
+                        DiloagBox.instrumentDiloagBox(allInstrumentList,(value){
+                          debugPrint(value);
+                          setState(() {
+                            selectedInstrument = value;
+                          });
+                        });
                       },
                       child: Icon(
                         Icons.arrow_drop_down,
@@ -265,4 +291,63 @@ class RegisterProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  // updateRegisterFormDetail() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   final authRepository = AuthRepository();
+  //   var data = {
+  //     'name': controller.nameController.text,
+  //     'email': controller.emailController.text,
+  //     'gender':controller.genderController.text,
+  //     'alternateNumber':controller.altPhoneNumberController.text,
+  //     'address1':controller.addressLineFirstController.text,
+  //     'address2':controller.addressLineSecondController.text,
+  //     'city':controller.cityController.text,
+  //     'pincode':controller.pinCodeController.text,
+  //     'state':controller.stateController.text,
+  //     'country':controller.countryController.text,
+  //     'dateOfBirth':controller.dobController.text,
+  //     'instruments':controller.instrumentsController.text,
+  //
+  //
+  //
+  //   };
+  //   final response = await authRepository.updateRegisterForm(
+  //     data,
+  //     pic!,
+  //   );
+  //   setState(() {
+  //     _isLoading = false;
+  //   });
+  //   RegisterFormModel registerFormModel =
+  //   RegisterFormModel.fromJson(response);
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => HomePage(),
+  //       ));
+  //
+  //   debugPrint(response.toString());
+  //
+  //   setState(() {
+  //     //updateAndUploadModel.msg!;
+  //   });
+
+
+
+ // }
+  void getInstruments() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.allServiceApi();
+    debugPrint(response.toString());
+    GetInstrumentModel getInstrumentModel =
+    GetInstrumentModel.fromJson(response);
+    setState(() {
+      allInstrumentList = getInstrumentModel.subjects!;
+      print(allInstrumentList.length);
+    });
+  }
+
 }

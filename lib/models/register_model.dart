@@ -1,6 +1,6 @@
 /// status : 201
 /// message : "Signup successful"
-/// user : {"mobileNumber":"1234567899","otp":"301026","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","_id":"651eab2102cb71e9ee04bcf2","createdAt":"2023-10-05T12:25:05.648Z","__v":0}
+/// user : {"mobileNumber":"1234567789","otp":"301219","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","_id":"65213bee9a9ad24c20f32f90","createdAt":"2023-10-07T11:07:26.407Z","__v":0}
 /// token : ""
 
 class RegisterModel {
@@ -52,8 +52,8 @@ RegisterModel copyWith({  num? status,
 
 }
 
-/// mobileNumber : "1234567899"
-/// otp : "301026"
+/// mobileNumber : "1234567789"
+/// otp : "301219"
 /// isVerified : false
 /// profilePicture : ""
 /// name : ""
@@ -87,8 +87,8 @@ RegisterModel copyWith({  num? status,
 /// modeOFClass : ""
 /// prefferedPaymentSchedule : ""
 /// role : "user"
-/// _id : "651eab2102cb71e9ee04bcf2"
-/// createdAt : "2023-10-05T12:25:05.648Z"
+/// _id : "65213bee9a9ad24c20f32f90"
+/// createdAt : "2023-10-07T11:07:26.407Z"
 /// __v : 0
 
 class User {
@@ -147,6 +147,7 @@ class User {
     _gold = gold;
     _silver = silver;
     _bronze = bronze;
+    _badges = badges;
     _teachingHours = teachingHours;
     _level = level;
     _gender = gender;
@@ -225,6 +226,7 @@ class User {
   String? _gold;
   String? _silver;
   String? _bronze;
+  List<dynamic>? _badges;
   num? _teachingHours;
   String? _level;
   String? _gender;
@@ -300,6 +302,7 @@ User copyWith({  String? mobileNumber,
   gold: gold ?? _gold,
   silver: silver ?? _silver,
   bronze: bronze ?? _bronze,
+  badges: badges ?? _badges,
   teachingHours: teachingHours ?? _teachingHours,
   level: level ?? _level,
   gender: gender ?? _gender,
@@ -338,6 +341,7 @@ User copyWith({  String? mobileNumber,
   String? get gold => _gold;
   String? get silver => _silver;
   String? get bronze => _bronze;
+  List<dynamic>? get badges => _badges;
   num? get teachingHours => _teachingHours;
   String? get level => _level;
   String? get gender => _gender;
@@ -378,6 +382,9 @@ User copyWith({  String? mobileNumber,
     map['gold'] = _gold;
     map['silver'] = _silver;
     map['bronze'] = _bronze;
+    if (_badges != null) {
+      map['badges'] = _badges?.map((v) => v.toJson()).toList();
+    }
     map['teachingHours'] = _teachingHours;
     map['level'] = _level;
     map['gender'] = _gender;

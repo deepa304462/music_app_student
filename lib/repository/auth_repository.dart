@@ -1,8 +1,13 @@
 
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:music_app_student/data/network/base_api_services.dart';
 import 'package:music_app_student/data/network/network_api_services.dart';
 
+import '../core/utils/constants/constants.dart';
+import '../core/utils/utils.dart';
 import '../res/components/app_url.dart';
 
 class AuthRepository{
@@ -40,6 +45,33 @@ class AuthRepository{
       throw e;;
     }
 
+  }
+
+  Future<dynamic> updateRegisterForm(
+      dynamic data,
+      File? pic,
+      ) async {
+    try {
+      String userId = await Utils.getFromSharedPreference(Constants.userId);
+      debugPrint(AppUrl.registerFormUrl + userId);
+      dynamic response = await _apiServices.getPutApiResponse(
+          AppUrl.registerFormUrl + userId,
+          data,
+          pic!,);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<dynamic> allServiceApi() async {
+    try {
+      dynamic response =
+      await _apiServices.getGetApiResponse(AppUrl.instrumentUrl);
+      return response;
+    } catch (e) {
+      throw e;
+    }
   }
 
 }

@@ -3,21 +3,24 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
+import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
+import 'package:music_app_student/core/presentation/pages/register_profile/register_profile_page.dart';
 import 'package:music_app_student/models/register_otp_model.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../repository/auth_repository.dart';
-import '../../../../../utils/utils.dart';
+import '../../../../utils/utils.dart';
 import '../../../../utils/constants/constants.dart';
 import 'controller/otp_verify_controller.dart';
 
 class OtpVerifyPage extends StatefulWidget {
   String? phone;
   String? otp;
+  bool isFromLogin;
 
-  OtpVerifyPage({this.otp, this.phone, super.key});
+  OtpVerifyPage({this.otp, this.phone,required this.isFromLogin, super.key});
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
@@ -219,10 +222,21 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
         });
         await Utils.saveToSharedPreference(
             Constants.accessToken, registerOtpModel.token);
+        await Utils.saveToSharedPreference(Constants.isLoggedIn, true);
         debugPrint(registerOtpModel.message);
         debugPrint(registerOtpModel.token);
         Utils.toastMassage(widget.otp.toString());
-        Get.to(NewBottomNavigationBar());
+
+        if (widget.isFromLogin) {
+          Utils.pushToNewRoute(context, HomePage());
+        } else {
+          setState(() {
+            _isLoading= false;
+          });
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RegisterProfilePage()));
+        }
+        //Get.to(NewBottomNavigationBar());
       } else {
         setState(() {
           _isLoading = false;
