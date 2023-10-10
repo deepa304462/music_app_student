@@ -8,11 +8,16 @@ class TextFormFieldView extends StatelessWidget {
     this.controller,
     this.hintText,
     this.suffixIcon,
+    required this.validator,
+    this.lableText
+
   });
 
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final String? hintText;
+  final String? lableText;
+  final String Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class TextFormFieldView extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        validator: validator,
         style: TextStyle(color: AppColor.white255),
         controller: controller,
         decoration: InputDecoration(

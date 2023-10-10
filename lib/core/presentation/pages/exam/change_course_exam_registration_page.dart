@@ -34,21 +34,41 @@ class ChangeCourseExamRegistrationPage extends StatelessWidget {
                         children: [
                           4.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.nameController,
                             hintText: "Full Name",
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.emailController,
                             hintText: "Email",
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.genderController,
                             hintText: "Gender",
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.currentInstrumentController,
                             hintText: "Current Instrument",
                             suffixIcon: InkWell(
@@ -60,16 +80,31 @@ class ChangeCourseExamRegistrationPage extends StatelessWidget {
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.currentSkillLevelController,
                             hintText: "Current Skill level",
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.genderController,
                             hintText: "Current Grade",
                           ),
                           2.h.heightBox,
                           TextFormFieldView(
+                            validator: (value){
+                              if (value!.isEmpty) {
+                                return 'Please enter your State';
+                              }return '';
+                            },
                             controller: controller.selectInstrumentController,
                             hintText: "Select Instrument",
                             suffixIcon: InkWell(

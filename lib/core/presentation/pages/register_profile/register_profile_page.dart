@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
+import 'package:music_app_student/core/presentation/pages/schedule/schedule_classes_page.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:music_app_student/models/get_instrument_model.dart';
 import 'package:music_app_student/models/register_form_model.dart';
@@ -51,6 +52,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
   String? selectedModeOfClass;
   String? selectedPreferredSchedule;
   String selectedInstrument = "instrument";
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -67,7 +69,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: Form(
-              key: controller.formKey,
+              key: _formKey,
               child: Column(
                 children: [
                   8.h.heightBox,
@@ -253,31 +255,61 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                   ),
                   4.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your full name';
+                      }return '';
+                    },
                     controller: controller.nameController,
                     hintText: "Full Name",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your full Username/Email';
+                      }return '';
+                    },
                     controller: controller.emailController,
                     hintText: "Username/Email",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your Gender';
+                      }return '';
+                    },
                     controller: controller.genderController,
                     hintText: "Gender",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your Phone';
+                      }return '';
+                    },
                     controller: controller.altPhoneNumberController,
                     hintText: "Alternate phone number",
                   ),
                   2.h.heightBox,
-                  TextFormFieldView(
+                  TextFormFieldView(validator: (value){
+                    if (value!.isEmpty) {
+                      return 'Please enter your Address Line 1';
+                    }return '';
+                  },
+
                     controller: controller.addressLineFirstController,
                     hintText: "Address Line 1",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your Address Line 2';
+                      }return '';
+                    },
                     controller: controller.addressLineSecondController,
                     hintText: "Address Line 2",
                   ),
@@ -286,6 +318,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your City';
+                            }return '';
+                          },
                           controller: controller.cityController,
                           hintText: "City",
                         ),
@@ -293,6 +330,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                       4.w.widthBox,
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your Pincode';
+                            }return '';
+                          },
                           controller: controller.pinCodeController,
                           hintText: "Pincode",
                         ),
@@ -304,6 +346,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.stateController,
                           hintText: "State",
                         ),
@@ -311,6 +358,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                       4.w.widthBox,
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your Country';
+                            }return '';
+                          },
                           controller: controller.countryController,
                           hintText: "Country",
                         ),
@@ -319,6 +371,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your Date Of Birth';
+                      }return '';
+                    },
                     controller: controller.dobController,
                     hintText: "Date Of Birth",
                     suffixIcon: InkWell(
@@ -335,6 +392,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                   2.h.heightBox,
                   TextFormFieldView(
                     controller: controller.instrumentsController,
+                    validator: (value){
+                      if (value!.isNotEmpty) {
+                        return 'Please choose Instrument';
+                      }return '';
+                    },
                     hintText: selectedInstrument,
                     suffixIcon: InkWell(
                       onTap: () {
@@ -625,6 +687,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your Date Of joining';
+                      }return '';
+                    },
                     controller: controller.dojoiningController,
                     hintText: "Date Of joining",
                     suffixIcon: InkWell(
@@ -648,8 +715,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                     height: 60,
                     onPressed: () {
                       updateRegisterFormDetail();
-                      // log(controller.nameController.toString());
-                    },
+                      } ,// log(controller.nameController.toString());
                     child: Text(
                       "Register",
                       textAlign: TextAlign.center,
@@ -700,6 +766,11 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
       data,
       pic!,
     );
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
+
     setState(() {
       _isLoading = false;
     });

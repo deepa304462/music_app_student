@@ -35,41 +35,81 @@ class ExamRegistrationPage extends StatelessWidget {
                       children: [
                         4.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.nameController,
                           hintText: "Full Name",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.emailController,
                           hintText: "Email",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.genderController,
                           hintText: "Gender",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.instrumentController,
                           hintText: "Instrument",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.skillLevelController,
                           hintText: "Skill level",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.genderController,
                           hintText: "Grade",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.panNumberController,
                           hintText: "PAN Number",
                         ),
                         2.h.heightBox,
                         TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.musicBoardController,
                           hintText: "Select Music Board",
                         ),

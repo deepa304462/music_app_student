@@ -69,31 +69,60 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   4.h.heightBox,
                   TextFormFieldView(
-                    controller: controller.parentNameController,
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },                    controller: controller.parentNameController,
                     hintText: "Parent Name",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentEmailController,
                     hintText: "Parent Email id",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentPhoneNumberController,
                     hintText: "Parent Phone Number",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentPhoneNumberController,
                     hintText: "Academic School/College Name",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentAddressLineFirstController,
                     hintText: "Address Line 1",
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentAddressLineSecondController,
                     hintText: "Address Line 2",
                   ),
@@ -102,13 +131,23 @@ class ParentRegisterProfilePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.parentPinCodeController,
                           hintText: "Pincode",
                         ),
                       ),
                       4.w.widthBox,
                       Expanded(
-                        child: TextFormFieldView(
+                        child: TextFormFieldView( validator: (value){
+                          if (value!.isEmpty) {
+                            return 'Please enter your State';
+                          }return '';
+                        },
+
                           controller: controller.parentDistrictController,
                           hintText: "District",
                         ),
@@ -120,6 +159,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.parentStateController,
                           hintText: "State",
                         ),
@@ -127,6 +171,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                       4.w.widthBox,
                       Expanded(
                         child: TextFormFieldView(
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return 'Please enter your State';
+                            }return '';
+                          },
                           controller: controller.parentCountryController,
                           hintText: "Country",
                         ),
@@ -135,6 +184,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentDobController,
                     hintText: "Date Of Birth",
                     suffixIcon: InkWell(
@@ -150,6 +204,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentInstrumentsController,
                     hintText: "Instruments",
                     suffixIcon: InkWell(
@@ -162,6 +221,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentTypeOfSessionController,
                     hintText: "Type of session",
                     suffixIcon: InkWell(
@@ -174,6 +238,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentSkillLevelController,
                     hintText: "Skill Level",
                     suffixIcon: InkWell(
@@ -186,6 +255,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentClassFrequencyController,
                     hintText: "Class Frequency",
                     suffixIcon: InkWell(
@@ -198,6 +272,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentModelOfClassController,
                     hintText: "Mode of Class",
                     suffixIcon: InkWell(
@@ -210,6 +289,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller:
                         controller.parentPreferredPaymentScheduleController,
                     hintText: "Preferred Payment schedule",
@@ -223,6 +307,11 @@ class ParentRegisterProfilePage extends StatelessWidget {
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return 'Please enter your State';
+                      }return '';
+                    },
                     controller: controller.parentDojoiningController,
                     hintText: "Date Of joining",
                     suffixIcon: InkWell(
