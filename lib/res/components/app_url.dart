@@ -11,5 +11,7 @@ class AppUrl{
 
   static var instrumentUrl = "${baseUrl}api/v1/subject/all";
 
+  static var allCoursesUrl = "${baseUrl}api/user/classes/";
 
+  static var myProfileUrl ="${baseUrl}api/user/";
 }

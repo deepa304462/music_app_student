@@ -1,31 +1,31 @@
-/// message : "OTP generated and sent to the user"
-/// user : {"_id":"651fad10a70dceeb1031b1f9","mobileNumber":"1234597891","otp":"SIcxI6","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","createdAt":"2023-10-06T06:45:36.245Z","__v":0}
+/// success : true
+/// user : {"_id":"652695d11decc51b33d945a4","mobileNumber":"7777777777","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","createdAt":"2023-10-11T12:32:17.018Z","__v":0,"otp":"DScCcP"}
 
-class LoginModel {
-  LoginModel({
-      String? message, 
+class MyProfileModel {
+  MyProfileModel({
+      bool? success, 
       User? user,}){
-    _message = message;
+    _success = success;
     _user = user;
 }
 
-  LoginModel.fromJson(dynamic json) {
-    _message = json['message'];
+  MyProfileModel.fromJson(dynamic json) {
+    _success = json['success'];
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
-  String? _message;
+  bool? _success;
   User? _user;
-LoginModel copyWith({  String? message,
+MyProfileModel copyWith({  bool? success,
   User? user,
-}) => LoginModel(  message: message ?? _message,
+}) => MyProfileModel(  success: success ?? _success,
   user: user ?? _user,
 );
-  String? get message => _message;
+  bool? get success => _success;
   User? get user => _user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['message'] = _message;
+    map['success'] = _success;
     if (_user != null) {
       map['user'] = _user?.toJson();
     }
@@ -34,9 +34,8 @@ LoginModel copyWith({  String? message,
 
 }
 
-/// _id : "651fad10a70dceeb1031b1f9"
-/// mobileNumber : "1234597891"
-/// otp : "SIcxI6"
+/// _id : "652695d11decc51b33d945a4"
+/// mobileNumber : "7777777777"
 /// isVerified : false
 /// profilePicture : ""
 /// name : ""
@@ -70,14 +69,14 @@ LoginModel copyWith({  String? message,
 /// modeOFClass : ""
 /// prefferedPaymentSchedule : ""
 /// role : "user"
-/// createdAt : "2023-10-06T06:45:36.245Z"
+/// createdAt : "2023-10-11T12:32:17.018Z"
 /// __v : 0
+/// otp : "DScCcP"
 
 class User {
   User({
       String? id, 
       String? mobileNumber, 
-      String? otp, 
       bool? isVerified, 
       String? profilePicture, 
       String? name, 
@@ -112,10 +111,10 @@ class User {
       String? prefferedPaymentSchedule, 
       String? role, 
       String? createdAt, 
-      num? v,}){
+      num? v, 
+      String? otp,}){
     _id = id;
     _mobileNumber = mobileNumber;
-    _otp = otp;
     _isVerified = isVerified;
     _profilePicture = profilePicture;
     _name = name;
@@ -151,12 +150,12 @@ class User {
     _role = role;
     _createdAt = createdAt;
     _v = v;
+    _otp = otp;
 }
 
   User.fromJson(dynamic json) {
     _id = json['_id'];
     _mobileNumber = json['mobileNumber'];
-    _otp = json['otp'];
     _isVerified = json['isVerified'];
     _profilePicture = json['profilePicture'];
     _name = json['name'];
@@ -191,10 +190,10 @@ class User {
     _role = json['role'];
     _createdAt = json['createdAt'];
     _v = json['__v'];
+    _otp = json['otp'];
   }
   String? _id;
   String? _mobileNumber;
-  String? _otp;
   bool? _isVerified;
   String? _profilePicture;
   String? _name;
@@ -230,9 +229,9 @@ class User {
   String? _role;
   String? _createdAt;
   num? _v;
+  String? _otp;
 User copyWith({  String? id,
   String? mobileNumber,
-  String? otp,
   bool? isVerified,
   String? profilePicture,
   String? name,
@@ -268,9 +267,9 @@ User copyWith({  String? id,
   String? role,
   String? createdAt,
   num? v,
+  String? otp,
 }) => User(  id: id ?? _id,
   mobileNumber: mobileNumber ?? _mobileNumber,
-  otp: otp ?? _otp,
   isVerified: isVerified ?? _isVerified,
   profilePicture: profilePicture ?? _profilePicture,
   name: name ?? _name,
@@ -306,10 +305,10 @@ User copyWith({  String? id,
   role: role ?? _role,
   createdAt: createdAt ?? _createdAt,
   v: v ?? _v,
+  otp: otp ?? _otp,
 );
   String? get id => _id;
   String? get mobileNumber => _mobileNumber;
-  String? get otp => _otp;
   bool? get isVerified => _isVerified;
   String? get profilePicture => _profilePicture;
   String? get name => _name;
@@ -345,12 +344,12 @@ User copyWith({  String? id,
   String? get role => _role;
   String? get createdAt => _createdAt;
   num? get v => _v;
+  String? get otp => _otp;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = _id;
     map['mobileNumber'] = _mobileNumber;
-    map['otp'] = _otp;
     map['isVerified'] = _isVerified;
     map['profilePicture'] = _profilePicture;
     map['name'] = _name;
@@ -388,6 +387,7 @@ User copyWith({  String? id,
     map['role'] = _role;
     map['createdAt'] = _createdAt;
     map['__v'] = _v;
+    map['otp'] = _otp;
     return map;
   }
 

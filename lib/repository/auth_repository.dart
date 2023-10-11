@@ -74,4 +74,26 @@ class AuthRepository{
     }
   }
 
+  Future<dynamic> allCoursesApi() async {
+    try {
+      String userId = await Utils.getFromSharedPreference(Constants.userId);
+      dynamic response =
+      await _apiServices.getGetApiResponse(AppUrl.allCoursesUrl+userId);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<dynamic> myProfileApi() async {
+    try {
+      String userId = await Utils.getFromSharedPreference(Constants.userId);
+      dynamic response =
+      await _apiServices.getGetApiResponse(AppUrl.myProfileUrl+userId);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
 }

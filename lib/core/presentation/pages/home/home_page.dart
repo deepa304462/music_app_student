@@ -9,13 +9,33 @@ import 'package:music_app_student/core/presentation/pages/home/controller/home_c
 import 'package:music_app_student/core/presentation/pages/progress/guitar_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/piano_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/rescheduale_diloag_box.dart';
+import 'package:music_app_student/models/all_caurses_model.dart';
+import 'package:music_app_student/models/my_profile_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
+import '../../../../repository/auth_repository.dart';
+
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final controller = Get.put(HomeController());
+  MyProfileModel myProfileModel = MyProfileModel();
+  AllCoursesModel allCoursesModel = AllCoursesModel();
+
+  @override
+  void initState() {
+    getAllCourses();
+    getMyProfile();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (context) {
@@ -23,7 +43,7 @@ class HomePage extends StatelessWidget {
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Column(
+              child: myProfileModel.user == null ?Center(child: CircularProgressIndicator(),):Column(
                 children: [
                   _header(),
                   2.h.heightBox,
@@ -255,7 +275,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "3",
+                      myProfileModel.user!.classesAttended.toString(),
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w800,
@@ -282,7 +302,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "1",
+                      myProfileModel.user!.late.toString(),
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w800,
@@ -313,7 +333,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "08",
+                    myProfileModel.user!.classesRemaining.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
@@ -398,7 +418,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "3",
+                      myProfileModel.user!.approvedLeave.toString(),
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w800,
@@ -432,7 +452,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "4",
+                        myProfileModel.user!.classesConsumed.toString(),
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w800,
@@ -601,7 +621,7 @@ class HomePage extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: "\t12",
+                          text: myProfileModel.user!.classCredited.toString(),
                           style: TextStyle(
                             fontSize: 24,
                             fontStyle: FontStyle.normal,
@@ -1035,5 +1055,27 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void getAllCourses() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.allCoursesApi();
+    debugPrint(response.toString());
+    allCoursesModel = AllCoursesModel.fromJson(response);
+    setState(() {
+      // allInstrumentList = getInstrumentModel.subjects!;
+      // print(allInstrumentList.length);
+    });
+  }
+  void getMyProfile() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.myProfileApi();
+    debugPrint(response.toString());
+    myProfileModel =
+    MyProfileModel.fromJson(response);
+    setState(() {
+      // allInstrumentList = getInstrumentModel.subjects!;
+      // print(allInstrumentList.length);
+    });
   }
 }

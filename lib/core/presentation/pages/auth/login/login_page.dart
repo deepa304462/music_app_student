@@ -98,31 +98,6 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: MaterialButton(
-                        height: 50,
-                        minWidth: double.infinity,
-                        color: AppColor.blue224,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        onPressed: () {
-                          Get.to(OtpVerifyPage(isFromLogin: true,));
-                        },
-                        child: Text(
-                          "Log in",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: AppTextStyle.textStyleMulish,
-                            fontSize: 24,
-                            color: AppColor.white255,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -250,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 
 
 }
