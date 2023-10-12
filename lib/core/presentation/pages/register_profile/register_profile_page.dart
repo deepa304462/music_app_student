@@ -53,6 +53,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
   String? selectedPreferredSchedule;
   String selectedInstrument = "instrument";
   final _formKey = GlobalKey<FormState>();
+  RegisterFormModel registerFormModel = RegisterFormModel();
 
   @override
   void initState() {
@@ -769,22 +770,12 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
     setState(() {
       _isLoading = false;
     });
+    registerFormModel = RegisterFormModel.fromJson(response);
     Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
 
-    setState(() {
-      _isLoading = false;
-    });
-    RegisterFormModel registerFormModel = RegisterFormModel.fromJson(response);
-    // / Navigator.push(
-    //      context,
-    //      MaterialPageRoute(
-    //        builder: (context) => HomePage(),
-    //      ));
-
     debugPrint(response.toString());
-
     setState(() {
-      //updateAndUploadModel.msg!;
+
     });
   }
 

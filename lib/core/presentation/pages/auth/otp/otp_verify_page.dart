@@ -31,6 +31,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   bool _isLoading = false;
   String otpId = '';
 
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OtpVerifyController>(
@@ -249,6 +250,12 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       });
       Utils.toastMassage("Response is null"); // Handle the case when the response is null
     }
+  }
+
+  @override
+  void dispose() {
+    controller.otpController.dispose();
+    super.dispose();
   }
 
 }

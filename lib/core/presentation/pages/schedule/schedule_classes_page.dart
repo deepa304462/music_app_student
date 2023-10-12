@@ -5,13 +5,31 @@ import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/schedule/controller/schedule_classes_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
+import 'package:music_app_student/models/get_all_teacher_modol.dart';
+import 'package:music_app_student/repository/auth_repository.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ScheduleClassesPage extends StatelessWidget {
+class ScheduleClassesPage extends StatefulWidget {
   ScheduleClassesPage({super.key});
+
+  @override
+  State<ScheduleClassesPage> createState() => _ScheduleClassesPageState();
+}
+
+class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
   final controller = Get.put(ScheduleClassesController());
+  GetAllTeacherModol? getAllTeacherModol;
+
+  List<Teachers> allTeacherList = [];
+
+  @override
+  void initState() {
+   getAllTeacher();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ScheduleClassesController>(builder: (context) {
@@ -280,7 +298,7 @@ class ScheduleClassesPage extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: ListView.builder(
-        itemCount: 6,
+        itemCount: allTeacherList.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -314,8 +332,8 @@ class ScheduleClassesPage extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.33),
-                            image: const DecorationImage(
-                              image: AssetImage("assets/images/teacher.png"),
+                            image:  DecorationImage(
+                              image: NetworkImage(allTeacherList[index].profilePicture.toString(),)
                             ),
                           ),
                         ),
@@ -327,17 +345,13 @@ class ScheduleClassesPage extends StatelessWidget {
                               RichText(
                                 maxLines: 2,
                                 text: TextSpan(
-                                  text: "Andy Raj",
+                                  text: allTeacherList[index].name,
                                   style: TextStyle(
                                     fontFamily: AppTextStyle.textStyleMulish,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 13.33,
                                     color: AppColor.white255,
                                   ),
-                                  children: const [
-                                    TextSpan(text: "\n"),
-                                    TextSpan(text: "Kapoor"),
-                                  ],
                                 ),
                               ),
                               Row(
@@ -351,12 +365,12 @@ class ScheduleClassesPage extends StatelessWidget {
                                   ),
                                   RichText(
                                     text: TextSpan(
-                                      text: "4.5",
+                                      text: allTeacherList[index].ratings,
                                       style: TextStyle(
                                         fontFamily:
                                             AppTextStyle.textStyleMulish,
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 5.7,
+                                        fontSize: 8,
                                         color: AppColor.white255,
                                         letterSpacing: -0.16,
                                       ),
@@ -385,8 +399,8 @@ class ScheduleClassesPage extends StatelessWidget {
                                           fontSize: 8.33,
                                           color: AppColor.white255,
                                           letterSpacing: -0.23),
-                                      children: const [
-                                        TextSpan(text: " 10 Years"),
+                                      children:  [
+                                        TextSpan(text: allTeacherList[index].experience),
                                       ],
                                     ),
                                   ),
@@ -425,5 +439,21 @@ class ScheduleClassesPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void getAllTeacher() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getAllTeacherApi();
+    debugPrint(response.toString());
+     getAllTeacherModol = GetAllTeacherModol.fromJson(response);
+    print("response");
+     print(response);
+    print("response");
+    setState(() {
+        allTeacherList = getAllTeacherModol!.teachers!;
+        print(allTeacherList.length);
+
+      getAllTeacherModol = GetAllTeacherModol.fromJson(response);
+    });
   }
 }

@@ -19,7 +19,6 @@ class OtpVerifyController extends GetxController {
 
   @override
   void dispose() {
-
     super.dispose();
 
   }

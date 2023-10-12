@@ -96,4 +96,14 @@ class AuthRepository{
     }
   }
 
+  Future<dynamic> getAllTeacherApi() async {
+    try {
+      dynamic response =
+      await _apiServices.getGetApiResponse(AppUrl.getAllTeacher);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
 }
