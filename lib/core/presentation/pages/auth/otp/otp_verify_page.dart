@@ -252,10 +252,10 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     }
   }
 
-  @override
-  void dispose() {
-    controller.otpController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller.otpController.dispose();
+  //   super.dispose();
+  // }
 
 }

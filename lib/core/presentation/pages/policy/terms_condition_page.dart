@@ -3,15 +3,33 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/policy/controller/terms_condition_controller.dart';
+import 'package:music_app_student/repository/auth_repository.dart';
 
-class TermsConditionPage extends StatelessWidget {
+import '../../../../models/get_terms_and_conditions_model.dart';
+
+class TermsConditionPage extends StatefulWidget {
   TermsConditionPage({super.key});
+
+  @override
+  State<TermsConditionPage> createState() => _TermsConditionPageState();
+}
+
+class _TermsConditionPageState extends State<TermsConditionPage> {
   final controller = Get.put(TermsConditionController());
+  GetTermsAndConditionsModel? getTermsAndConditionsModel;
+  List<Terms>? getAllTermsList = [];
+ bool _isLoading = false;
+
+  @override
+  void initState() {
+    getTermsAndConditions();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TermsConditionController>(
-      builder: (context) {
+      builder: (ctx) {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -36,20 +54,22 @@ class TermsConditionPage extends StatelessWidget {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 11),
-                child: Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: AppTextStyle.textStyleMulish,
-                    fontSize: 20,
-                    color: AppColor.white255,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Container(
+             Expanded(
+               child: ListView.builder(
+                 itemCount: getAllTermsList!.length,
+                   itemBuilder: (context, index){
+                   return ListTile(
+                     title: Text(
+                       getAllTermsList![index].terms.toString(),
+                       style: TextStyle(
+                         fontFamily: "Inter",
+                         color: Colors.white
+                       ),
+                     ),
+                   );
+               }),
+             ),
+              _isLoading?CircularProgressIndicator():     Container(
                 margin: const EdgeInsets.only(bottom: 50),
                 child: MaterialButton(
                   color: AppColor.blue224,
@@ -58,7 +78,9 @@ class TermsConditionPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(85),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context,);
+                  },
                   child: Text(
                     "Accept",
                     style: TextStyle(
@@ -75,5 +97,21 @@ class TermsConditionPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  void getTermsAndConditions() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getTermsApi();
+    debugPrint(response.toString());
+    getTermsAndConditionsModel = GetTermsAndConditionsModel.fromJson(response);
+    print("response");
+    print(response);
+    print("response");
+    setState(() {
+      getAllTermsList = getTermsAndConditionsModel!.terms;
+      print(getAllTermsList!.length);
+
+      getTermsAndConditionsModel = GetTermsAndConditionsModel.fromJson(response);
+    });
   }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
+import 'package:music_app_student/core/presentation/pages/policy/terms_condition_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -27,15 +28,20 @@ class ParentProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Terms & Condition",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleMulish,
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w700,
-                      color: AppColor.blue224,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>TermsConditionPage()));
+                    },
+                    child: Text(
+                      "Terms & Condition",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w700,
+                        color: AppColor.blue224,
+                      ),
                     ),
                   ),
                   1.h.heightBox,

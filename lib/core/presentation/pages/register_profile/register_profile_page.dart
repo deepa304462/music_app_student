@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,14 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
-import 'package:music_app_student/core/presentation/pages/schedule/schedule_classes_page.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
 import 'package:music_app_student/models/get_instrument_model.dart';
 import 'package:music_app_student/models/register_form_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import '../../../../models/register_model.dart';
 import '../../../../repository/auth_repository.dart';
 import 'controller/register_profile_controller.dart';
 
@@ -739,9 +735,9 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
   }
 
   updateRegisterFormDetail() async {
-    setState(() {
+    /*setState(() {
       _isLoading = true;
-    });
+    });*/
     final authRepository = AuthRepository();
     var data = {
       'name': controller.nameController.text,
@@ -763,15 +759,17 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
       'prefferedPaymentSchedule': selectedPreferredSchedule,
       'createdAt': controller.dojoiningController.text,
     };
+
     final response = await authRepository.updateRegisterForm(
       data,
       pic!,
     );
+    print(response);
     setState(() {
       _isLoading = false;
     });
     registerFormModel = RegisterFormModel.fromJson(response);
-    Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
+    //Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
 
     debugPrint(response.toString());
     setState(() {

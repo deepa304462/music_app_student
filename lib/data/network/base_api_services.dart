@@ -9,7 +9,9 @@ abstract class BaseApiServices{
 
   Future<dynamic>getPostApiResponse(String url, dynamic data);
 
-  Future<dynamic>getPutApiResponse(String url, dynamic data, File pic,);
+  Future<dynamic>getPutApiResponse(String url, dynamic data);
+
+  Future<dynamic>getPutWithFileApiResponse(String url, dynamic data, File? pic);
 
 
 

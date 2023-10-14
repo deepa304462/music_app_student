@@ -304,6 +304,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     final response = await authRepository.signUpApi(data);
     //Navigator.pop(context);
     RegisterModel registerModel = RegisterModel.fromJson(response);
+    print("registerFormModel.id");
+    print(registerModel.user!.id);
+    print("registerFormModel.id");
     if (registerModel.status == 201) {
       setState(() {
         _isLoading = false;

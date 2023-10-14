@@ -27,12 +27,9 @@ class AuthRepository{
 
   Future<dynamic>signUpOtpApi(dynamic data)async{
 
-    try{
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.registerOtpUrl,data);
       return response;
-    }catch(e){
-      throw e;;
-    }
+
 
   }
 
@@ -54,7 +51,7 @@ class AuthRepository{
     try {
       String userId = await Utils.getFromSharedPreference(Constants.userId);
       debugPrint(AppUrl.registerFormUrl + userId);
-      dynamic response = await _apiServices.getPutApiResponse(
+      dynamic response = await _apiServices.getPutWithFileApiResponse(
           AppUrl.registerFormUrl + userId,
           data,
           pic!,);
@@ -104,6 +101,28 @@ class AuthRepository{
     } catch (e) {
       throw e;
     }
+  }
+
+  Future<dynamic> getTermsApi() async {
+    try {
+      dynamic response =
+      await _apiServices.getGetApiResponse(AppUrl.termsUrl);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+
+  Future<dynamic>registerForExamApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.examRegistrationUrl,data);
+      return response;
+    }catch(e){
+      throw e;
+    }
+
   }
 
 }
