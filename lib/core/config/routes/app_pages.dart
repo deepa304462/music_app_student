@@ -156,10 +156,10 @@ class AppPage {
       name: AppRoutes.myGuitarClassPage,
       page: () => MyGuitarClassesPage(),
     ),
-    GetPage(
-      name: AppRoutes.teacherProfilePage,
-      page: () => TeacherProfilePage(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.teacherProfilePage,
+    //   page: () => TeacherProfilePage(),
+    // ),
     GetPage(
       name: AppRoutes.studentHybridProfilePage,
       page: () => StudentHybridProfilePage(),

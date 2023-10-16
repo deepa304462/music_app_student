@@ -20,4 +20,10 @@ class AppUrl{
   static var termsUrl = "${baseUrl}api/v1/terms";
 
   static var examRegistrationUrl = "${baseUrl}api/v1/examRegistration";
+
+  static var emailRegisterUrl = "${baseUrl}api/user/email/register";
+
+  static var resendOtpUrl = "${baseUrl}api/user/resend/otp";
+
+  static var getTimeSlotUrl = "${baseUrl}api/v1/teacher/time/";
 }

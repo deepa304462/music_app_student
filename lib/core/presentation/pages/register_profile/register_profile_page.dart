@@ -9,11 +9,13 @@ import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/widgets/text_form_field_view.dart';
+import 'package:music_app_student/core/utils/utils.dart';
 import 'package:music_app_student/models/get_instrument_model.dart';
 import 'package:music_app_student/models/register_form_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../repository/auth_repository.dart';
+import '../schedule/schedule_classes_page.dart';
 import 'controller/register_profile_controller.dart';
 
 class RegisterProfilePage extends StatefulWidget {
@@ -42,14 +44,20 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
     '36 Sessions',
     '45 Sessions'
   ];
+  List<String> gender = [
+    'Male',
+    'Female',
+    'Other'
+  ];
   String? selectedSession;
   String? selectedSkillLevel;
   String? selectedClassFrequency;
   String? selectedModeOfClass;
   String? selectedPreferredSchedule;
   String selectedInstrument = "instrument";
+  String? selectedGender;
   final _formKey = GlobalKey<FormState>();
-  RegisterFormModel registerFormModel = RegisterFormModel();
+  RegisterFormModel? registerFormModel;
 
   @override
   void initState() {
@@ -265,27 +273,78 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                     validator: (value){
                       if (value!.isEmpty) {
                         return 'Please enter your full Username/Email';
-                      }return '';
+                      }if (!isEmail(value)) {
+                        return 'Please enter a valid Username or Email';
+                      }
+                      return '';
                     },
                     controller: controller.emailController,
                     hintText: "Username/Email",
                   ),
                   2.h.heightBox,
-                  TextFormFieldView(
-                    validator: (value){
-                      if (value!.isEmpty) {
-                        return 'Please enter your Gender';
-                      }return '';
-                    },
-                    controller: controller.genderController,
-                    hintText: "Gender",
+                  Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.circular(10.0), // Rounded border
+                          borderSide: BorderSide.none, // No border side
+                        ),
+                        contentPadding:
+                        const EdgeInsets.only(bottom: 8, left: 8),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Gender',
+                        hintStyle: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ), // Background color
+                      ),
+                      value: selectedGender,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                          fontSize: 16),
+                      iconSize: 0,
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedGender = newValue;
+                          // Navigator.push(context, MaterialPageRoute(builder: (_)=>PincodeScreen()));
+                        });
+                      },
+                      items: gender
+                          .map<DropdownMenuItem<String>>((String? value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value!));
+                      }).toList(),
+                      dropdownColor: Colors.grey.shade800,
+                      borderRadius: BorderRadius.circular(16),
+                      hint: const Text(
+                        "Gender",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Inter',
+                            fontSize: 16),
+                      ),
+                    ),
                   ),
                   2.h.heightBox,
                   TextFormFieldView(
                     validator: (value){
                       if (value!.isEmpty) {
                         return 'Please enter your Phone';
-                      }return '';
+                      }
+                      if (!isValidPhoneNumber(value)) {
+                        return 'Please enter a valid phone number';
+                      }
+                      return '';
                     },
                     controller: controller.altPhoneNumberController,
                     hintText: "Alternate phone number",
@@ -330,7 +389,12 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                           validator: (value){
                             if (value!.isEmpty) {
                               return 'Please enter your Pincode';
-                            }return '';
+                            }
+                            if (!isValidPincode(value)) {
+                              return 'Please enter a valid Pincode';
+                            }
+
+                            return '';
                           },
                           controller: controller.pinCodeController,
                           hintText: "Pincode",
@@ -377,7 +441,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
                     hintText: "Date Of Birth",
                     suffixIcon: InkWell(
                       onTap: () {
-                        _selectDobDate();
+                         _selectDobDate();
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
@@ -735,9 +799,9 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
   }
 
   updateRegisterFormDetail() async {
-    /*setState(() {
+    setState(() {
       _isLoading = true;
-    });*/
+    });
     final authRepository = AuthRepository();
     var data = {
       'name': controller.nameController.text,
@@ -765,12 +829,19 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
       pic!,
     );
     print(response);
-    setState(() {
-      _isLoading = false;
-    });
     registerFormModel = RegisterFormModel.fromJson(response);
-    //Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
-
+    if(registerFormModel != null){
+      setState(() {
+        _isLoading = false;
+      });
+      Utils.toastMassage("Details Register Successfully");
+      Navigator.push(context,MaterialPageRoute(builder: (_)=> ScheduleClassesPage()));
+    }else{
+      Utils.toastMassage(response['error']);
+      setState(() {
+        _isLoading = false;
+      });
+    }
     debugPrint(response.toString());
     setState(() {
 
@@ -823,10 +894,14 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
       },
     );
 
-    if (picked != null && picked != controller.dobController.text) {
-      // Update the text field with the selected date
+    if (picked != null) {
+      // Format the selected date as a string in the desired format
+      String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(picked);
+      print(formattedDate);
+
+      // Update the text field with the formatted date
       setState(() {
-        controller.dobController.text = DateFormat('dd-MM-yyyy').format(picked);
+        controller.dobController.text = formattedDate;
       });
     }
   }
@@ -850,12 +925,14 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
         );
       },
     );
+    if (picked != null) {
+      // Format the selected date as a string in the desired format
+      String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(picked);
+      print(formattedDate);
 
-    if (picked != null && picked != controller.dobController.text) {
-      // Update the text field with the selected date
+      // Update the text field with the formatted date
       setState(() {
-        controller.dojoiningController.text =
-            DateFormat('dd-MM-yyyy').format(picked);
+        controller.dojoiningController.text = formattedDate;
       });
     }
   }
@@ -889,6 +966,29 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
     } else {
       // User canceled the image picker.
       return null;
+    }
+  }
+
+  bool isEmail(String value) {
+    final emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    return emailRegExp.hasMatch(value);
+  }
+
+  bool isValidPhoneNumber(String phoneNumber) {
+    // Define a regular expression for phone number validation
+    final phoneRegExp = RegExp(r'^\d{10}$');
+    return phoneRegExp.hasMatch(phoneNumber);
+  }
+
+  bool isValidPincode(String value) {
+    // Define a regular expression pattern to match a valid pincode.
+    // You can customize this pattern based on your requirements.
+    final RegExp pincodePattern = RegExp(r'^\d{6}$'); // Assumes a 6-digit pincode.
+
+    if (pincodePattern.hasMatch(value)) {
+      return true; // Return true if the input matches the pattern.
+    } else {
+      return false; // Return false for invalid pincodes.
     }
   }
 }

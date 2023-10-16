@@ -29,6 +29,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final controller = Get.put(CreateAccountController());
   final _formKey = GlobalKey<FormState>();
   File? pic;
+  RegisterModel registerModel = RegisterModel();
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +304,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     final authRepository = AuthRepository();
     final response = await authRepository.signUpApi(data);
     //Navigator.pop(context);
-    RegisterModel registerModel = RegisterModel.fromJson(response);
+    registerModel = RegisterModel.fromJson(response);
     print("registerFormModel.id");
     print(registerModel.user!.id);
     print("registerFormModel.id");

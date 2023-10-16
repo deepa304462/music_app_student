@@ -1,6 +1,6 @@
-
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:music_app_student/core/utils/constants/constants.dart';
@@ -8,45 +8,42 @@ import 'package:music_app_student/core/utils/utils.dart';
 import 'package:music_app_student/data/app_excaptions.dart';
 import 'package:music_app_student/data/network/base_api_services.dart';
 
-class NetworkApiServices extends BaseApiServices{
-
+class NetworkApiServices extends BaseApiServices {
   @override
-  Future getGetApiResponse(String url)async {
+  Future getGetApiResponse(String url) async {
     dynamic responseJson;
 
     try {
-      final response = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+      final response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
-    }on SocketException{
+    } on SocketException {
       throw FetchDataException('No internet connection');
     }
     return responseJson;
-
   }
 
-
   @override
-  Future getPostApiResponse (String url, dynamic data) async {
+  Future getPostApiResponse(String url, dynamic data) async {
     dynamic responseJson;
 
     try {
       String token = await Utils.getFromSharedPreference(Constants.accessToken);
-      Response response = await post(
-        Uri.parse(url),
-        body: data,
-        headers: {"Authorization": 'Bearer $token'}
-      ).timeout(const Duration(seconds: 10));
+      Response response = await post(Uri.parse(url),
+              body: data, headers: {"Authorization": 'Bearer $token'})
+          .timeout(const Duration(seconds: 10));
       print(response.body);
       responseJson = jsonDecode(response.body);
-    }on SocketException{
+    } on SocketException {
       throw FetchDataException('No internet connection');
     }
     return responseJson;
-
   }
 
-  Future getPutApiResponse (String url, dynamic data,) async {
-
+  Future getPutApiResponse(
+    String url,
+    dynamic data,
+  ) async {
     dynamic responseJson;
 
     try {
@@ -55,22 +52,20 @@ class NetworkApiServices extends BaseApiServices{
         body: data,
       ).timeout(const Duration(seconds: 10));
       responseJson = jsonDecode(response.body);
-    }on SocketException{
+    } on SocketException {
       throw FetchDataException('No internet connection');
     }
     return responseJson;
-
   }
 
   @override
-  Future getPutWithFileApiResponse(String url, data,
-      File? pic) async {
+  Future getPutWithFileApiResponse(String url, data, File? pic) async {
     dynamic responseJson;
 
     try {
       String token = await Utils.getFromSharedPreference(Constants.accessToken);
       var request = http.MultipartRequest('PUT', Uri.parse(url));
-       request.headers['Authorization'] = 'Bearer $token';
+      request.headers['Authorization'] = 'Bearer $token';
       // Add the files to the request
 
       if (pic != null) {
@@ -96,10 +91,8 @@ class NetworkApiServices extends BaseApiServices{
     return responseJson;
   }
 
-
-  dynamic returnResponse(http.Response response){
-
-    switch(response.statusCode){
+  dynamic returnResponse(http.Response response) {
+    switch (response.statusCode) {
       case 200:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
@@ -110,13 +103,10 @@ class NetworkApiServices extends BaseApiServices{
       case 401:
         throw UnauthorisedException(response.body.toString());
       default:
-        throw FetchDataException('Error accord while communicating with server'+'with status code'+
-            response.statusCode.toString());
-
-
+        throw FetchDataException(
+            'Error accord while communicating with server' +
+                'with status code' +
+                response.statusCode.toString());
     }
   }
-
-
-
 }

@@ -1,10 +1,45 @@
-/// _id : "652a37560a8c1d273f5e9135"
-/// mobileNumber : "7867564534"
-/// otp : "269142"
+/// message : "OTP resent successfully"
+/// user : {"_id":"652695d11decc51b33d945a4","mobileNumber":"7777777777","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","createdAt":"2023-10-11T12:32:17.018Z","__v":0,"otp":"756211"}
+
+class ResendOtpModel {
+  ResendOtpModel({
+      String? message, 
+      User? user,}){
+    _message = message;
+    _user = user;
+}
+
+  ResendOtpModel.fromJson(dynamic json) {
+    _message = json['message'];
+    _user = json['user'] != null ? User.fromJson(json['user']) : null;
+  }
+  String? _message;
+  User? _user;
+ResendOtpModel copyWith({  String? message,
+  User? user,
+}) => ResendOtpModel(  message: message ?? _message,
+  user: user ?? _user,
+);
+  String? get message => _message;
+  User? get user => _user;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['message'] = _message;
+    if (_user != null) {
+      map['user'] = _user?.toJson();
+    }
+    return map;
+  }
+
+}
+
+/// _id : "652695d11decc51b33d945a4"
+/// mobileNumber : "7777777777"
 /// isVerified : false
 /// profilePicture : ""
-/// name : "anwer new"
-/// email : "student@gmail.com"
+/// name : ""
+/// email : ""
 /// classCredited : 12
 /// coverLeft : "0"
 /// classesAttended : 0
@@ -19,29 +54,29 @@
 /// teachingHours : 0
 /// level : "0"
 /// gender : ""
-/// alternateNumber : "987456321"
-/// address1 : "noida"
-/// address2 : "noida2"
-/// city : "noida"
-/// state : "up"
-/// country : "india"
-/// pincode : "1234"
-/// dateOfBirth : "2000-01-01T00:00:00.000Z"
-/// instruments : "Guitar"
-/// typeOfSession : "Private Session"
-/// skillLevel : "Beginner"
-/// classFrequency : "Once a week"
-/// modeOFClass : "Online"
-/// prefferedPaymentSchedule : "12 sessions"
+/// alternateNumber : ""
+/// address1 : ""
+/// address2 : ""
+/// city : ""
+/// state : ""
+/// country : ""
+/// pincode : ""
+/// dateOfBirth : null
+/// instruments : ""
+/// typeOfSession : ""
+/// skillLevel : ""
+/// classFrequency : ""
+/// modeOFClass : ""
+/// prefferedPaymentSchedule : ""
 /// role : "user"
-/// createdAt : "2023-10-14T06:38:14.987Z"
+/// createdAt : "2023-10-11T12:32:17.018Z"
 /// __v : 0
+/// otp : "756211"
 
-class RegisterFormModel {
-  RegisterFormModel({
+class User {
+  User({
       String? id, 
       String? mobileNumber, 
-      String? otp, 
       bool? isVerified, 
       String? profilePicture, 
       String? name, 
@@ -67,7 +102,7 @@ class RegisterFormModel {
       String? state, 
       String? country, 
       String? pincode, 
-      String? dateOfBirth, 
+      dynamic dateOfBirth, 
       String? instruments, 
       String? typeOfSession, 
       String? skillLevel, 
@@ -76,10 +111,10 @@ class RegisterFormModel {
       String? prefferedPaymentSchedule, 
       String? role, 
       String? createdAt, 
-      num? v,}){
+      num? v, 
+      String? otp,}){
     _id = id;
     _mobileNumber = mobileNumber;
-    _otp = otp;
     _isVerified = isVerified;
     _profilePicture = profilePicture;
     _name = name;
@@ -115,12 +150,12 @@ class RegisterFormModel {
     _role = role;
     _createdAt = createdAt;
     _v = v;
+    _otp = otp;
 }
 
-  RegisterFormModel.fromJson(dynamic json) {
+  User.fromJson(dynamic json) {
     _id = json['_id'];
     _mobileNumber = json['mobileNumber'];
-    _otp = json['otp'];
     _isVerified = json['isVerified'];
     _profilePicture = json['profilePicture'];
     _name = json['name'];
@@ -155,10 +190,10 @@ class RegisterFormModel {
     _role = json['role'];
     _createdAt = json['createdAt'];
     _v = json['__v'];
+    _otp = json['otp'];
   }
   String? _id;
   String? _mobileNumber;
-  String? _otp;
   bool? _isVerified;
   String? _profilePicture;
   String? _name;
@@ -184,7 +219,7 @@ class RegisterFormModel {
   String? _state;
   String? _country;
   String? _pincode;
-  String? _dateOfBirth;
+  dynamic _dateOfBirth;
   String? _instruments;
   String? _typeOfSession;
   String? _skillLevel;
@@ -194,9 +229,9 @@ class RegisterFormModel {
   String? _role;
   String? _createdAt;
   num? _v;
-RegisterFormModel copyWith({  String? id,
+  String? _otp;
+User copyWith({  String? id,
   String? mobileNumber,
-  String? otp,
   bool? isVerified,
   String? profilePicture,
   String? name,
@@ -222,7 +257,7 @@ RegisterFormModel copyWith({  String? id,
   String? state,
   String? country,
   String? pincode,
-  String? dateOfBirth,
+  dynamic dateOfBirth,
   String? instruments,
   String? typeOfSession,
   String? skillLevel,
@@ -232,9 +267,9 @@ RegisterFormModel copyWith({  String? id,
   String? role,
   String? createdAt,
   num? v,
-}) => RegisterFormModel(  id: id ?? _id,
+  String? otp,
+}) => User(  id: id ?? _id,
   mobileNumber: mobileNumber ?? _mobileNumber,
-  otp: otp ?? _otp,
   isVerified: isVerified ?? _isVerified,
   profilePicture: profilePicture ?? _profilePicture,
   name: name ?? _name,
@@ -270,10 +305,10 @@ RegisterFormModel copyWith({  String? id,
   role: role ?? _role,
   createdAt: createdAt ?? _createdAt,
   v: v ?? _v,
+  otp: otp ?? _otp,
 );
   String? get id => _id;
   String? get mobileNumber => _mobileNumber;
-  String? get otp => _otp;
   bool? get isVerified => _isVerified;
   String? get profilePicture => _profilePicture;
   String? get name => _name;
@@ -299,7 +334,7 @@ RegisterFormModel copyWith({  String? id,
   String? get state => _state;
   String? get country => _country;
   String? get pincode => _pincode;
-  String? get dateOfBirth => _dateOfBirth;
+  dynamic get dateOfBirth => _dateOfBirth;
   String? get instruments => _instruments;
   String? get typeOfSession => _typeOfSession;
   String? get skillLevel => _skillLevel;
@@ -309,12 +344,12 @@ RegisterFormModel copyWith({  String? id,
   String? get role => _role;
   String? get createdAt => _createdAt;
   num? get v => _v;
+  String? get otp => _otp;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = _id;
     map['mobileNumber'] = _mobileNumber;
-    map['otp'] = _otp;
     map['isVerified'] = _isVerified;
     map['profilePicture'] = _profilePicture;
     map['name'] = _name;
@@ -352,6 +387,7 @@ RegisterFormModel copyWith({  String? id,
     map['role'] = _role;
     map['createdAt'] = _createdAt;
     map['__v'] = _v;
+    map['otp'] = _otp;
     return map;
   }
 

@@ -125,4 +125,38 @@ class AuthRepository{
 
   }
 
+  Future<dynamic>registerEmailApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.emailRegisterUrl,data);
+      return response;
+    }catch(e){
+      throw e;;
+    }
+
+  }
+
+  Future<dynamic>resendOtpApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resendOtpUrl,data);
+      return response;
+    }catch(e){
+      throw e;;
+    }
+
+  }
+
+  Future<dynamic> getTimeSlots(String teacherId) async {
+    try {
+      dynamic response =
+      await _apiServices.getGetApiResponse('${AppUrl.getTimeSlotUrl}/$teacherId');
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+
+
 }

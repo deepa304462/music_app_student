@@ -2,11 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/models/get_all_teacher_modol.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class TeacherProfilePage extends StatelessWidget {
-  const TeacherProfilePage({super.key});
+class TeacherProfilePage extends StatefulWidget {
+  final Teachers teacher;
+  final List<Teachers> listOfTeachers;
+
+  const TeacherProfilePage(
+      {super.key, required this.teacher, required this.listOfTeachers,});
+
+  @override
+  State<TeacherProfilePage> createState() => _TeacherProfilePageState();
+}
+
+class _TeacherProfilePageState extends State<TeacherProfilePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,15 @@ class TeacherProfilePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(36),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  for (var teacher in widget.listOfTeachers) {
+                    if (teacher.isSelected!) {
+                      teacher.isSelected = false;
+                    }
+                  }
+                  widget.teacher.isSelected = true;
+                  Navigator.pop(context, true,);
+                  },
                 child: Text(
                   "Select",
                   textAlign: TextAlign.center,
@@ -148,7 +167,7 @@ class TeacherProfilePage extends StatelessWidget {
                 children: [
                   8.h.heightBox,
                   Text(
-                    "Ram Charan",
+                    widget.teacher.name.toString(),
                     style: TextStyle(
                       fontFamily: AppTextStyle.textStylePoppins,
                       fontSize: 17.85,
@@ -184,15 +203,29 @@ class TeacherProfilePage extends StatelessWidget {
                             size: 18,
                           ),
                           1.w.widthBox,
-                          Text(
-                            "4.5 (1000)",
-                            style: TextStyle(
-                              color: AppColor.black29,
-                              fontFamily: AppTextStyle.textStyleMulish,
-                              fontSize: 15.36,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: -0.43,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.teacher.rating.toString(),
+                                style: TextStyle(
+                                  color: AppColor.black29,
+                                  fontFamily: AppTextStyle.textStyleMulish,
+                                  fontSize: 15.36,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: -0.43,
+                                ),
+                              ),
+                              Text(
+                                "(1000)",
+                                style: TextStyle(
+                                  color: AppColor.black29,
+                                  fontFamily: AppTextStyle.textStyleMulish,
+                                  fontSize: 15.36,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: -0.43,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -233,9 +266,9 @@ class TeacherProfilePage extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             letterSpacing: -0.59,
                           ),
-                          children: const [
+                          children:  [
                             TextSpan(
-                              text: "10 Years",
+                              text: widget.teacher.experience.toString(),
                             ),
                           ],
                         ),
@@ -246,19 +279,28 @@ class TeacherProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 110,
-            left: 10,
-            right: 10,
+          Padding(
+            padding: const EdgeInsets.only(left: 130,top: 80),
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColor.blue224, width: 5),
               ),
-              child: Image.asset(
-                "assets/images/jon.png",
-                height: 100,
-                width: 100,
+              child: SizedBox(
+                height: 120,
+                width: 120,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Image.network(
+                      widget.teacher.profilePicture.toString(),
+                      height: 120,
+                      width: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

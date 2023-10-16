@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
-import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/presentation/pages/schedule/controller/schedule_classes_controller.dart';
+import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_profile_page.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
 import 'package:music_app_student/models/get_all_teacher_modol.dart';
+import 'package:music_app_student/models/get_time_slots_model.dart';
 import 'package:music_app_student/repository/auth_repository.dart';
-
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -21,12 +21,15 @@ class ScheduleClassesPage extends StatefulWidget {
 class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
   final controller = Get.put(ScheduleClassesController());
   GetAllTeacherModol? getAllTeacherModol;
-
+  GetTimeSlotsModel? getTimeSlotsModel;
+  bool _isTimeLoading = true;
   List<Teachers> allTeacherList = [];
+
+  Classes? selectedDay;
 
   @override
   void initState() {
-   getAllTeacher();
+    getAllTeacher();
     super.initState();
   }
 
@@ -70,97 +73,60 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
             2.h.heightBox,
             Container(
               height: 35,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              margin: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: AppColor.white255,
-                ),
-              ),
-              child: DropdownButton(
-                dropdownColor: AppColor.appThemeColor,
-                underline: const SizedBox(),
-                elevation: 0,
-                borderRadius: BorderRadius.circular(20),
-                isExpanded: true,
-                icon: Icon(
-                  Icons.arrow_drop_down_outlined,
-                  color: AppColor.white255,
-                ),
-                hint: Text(
-                  "1st class Day",
-                  style: TextStyle(
-                    color: AppColor.white255,
-                    fontFamily: AppTextStyle.textStylePoppins,
-                    fontSize: 15.38,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                onChanged: controller.onChangeDayItem,
-                value: controller.dayDropdownvalue,
-                items: controller.daysItems
-                    .map(
-                      (text) => DropdownMenuItem(
-                        value: text,
-                        child: Text(
-                          text,
-                          style: TextStyle(
-                            color: AppColor.white255,
-                          ),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
+              child: _isTimeLoading
+                  ? CircularProgressIndicator()
+                  : DropdownButtonFormField<Classes>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Rounded border
+                          borderSide: BorderSide.none, // No border side
                         ),
+                        contentPadding:
+                            const EdgeInsets.only(bottom: 8, left: 8),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Select Day',
+                        hintStyle: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ), // Background color
                       ),
-                    )
-                    .toList(),
-              ),
+                      value: selectedDay,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                          fontSize: 16),
+                      iconSize: 0,
+                      elevation: 16,
+                      onChanged: (Classes? newValue) {
+                        setState(() {
+                          selectedDay = newValue;
+                        });
+                      },
+                      items: getTimeSlotsModel?.classes!
+                          .map<DropdownMenuItem<Classes>>((Classes? value) {
+                        return DropdownMenuItem<Classes>(
+                            value: value, child: Text(value!.time.toString()));
+                      }).toList(),
+                      dropdownColor: Colors.grey.shade800,
+                      borderRadius: BorderRadius.circular(16),
+                      hint: const Text(
+                        "Select Day",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Inter',
+                            fontSize: 16),
+                      ),
+                    ),
             ),
             2.h.heightBox,
-            Container(
-              height: 35,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: AppColor.white255,
-                ),
-              ),
-              child: DropdownButton(
-                dropdownColor: AppColor.appThemeColor,
-                underline: const SizedBox(),
-                elevation: 0,
-                borderRadius: BorderRadius.circular(20),
-                isExpanded: true,
-                icon: Icon(
-                  Icons.arrow_drop_down_outlined,
-                  color: AppColor.white255,
-                ),
-                hint: Text(
-                  "1st class Day",
-                  style: TextStyle(
-                    color: AppColor.white255,
-                    fontFamily: AppTextStyle.textStylePoppins,
-                    fontSize: 15.38,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                onChanged: controller.onChangeTimeItem,
-                value: controller.timeDropdownvalue,
-                items: controller.timeItems
-                    .map(
-                      (text) => DropdownMenuItem(
-                        value: text,
-                        child: Text(
-                          text,
-                          style: TextStyle(
-                            color: AppColor.white255,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
+
             4.h.heightBox,
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -171,48 +137,48 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
             2.h.heightBox,
             Container(
               height: 35,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              margin: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: AppColor.white255,
-                ),
-              ),
-              child: DropdownButton(
-                dropdownColor: AppColor.appThemeColor,
-                underline: const SizedBox(),
-                elevation: 0,
-                borderRadius: BorderRadius.circular(20),
-                isExpanded: true,
-                icon: Icon(
-                  Icons.arrow_drop_down_outlined,
-                  color: AppColor.white255,
-                ),
-                hint: Text(
-                  "1st class Day",
-                  style: TextStyle(
-                    color: AppColor.white255,
-                    fontFamily: AppTextStyle.textStylePoppins,
-                    fontSize: 15.38,
-                    fontWeight: FontWeight.w500,
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
+              child: DropdownButtonFormField<Classes>(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0), // Rounded border
+                    borderSide: BorderSide.none, // No border side
                   ),
+                  contentPadding: const EdgeInsets.only(bottom: 8, left: 8),
+                  suffixIcon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Select Day',
+                  hintStyle: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                  ), // Background color
                 ),
-                onChanged: controller.onChangeDayItem_2,
-                value: controller.dayDropdownvalue_2,
-                items: controller.daysItems_2
-                    .map(
-                      (text) => DropdownMenuItem(
-                        value: text,
-                        child: Text(
-                          text,
-                          style: TextStyle(
-                            color: AppColor.white255,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+                value: selectedDay,
+                style: const TextStyle(
+                    color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                iconSize: 0,
+                elevation: 16,
+                onChanged: (Classes? newValue) {
+                  setState(() {
+                    selectedDay = newValue;
+                  });
+                },
+                items: getTimeSlotsModel?.classes!
+                    .map<DropdownMenuItem<Classes>>((Classes? value) {
+                  return DropdownMenuItem<Classes>(
+                      value: value, child: Text(value!.time.toString()));
+                }).toList(),
+                dropdownColor: Colors.grey.shade800,
+                borderRadius: BorderRadius.circular(16),
+                hint: const Text(
+                  "Select Day",
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                ),
               ),
             ),
             2.h.heightBox,
@@ -303,8 +269,19 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {
-              Get.toNamed(AppRoutes.teacherProfilePage);
+            onTap: () async {
+              final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => TeacherProfilePage(
+                            teacher: allTeacherList[index],
+                            listOfTeachers: allTeacherList,
+                          )));
+              if (result != null && result) {
+                setState(() {
+                  getTimeSlots(allTeacherList[index].id!);
+                });
+              }
             },
             child: Container(
               height: 170,
@@ -332,9 +309,10 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.33),
-                            image:  DecorationImage(
-                              image: NetworkImage(allTeacherList[index].profilePicture.toString(),)
-                            ),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                              allTeacherList[index].profilePicture.toString(),
+                            )),
                           ),
                         ),
                         Expanded(
@@ -399,8 +377,10 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                                           fontSize: 8.33,
                                           color: AppColor.white255,
                                           letterSpacing: -0.23),
-                                      children:  [
-                                        TextSpan(text: allTeacherList[index].experience),
+                                      children: [
+                                        TextSpan(
+                                            text: allTeacherList[index]
+                                                .experience),
                                       ],
                                     ),
                                   ),
@@ -412,7 +392,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                       ],
                     ),
                   ),
-                  index == 0
+                  allTeacherList[index].isSelected!
                       ? Align(
                           alignment: Alignment.topRight,
                           child: Container(
@@ -445,15 +425,30 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
     final authRepository = AuthRepository();
     final response = await authRepository.getAllTeacherApi();
     debugPrint(response.toString());
-     getAllTeacherModol = GetAllTeacherModol.fromJson(response);
+    getAllTeacherModol = GetAllTeacherModol.fromJson(response);
     print("response");
-     print(response);
+    print(response);
     print("response");
     setState(() {
-        allTeacherList = getAllTeacherModol!.teachers!;
-        print(allTeacherList.length);
+      allTeacherList = getAllTeacherModol!.teachers!;
+      print(allTeacherList.length);
 
       getAllTeacherModol = GetAllTeacherModol.fromJson(response);
+    });
+  }
+
+  void getTimeSlots(String teacherId) async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getTimeSlots(teacherId);
+
+    debugPrint(response.toString());
+    getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
+    print("response");
+    print(response);
+    print("response");
+    setState(() {
+      _isTimeLoading = false;
+      getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
     });
   }
 }

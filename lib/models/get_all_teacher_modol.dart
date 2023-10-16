@@ -3,11 +3,12 @@
 
 class GetAllTeacherModol {
   GetAllTeacherModol({
-      bool? success, 
-      List<Teachers>? teachers,}){
+    bool? success,
+    List<Teachers>? teachers,
+  }) {
     _success = success;
     _teachers = teachers;
-}
+  }
 
   GetAllTeacherModol.fromJson(dynamic json) {
     _success = json['success'];
@@ -18,14 +19,21 @@ class GetAllTeacherModol {
       });
     }
   }
+
   bool? _success;
   List<Teachers>? _teachers;
-GetAllTeacherModol copyWith({  bool? success,
-  List<Teachers>? teachers,
-}) => GetAllTeacherModol(  success: success ?? _success,
-  teachers: teachers ?? _teachers,
-);
+
+  GetAllTeacherModol copyWith({
+    bool? success,
+    List<Teachers>? teachers,
+  }) =>
+      GetAllTeacherModol(
+        success: success ?? _success,
+        teachers: teachers ?? _teachers,
+      );
+
   bool? get success => _success;
+
   List<Teachers>? get teachers => _teachers;
 
   Map<String, dynamic> toJson() {
@@ -36,7 +44,6 @@ GetAllTeacherModol copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// ratings : "0"
@@ -48,19 +55,22 @@ GetAllTeacherModol copyWith({  bool? success,
 
 class Teachers {
   Teachers({
-      String? ratings, 
-      String? id, 
-      String? name, 
-      String? experience, 
-      String? profilePicture, 
-      num? rating,}){
+    String? ratings,
+    String? id,
+    bool? isSelected,
+    String? name,
+    String? experience,
+    String? profilePicture,
+    num? rating,
+  }) {
     _ratings = ratings;
     _id = id;
+    _isSelected = isSelected;
     _name = name;
     _experience = experience;
     _profilePicture = profilePicture;
     _rating = rating;
-}
+  }
 
   Teachers.fromJson(dynamic json) {
     _ratings = json['ratings'];
@@ -70,30 +80,47 @@ class Teachers {
     _profilePicture = json['profilePicture'];
     _rating = json['rating'];
   }
+
   String? _ratings;
   String? _id;
+  bool? _isSelected = false;
   String? _name;
   String? _experience;
   String? _profilePicture;
   num? _rating;
-Teachers copyWith({  String? ratings,
-  String? id,
-  String? name,
-  String? experience,
-  String? profilePicture,
-  num? rating,
-}) => Teachers(  ratings: ratings ?? _ratings,
-  id: id ?? _id,
-  name: name ?? _name,
-  experience: experience ?? _experience,
-  profilePicture: profilePicture ?? _profilePicture,
-  rating: rating ?? _rating,
-);
+
+  Teachers copyWith({
+    String? ratings,
+    String? id,
+    String? name,
+    String? experience,
+    String? profilePicture,
+    num? rating,
+  }) =>
+      Teachers(
+        ratings: ratings ?? _ratings,
+        id: id ?? _id,
+        name: name ?? _name,
+        experience: experience ?? _experience,
+        profilePicture: profilePicture ?? _profilePicture,
+        rating: rating ?? _rating,
+      );
+
   String? get ratings => _ratings;
+  bool? get isSelected => _isSelected;
+
+  set isSelected(bool? value) {
+    _isSelected = value;
+  }
+
   String? get id => _id;
+
   String? get name => _name;
+
   String? get experience => _experience;
+
   String? get profilePicture => _profilePicture;
+
   num? get rating => _rating;
 
   Map<String, dynamic> toJson() {
@@ -106,5 +133,4 @@ Teachers copyWith({  String? ratings,
     map['rating'] = _rating;
     return map;
   }
-
 }

@@ -1,10 +1,44 @@
-/// _id : "652a37560a8c1d273f5e9135"
-/// mobileNumber : "7867564534"
-/// otp : "269142"
+/// user : {"isVerified":false,"profilePicture":"","name":"","email":"anwe@gmail.com","password":"$2b$10$.14wbHEL3NzHg3ewPjw3k.ZsWimPOUbza/CAnGOq6FgxBu1Cx3/Mm","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","_id":"652d0139bfd45f9ab2f67edd","createdAt":"2023-10-16T09:24:09.514Z","__v":0}
+/// token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQwMTM5YmZkNDVmOWFiMmY2N2VkZCIsImlhdCI6MTY5NzQ0ODI0OX0.9gAsMrflt_1J0jt3senyq9lpSPMSX_iwieJNIkmaxLE"
+
+class RegisterWithEmailModel {
+  RegisterWithEmailModel({
+      User? user, 
+      String? token,}){
+    _user = user;
+    _token = token;
+}
+
+  RegisterWithEmailModel.fromJson(dynamic json) {
+    _user = json['user'] != null ? User.fromJson(json['user']) : null;
+    _token = json['token'];
+  }
+  User? _user;
+  String? _token;
+RegisterWithEmailModel copyWith({  User? user,
+  String? token,
+}) => RegisterWithEmailModel(  user: user ?? _user,
+  token: token ?? _token,
+);
+  User? get user => _user;
+  String? get token => _token;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_user != null) {
+      map['user'] = _user?.toJson();
+    }
+    map['token'] = _token;
+    return map;
+  }
+
+}
+
 /// isVerified : false
 /// profilePicture : ""
-/// name : "anwer new"
-/// email : "student@gmail.com"
+/// name : ""
+/// email : "anwe@gmail.com"
+/// password : "$2b$10$.14wbHEL3NzHg3ewPjw3k.ZsWimPOUbza/CAnGOq6FgxBu1Cx3/Mm"
 /// classCredited : 12
 /// coverLeft : "0"
 /// classesAttended : 0
@@ -19,33 +53,32 @@
 /// teachingHours : 0
 /// level : "0"
 /// gender : ""
-/// alternateNumber : "987456321"
-/// address1 : "noida"
-/// address2 : "noida2"
-/// city : "noida"
-/// state : "up"
-/// country : "india"
-/// pincode : "1234"
-/// dateOfBirth : "2000-01-01T00:00:00.000Z"
-/// instruments : "Guitar"
-/// typeOfSession : "Private Session"
-/// skillLevel : "Beginner"
-/// classFrequency : "Once a week"
-/// modeOFClass : "Online"
-/// prefferedPaymentSchedule : "12 sessions"
+/// alternateNumber : ""
+/// address1 : ""
+/// address2 : ""
+/// city : ""
+/// state : ""
+/// country : ""
+/// pincode : ""
+/// dateOfBirth : null
+/// instruments : ""
+/// typeOfSession : ""
+/// skillLevel : ""
+/// classFrequency : ""
+/// modeOFClass : ""
+/// prefferedPaymentSchedule : ""
 /// role : "user"
-/// createdAt : "2023-10-14T06:38:14.987Z"
+/// _id : "652d0139bfd45f9ab2f67edd"
+/// createdAt : "2023-10-16T09:24:09.514Z"
 /// __v : 0
 
-class RegisterFormModel {
-  RegisterFormModel({
-      String? id, 
-      String? mobileNumber, 
-      String? otp, 
+class User {
+  User({
       bool? isVerified, 
       String? profilePicture, 
       String? name, 
       String? email, 
+      String? password, 
       num? classCredited, 
       String? coverLeft, 
       num? classesAttended, 
@@ -67,7 +100,7 @@ class RegisterFormModel {
       String? state, 
       String? country, 
       String? pincode, 
-      String? dateOfBirth, 
+      dynamic dateOfBirth, 
       String? instruments, 
       String? typeOfSession, 
       String? skillLevel, 
@@ -75,15 +108,14 @@ class RegisterFormModel {
       String? modeOFClass, 
       String? prefferedPaymentSchedule, 
       String? role, 
+      String? id, 
       String? createdAt, 
       num? v,}){
-    _id = id;
-    _mobileNumber = mobileNumber;
-    _otp = otp;
     _isVerified = isVerified;
     _profilePicture = profilePicture;
     _name = name;
     _email = email;
+    _password = password;
     _classCredited = classCredited;
     _coverLeft = coverLeft;
     _classesAttended = classesAttended;
@@ -113,18 +145,17 @@ class RegisterFormModel {
     _modeOFClass = modeOFClass;
     _prefferedPaymentSchedule = prefferedPaymentSchedule;
     _role = role;
+    _id = id;
     _createdAt = createdAt;
     _v = v;
 }
 
-  RegisterFormModel.fromJson(dynamic json) {
-    _id = json['_id'];
-    _mobileNumber = json['mobileNumber'];
-    _otp = json['otp'];
+  User.fromJson(dynamic json) {
     _isVerified = json['isVerified'];
     _profilePicture = json['profilePicture'];
     _name = json['name'];
     _email = json['email'];
+    _password = json['password'];
     _classCredited = json['classCredited'];
     _coverLeft = json['coverLeft'];
     _classesAttended = json['classesAttended'];
@@ -153,16 +184,15 @@ class RegisterFormModel {
     _modeOFClass = json['modeOFClass'];
     _prefferedPaymentSchedule = json['prefferedPaymentSchedule'];
     _role = json['role'];
+    _id = json['_id'];
     _createdAt = json['createdAt'];
     _v = json['__v'];
   }
-  String? _id;
-  String? _mobileNumber;
-  String? _otp;
   bool? _isVerified;
   String? _profilePicture;
   String? _name;
   String? _email;
+  String? _password;
   num? _classCredited;
   String? _coverLeft;
   num? _classesAttended;
@@ -184,7 +214,7 @@ class RegisterFormModel {
   String? _state;
   String? _country;
   String? _pincode;
-  String? _dateOfBirth;
+  dynamic _dateOfBirth;
   String? _instruments;
   String? _typeOfSession;
   String? _skillLevel;
@@ -192,15 +222,14 @@ class RegisterFormModel {
   String? _modeOFClass;
   String? _prefferedPaymentSchedule;
   String? _role;
+  String? _id;
   String? _createdAt;
   num? _v;
-RegisterFormModel copyWith({  String? id,
-  String? mobileNumber,
-  String? otp,
-  bool? isVerified,
+User copyWith({  bool? isVerified,
   String? profilePicture,
   String? name,
   String? email,
+  String? password,
   num? classCredited,
   String? coverLeft,
   num? classesAttended,
@@ -222,7 +251,7 @@ RegisterFormModel copyWith({  String? id,
   String? state,
   String? country,
   String? pincode,
-  String? dateOfBirth,
+  dynamic dateOfBirth,
   String? instruments,
   String? typeOfSession,
   String? skillLevel,
@@ -230,15 +259,14 @@ RegisterFormModel copyWith({  String? id,
   String? modeOFClass,
   String? prefferedPaymentSchedule,
   String? role,
+  String? id,
   String? createdAt,
   num? v,
-}) => RegisterFormModel(  id: id ?? _id,
-  mobileNumber: mobileNumber ?? _mobileNumber,
-  otp: otp ?? _otp,
-  isVerified: isVerified ?? _isVerified,
+}) => User(  isVerified: isVerified ?? _isVerified,
   profilePicture: profilePicture ?? _profilePicture,
   name: name ?? _name,
   email: email ?? _email,
+  password: password ?? _password,
   classCredited: classCredited ?? _classCredited,
   coverLeft: coverLeft ?? _coverLeft,
   classesAttended: classesAttended ?? _classesAttended,
@@ -268,16 +296,15 @@ RegisterFormModel copyWith({  String? id,
   modeOFClass: modeOFClass ?? _modeOFClass,
   prefferedPaymentSchedule: prefferedPaymentSchedule ?? _prefferedPaymentSchedule,
   role: role ?? _role,
+  id: id ?? _id,
   createdAt: createdAt ?? _createdAt,
   v: v ?? _v,
 );
-  String? get id => _id;
-  String? get mobileNumber => _mobileNumber;
-  String? get otp => _otp;
   bool? get isVerified => _isVerified;
   String? get profilePicture => _profilePicture;
   String? get name => _name;
   String? get email => _email;
+  String? get password => _password;
   num? get classCredited => _classCredited;
   String? get coverLeft => _coverLeft;
   num? get classesAttended => _classesAttended;
@@ -299,7 +326,7 @@ RegisterFormModel copyWith({  String? id,
   String? get state => _state;
   String? get country => _country;
   String? get pincode => _pincode;
-  String? get dateOfBirth => _dateOfBirth;
+  dynamic get dateOfBirth => _dateOfBirth;
   String? get instruments => _instruments;
   String? get typeOfSession => _typeOfSession;
   String? get skillLevel => _skillLevel;
@@ -307,18 +334,17 @@ RegisterFormModel copyWith({  String? id,
   String? get modeOFClass => _modeOFClass;
   String? get prefferedPaymentSchedule => _prefferedPaymentSchedule;
   String? get role => _role;
+  String? get id => _id;
   String? get createdAt => _createdAt;
   num? get v => _v;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['_id'] = _id;
-    map['mobileNumber'] = _mobileNumber;
-    map['otp'] = _otp;
     map['isVerified'] = _isVerified;
     map['profilePicture'] = _profilePicture;
     map['name'] = _name;
     map['email'] = _email;
+    map['password'] = _password;
     map['classCredited'] = _classCredited;
     map['coverLeft'] = _coverLeft;
     map['classesAttended'] = _classesAttended;
@@ -350,6 +376,7 @@ RegisterFormModel copyWith({  String? id,
     map['modeOFClass'] = _modeOFClass;
     map['prefferedPaymentSchedule'] = _prefferedPaymentSchedule;
     map['role'] = _role;
+    map['_id'] = _id;
     map['createdAt'] = _createdAt;
     map['__v'] = _v;
     return map;

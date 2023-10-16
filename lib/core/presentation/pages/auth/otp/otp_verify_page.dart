@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
+import 'package:music_app_student/core/presentation/pages/auth/register_with_email.dart';
 import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
 import 'package:music_app_student/core/presentation/pages/register_profile/register_profile_page.dart';
 import 'package:music_app_student/models/register_otp_model.dart';
+import 'package:music_app_student/models/resend_otp_model.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -179,15 +181,20 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 ),
                 2.h.heightBox,
                 Align(
-                  child: Text(
-                    "RESEND OTP".toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleMulish,
-                      fontSize: 16,
-                      color: AppColor.brown29,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
+                  child: InkWell(
+                    onTap: (){
+                      onTapResendOtp();
+                    },
+                    child: Text(
+                      "RESEND OTP".toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTextStyle.textStyleMulish,
+                        fontSize: 16,
+                        color: AppColor.brown29,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                 ),
@@ -235,7 +242,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
             _isLoading= false;
           });
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => RegisterProfilePage()));
+              MaterialPageRoute(builder: (context) => RegisterWithEmail()));
         }
         //Get.to(NewBottomNavigationBar());
       } else {
@@ -252,10 +259,34 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   controller.otpController.dispose();
-  //   super.dispose();
-  // }
+  onTapResendOtp() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, String> data = {
+      'mobileNumber':widget.phone.toString(),
+    };
+    print(data);
+    final authRepository = AuthRepository();
+    final response = await authRepository.resendOtpApi(data);
+    //Navigator.pop(context);
+    ResendOtpModel resendOtpModel = ResendOtpModel.fromJson(response);
+    print("registerFormModel.id");
+    print(resendOtpModel.user);
+    print("registerFormModel.id");
+    if(resendOtpModel.user != null){
+      Utils.toastMassage(resendOtpModel.user!.otp.toString());
+      setState(() {
+        _isLoading = false;
+      });
+    }else{
+      Utils.toastMassage(response['error']);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
 }
