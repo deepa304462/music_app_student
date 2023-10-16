@@ -784,7 +784,7 @@ class _HomePageState extends State<HomePage> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  text: "Good morning",
+                  text: "Good morning  ",
                   style: TextStyle(
                     fontFamily: AppTextStyle.textStyleMulish,
                     fontSize: 16,
@@ -793,7 +793,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   children: [
                     TextSpan(
-                      text: "\tSAM",
+                      text:myProfileModel.user!.name,
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStyleMulish,
                         fontSize: 20,
@@ -819,12 +819,12 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Get.toNamed(AppRoutes.parentProfilePage);
                 },
-                child: const SizedBox(
+                child:  SizedBox(
                   height: 55,
                   width: 55,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                      "assets/images/men.png",
+                    backgroundImage: NetworkImage(
+                     myProfileModel.user!.profilePicture.toString(),
                     ),
                   ),
                 ),

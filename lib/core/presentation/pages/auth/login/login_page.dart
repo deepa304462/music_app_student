@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(
-                      height: controller.selectedIndex == 0 ? 140 : 190,
+                      height: controller.selectedIndex == 0 ? 200 : 300,
                       child: TabBarView(
                         physics: const NeverScrollableScrollPhysics(),
                         controller: controller.tabController,
@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              8.h.heightBox,
+
               Row(
                 children: [
                   Expanded(

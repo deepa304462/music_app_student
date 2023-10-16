@@ -26,4 +26,8 @@ class AppUrl{
   static var resendOtpUrl = "${baseUrl}api/user/resend/otp";
 
   static var getTimeSlotUrl = "${baseUrl}api/v1/teacher/time/";
+
+  static var getDaysUrl =  "${baseUrl}api/v1/teacher/days/";
+
+  static var logInWithEmailUrl = "${baseUrl}api/user/email/login";
 }

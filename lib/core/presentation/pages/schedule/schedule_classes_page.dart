@@ -24,8 +24,9 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
   GetTimeSlotsModel? getTimeSlotsModel;
   bool _isTimeLoading = true;
   List<Teachers> allTeacherList = [];
-
-  Classes? selectedDay;
+  List<String> result = [];
+  Classes? selectedTimeSlot;
+  String? selectedDay;
 
   @override
   void initState() {
@@ -71,22 +72,26 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
               ),
             ),
             2.h.heightBox,
-            Container(
-              height: 35,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10)),
-              child: _isTimeLoading
-                  ? CircularProgressIndicator()
-                  : DropdownButtonFormField<Classes>(
+            Padding(
+              padding: const EdgeInsets.only(right: 25,left: 25),
+              child: Column(
+                children: [
+                  Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: _isTimeLoading
+                        ? CircularProgressIndicator()
+                        : DropdownButtonFormField<Classes>(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(10.0), // Rounded border
+                          BorderRadius.circular(10.0), // Rounded border
                           borderSide: BorderSide.none, // No border side
                         ),
                         contentPadding:
-                            const EdgeInsets.only(bottom: 8, left: 8),
+                        const EdgeInsets.only(bottom: 8, left: 8),
                         suffixIcon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
@@ -97,7 +102,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           fontSize: 14,
                         ), // Background color
                       ),
-                      value: selectedDay,
+                      value: selectedTimeSlot,
                       style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
@@ -106,7 +111,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                       elevation: 16,
                       onChanged: (Classes? newValue) {
                         setState(() {
-                          selectedDay = newValue;
+                          selectedTimeSlot = newValue;
                         });
                       },
                       items: getTimeSlotsModel?.classes!
@@ -124,110 +129,159 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                             fontSize: 16),
                       ),
                     ),
-            ),
-            2.h.heightBox,
-
-            4.h.heightBox,
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              child: Divider(
-                color: AppColor.white255,
-              ),
-            ),
-            2.h.heightBox,
-            Container(
-              height: 35,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10)),
-              child: DropdownButtonFormField<Classes>(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Rounded border
-                    borderSide: BorderSide.none, // No border side
                   ),
-                  contentPadding: const EdgeInsets.only(bottom: 8, left: 8),
-                  suffixIcon: const Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.white,
-                  ),
-                  hintText: 'Select Day',
-                  hintStyle: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 14,
-                  ), // Background color
-                ),
-                value: selectedDay,
-                style: const TextStyle(
-                    color: Colors.white, fontFamily: 'Inter', fontSize: 16),
-                iconSize: 0,
-                elevation: 16,
-                onChanged: (Classes? newValue) {
-                  setState(() {
-                    selectedDay = newValue;
-                  });
-                },
-                items: getTimeSlotsModel?.classes!
-                    .map<DropdownMenuItem<Classes>>((Classes? value) {
-                  return DropdownMenuItem<Classes>(
-                      value: value, child: Text(value!.time.toString()));
-                }).toList(),
-                dropdownColor: Colors.grey.shade800,
-                borderRadius: BorderRadius.circular(16),
-                hint: const Text(
-                  "Select Day",
-                  style: TextStyle(
-                      color: Colors.white, fontFamily: 'Inter', fontSize: 16),
-                ),
-              ),
-            ),
-            2.h.heightBox,
-            Container(
-              height: 35,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: AppColor.white255,
-                ),
-              ),
-              child: DropdownButton(
-                dropdownColor: AppColor.appThemeColor,
-                underline: const SizedBox(),
-                elevation: 0,
-                borderRadius: BorderRadius.circular(20),
-                isExpanded: true,
-                icon: Icon(
-                  Icons.arrow_drop_down_outlined,
-                  color: AppColor.white255,
-                ),
-                hint: Text(
-                  "1st class Day",
-                  style: TextStyle(
-                    color: AppColor.white255,
-                    fontFamily: AppTextStyle.textStylePoppins,
-                    fontSize: 15.38,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                onChanged: controller.onChangeTimeItem_3,
-                value: controller.timeDropdownvalue_3,
-                items: controller.timeItems_3
-                    .map(
-                      (text) => DropdownMenuItem(
-                        value: text,
-                        child: Text(
-                          text,
-                          style: TextStyle(
-                            color: AppColor.white255,
-                          ),
+                  2.h.heightBox,
+                  Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                          borderSide: BorderSide.none, // No border side
                         ),
+                        contentPadding: const EdgeInsets.only(bottom: 8, left: 8),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Select Time Slot',
+                        hintStyle: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ), // Background color
                       ),
-                    )
-                    .toList(),
+                      value: selectedDay,
+                      style: const TextStyle(
+                          color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      iconSize: 0,
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedDay = newValue;
+                        });
+                      },
+                      items: result
+                          .map<DropdownMenuItem<String>>((String? value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value!));
+                      }).toList(),
+                      dropdownColor: Colors.grey.shade800,
+                      borderRadius: BorderRadius.circular(16),
+                      hint: const Text(
+                        "Select Time Slot",
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  4.h.heightBox,
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Divider(
+                      color: AppColor.white255,
+                    ),
+                  ),
+                  2.h.heightBox,
+                  Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButtonFormField<Classes>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                          borderSide: BorderSide.none, // No border side
+                        ),
+                        contentPadding: const EdgeInsets.only(bottom: 8, left: 8),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Select Day',
+                        hintStyle: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ), // Background color
+                      ),
+                      value: selectedTimeSlot,
+                      style: const TextStyle(
+                          color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      iconSize: 0,
+                      elevation: 16,
+                      onChanged: (Classes? newValue) {
+                        setState(() {
+                          selectedTimeSlot = newValue;
+                        });
+                      },
+                      items: getTimeSlotsModel?.classes!
+                          .map<DropdownMenuItem<Classes>>((Classes? value) {
+                        return DropdownMenuItem<Classes>(
+                            value: value, child: Text(value!.time.toString()));
+                      }).toList(),
+                      dropdownColor: Colors.grey.shade800,
+                      borderRadius: BorderRadius.circular(16),
+                      hint: const Text(
+                        "Select Day",
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  2.h.heightBox,
+                  Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                          borderSide: BorderSide.none, // No border side
+                        ),
+                        contentPadding: const EdgeInsets.only(bottom: 8, left: 8),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Select Time Slot',
+                        hintStyle: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ), // Background color
+                      ),
+                      value: selectedDay,
+                      style: const TextStyle(
+                          color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      iconSize: 0,
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedDay = newValue;
+                        });
+                      },
+                      items: result
+                          .map<DropdownMenuItem<String>>((String? value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value!));
+                      }).toList(),
+                      dropdownColor: Colors.grey.shade800,
+                      borderRadius: BorderRadius.circular(16),
+                      hint: const Text(
+                        "Select Time Slot",
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Inter', fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+
             20.h.heightBox,
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -280,6 +334,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
               if (result != null && result) {
                 setState(() {
                   getTimeSlots(allTeacherList[index].id!);
+                  getDays(allTeacherList[index].id!);
                 });
               }
             },
@@ -449,6 +504,25 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
     setState(() {
       _isTimeLoading = false;
       getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
+    });
+  }
+
+  void getDays(String teacherId) async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getDaysApi(teacherId);
+    List<dynamic> parsedList = response;
+    result = parsedList
+        .where((value) => value != null)
+        .map((value) => value.toString())
+        .toList();
+
+    debugPrint(response.toString());
+    setState(() {
+      _isTimeLoading = false;
+      result = parsedList
+          .where((value) => value != null)
+          .map((value) => value.toString())
+          .toList();
     });
   }
 }

@@ -45,7 +45,7 @@ class _LoginMobileViewState extends State<LoginMobileView> {
                 borderRadius: BorderRadius.circular(100),
               ),
               onPressed: () {
-                onTapSignUp();
+                onTapLogIn();
                 // Get.to(OtpVerifyPage(isFromLogin: true,));
               },
               child: Text(
@@ -119,7 +119,7 @@ class _LoginMobileViewState extends State<LoginMobileView> {
     );
   }
 
-  onTapSignUp() async {
+  onTapLogIn() async {
     setState(() {
       _isLoading = true;
     });

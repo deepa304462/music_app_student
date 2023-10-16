@@ -76,6 +76,7 @@ class _TeacherProfilePageState extends State<TeacherProfilePage> {
                   }
                   widget.teacher.isSelected = true;
                   Navigator.pop(context, true,);
+                  print(widget.teacher.id);
                   },
                 child: Text(
                   "Select",

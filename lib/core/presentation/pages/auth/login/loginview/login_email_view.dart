@@ -3,12 +3,24 @@ import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login/loginview/controller/login_view_controller.dart';
+import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class LoginEmailView extends StatelessWidget {
+import '../../../../../../models/login_with_email_model.dart';
+import '../../../../../../repository/auth_repository.dart';
+import '../../../../../utils/utils.dart';
+
+class LoginEmailView extends StatefulWidget {
   LoginEmailView({super.key});
+
+  @override
+  State<LoginEmailView> createState() => _LoginEmailViewState();
+}
+
+class _LoginEmailViewState extends State<LoginEmailView> {
   final controller = Get.put(LoginViewController());
+bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginViewController());
@@ -30,6 +42,35 @@ class LoginEmailView extends StatelessWidget {
             icon: Icon(
               Icons.lock,
               color: AppColor.white255,
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          _isLoading?Center(child: CircularProgressIndicator(),): Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: MaterialButton(
+              height: 50,
+              minWidth: double.infinity,
+              color: AppColor.blue224,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              onPressed: () {
+                onTapLogIn();
+                // Get.to(OtpVerifyPage(isFromLogin: true,));
+              },
+              child: Text(
+                "Log in",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 24,
+                  color: AppColor.white255,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],
@@ -82,5 +123,37 @@ class LoginEmailView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  onTapLogIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, String> data = {
+      'email': controller.emailController.text,
+      'password':controller.passwordController.text
+    };
+    print(data);
+    final authRepository = AuthRepository();
+    final response = await authRepository.logInWithEmailApi(data);
+    //Navigator.pop(context);
+    LoginWithEmailModel loginWithEmailModel = LoginWithEmailModel.fromJson(response);
+    print("registerFormModel.id");
+    print(loginWithEmailModel.user);
+    print("registerFormModel.id");
+    if(loginWithEmailModel.user != null){
+      Utils.toastMassage("Email register successfully");
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
+    }else{
+      Utils.toastMassage(response['message']);
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

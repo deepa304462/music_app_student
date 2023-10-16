@@ -157,6 +157,25 @@ class AuthRepository{
     }
   }
 
+  Future<dynamic> getDaysApi(String teacherId) async {
+    try {
+      dynamic response =
+      await _apiServices.getGetApiResponse('${AppUrl.getDaysUrl}/$teacherId');
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+  Future<dynamic>logInWithEmailApi(dynamic data)async{
+
+    try{
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.logInWithEmailUrl,data);
+      return response;
+    }catch(e){
+      throw e;;
+    }
+
+  }
 
 
 }
