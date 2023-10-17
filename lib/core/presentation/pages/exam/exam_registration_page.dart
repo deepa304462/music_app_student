@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
@@ -9,6 +11,7 @@ import 'package:music_app_student/models/exam_registration_model.dart';
 import 'package:music_app_student/models/get_instrument_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../../repository/auth_repository.dart';
 import 'controller/exam_registration_controller.dart';
@@ -21,6 +24,7 @@ class ExamRegistrationPage extends StatefulWidget {
 }
 
 class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
+  var _razorpay = Razorpay();
   final controller = Get.put(ExamRegistrationController());
   ExamRegistrationModel? examRegistrationModel;
   List<Subjects> allInstrumentList = [];
@@ -48,13 +52,17 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
   void initState() {
     getInstruments();
     super.initState();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -235,7 +243,7 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
                                   return 'Please enter your Grade';
                                 }return '';
                               },
-                              controller: controller.genderController,
+                              controller: controller.gradeController,
                               hintText: "Grade",
                             ),
                             2.h.heightBox,
@@ -245,9 +253,6 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter your PAN';
-                                }
-                                if (!isPanNumberValid(value)) {
-                                  return 'Please enter a valid PAN';
                                 }
                                 return " "; // Return null if the input is valid.
                               },
@@ -378,17 +383,28 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
     Map<String, String> data = {
       'name': controller.nameController.text,
       'email':controller.emailController.text,
-      "gender":controller.genderController.text,
-      "subject":controller.instrumentController.text,
-      "skillLevel":controller.skillLevelController.text,
+      "gender":selectedGender.toString(),
+      "subject":selectedInstrument.toString(),
+      "skillLevel":selectedSkillLevel.toString(),
       'grade':controller.gradeController.text,
-      'panNumber':controller.panNumberController.text,
-      'musicBoard':controller.musicBoardController.text,
+      'panNumber':controller.panNumberController.text.toString(),
+      'musicBoard':selectedMusicBoard.toString(),
     };
+    print(jsonEncode(data));
     final authRepository = AuthRepository();
     final response = await authRepository.registerForExamApi(data);
+    debugPrint('response: $response');
     examRegistrationModel = ExamRegistrationModel.fromJson(response);
-    Get.to(ExamPaymentPage());
+    var options = {
+      'key': ' rzp_test_35fzmQiPzfuB15',
+      'amount': 100,
+      'name': 'Music',
+      'description': 'Music Learn',
+      'timeout':60
+
+    };
+    _razorpay.open(options);
+    //Get.to(ExamPaymentPage());
   }
 
 
@@ -418,4 +434,18 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
       print(allInstrumentList.length);
     });
   }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+  }
+
+
 }

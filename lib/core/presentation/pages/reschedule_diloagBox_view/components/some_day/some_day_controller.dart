@@ -6,7 +6,7 @@ import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 class SomeDayController extends GetxController {
   TextEditingController reasonController = TextEditingController();
   TextEditingController timeOfClassController = TextEditingController();
-  TextEditingController selectedStudentsController = TextEditingController();
+  TextEditingController selectToScheduleController = TextEditingController();
 
   TextEditingController descriptionController = TextEditingController();
 

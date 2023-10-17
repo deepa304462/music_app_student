@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
@@ -9,13 +13,15 @@ import 'package:music_app_student/core/presentation/pages/home/controller/home_c
 import 'package:music_app_student/core/presentation/pages/progress/guitar_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/piano_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/rescheduale_diloag_box.dart';
+import 'package:music_app_student/core/presentation/widgets/custom_text_field.dart';
 import 'package:music_app_student/models/all_caurses_model.dart';
+import 'package:music_app_student/models/apply_leave_model.dart';
 import 'package:music_app_student/models/my_profile_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../repository/auth_repository.dart';
+import '../../../utils/utils.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -28,6 +34,11 @@ class _HomePageState extends State<HomePage> {
   final controller = Get.put(HomeController());
   MyProfileModel myProfileModel = MyProfileModel();
   AllCoursesModel allCoursesModel = AllCoursesModel();
+  TextEditingController reasonController = TextEditingController();
+  TextEditingController leaveStartDateForController = TextEditingController();
+  TextEditingController leaveEndDateForController = TextEditingController();
+  TextEditingController descriptionRegardingController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -43,46 +54,50 @@ class _HomePageState extends State<HomePage> {
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: myProfileModel.user == null ?Center(child: CircularProgressIndicator(),):Column(
-                children: [
-                  _header(),
-                  2.h.heightBox,
-                  _feesTimeCalender(),
-                  2.h.heightBox,
-                  _classesRemaining(),
-                  2.h.heightBox,
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.myGuitarClassDetailPage);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Image.asset("assets/images/calender-1.png"),
+              child: myProfileModel.user == null
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      children: [
+                        _header(),
+                        2.h.heightBox,
+                        _feesTimeCalender(),
+                        2.h.heightBox,
+                        _classesRemaining(),
+                        2.h.heightBox,
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.myGuitarClassDetailPage);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Image.asset("assets/images/calender-1.png"),
+                          ),
+                        ),
+                        2.h.heightBox,
+                        _myMusicClass(
+                          onTap: () {
+                            Get.to(GuitarProgressPage());
+                          },
+                          imagePath: 'assets/images/guitar-1.png',
+                          text: "My Guitar Class",
+                        ),
+                        4.h.heightBox,
+                        _myMusicClass(
+                          onTap: () {
+                            Get.to(PianoProgressPage());
+                          },
+                          imagePath: 'assets/images/piano.png',
+                          text: "My Piano Class",
+                        ),
+                        4.h.heightBox,
+                        lessionClasses(),
+                        2.h.heightBox,
+                        registrationExamViewOnBottom(),
+                        20.h.heightBox,
+                      ],
                     ),
-                  ),
-                  2.h.heightBox,
-                  _myMusicClass(
-                    onTap: () {
-                      Get.to(GuitarProgressPage());
-                    },
-                    imagePath: 'assets/images/guitar-1.png',
-                    text: "My Guitar Class",
-                  ),
-                  4.h.heightBox,
-                  _myMusicClass(
-                    onTap: () {
-                      Get.to(PianoProgressPage());
-                    },
-                    imagePath: 'assets/images/piano.png',
-                    text: "My Piano Class",
-                  ),
-                  4.h.heightBox,
-                  lessionClasses(),
-                  2.h.heightBox,
-                  registrationExamViewOnBottom(),
-                  20.h.heightBox,
-                ],
-              ),
             ),
             _bottomSheetBtn(),
           ],
@@ -489,7 +504,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(36),
                 ),
                 onPressed: () {
-                  controller.leaveDiloagBox();
+                  showApplyLeaveDialog();
                 },
                 child: Text(
                   "Apply Leave",
@@ -793,7 +808,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   children: [
                     TextSpan(
-                      text:myProfileModel.user!.name,
+                      text: myProfileModel.user!.name,
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStyleMulish,
                         fontSize: 20,
@@ -819,12 +834,12 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Get.toNamed(AppRoutes.parentProfilePage);
                 },
-                child:  SizedBox(
+                child: SizedBox(
                   height: 55,
                   width: 55,
                   child: CircleAvatar(
                     backgroundImage: NetworkImage(
-                     myProfileModel.user!.profilePicture.toString(),
+                      myProfileModel.user!.profilePicture.toString(),
                     ),
                   ),
                 ),
@@ -1067,15 +1082,208 @@ class _HomePageState extends State<HomePage> {
       // print(allInstrumentList.length);
     });
   }
+
   void getMyProfile() async {
     final authRepository = AuthRepository();
     final response = await authRepository.myProfileApi();
     debugPrint(response.toString());
-    myProfileModel =
-    MyProfileModel.fromJson(response);
+    myProfileModel = MyProfileModel.fromJson(response);
     setState(() {
       // allInstrumentList = getInstrumentModel.subjects!;
       // print(allInstrumentList.length);
     });
+  }
+
+  void showApplyLeaveDialog() {
+    Get.dialog(Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          height: 480,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: AppColor.white255,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              2.h.heightBox,
+              Text(
+                "Leave",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 24,
+                  color: AppColor.black,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              CustomTextField(
+                controller: reasonController,
+                hintText: "Reason...",
+              ),
+              CustomTextField(
+                controller: leaveStartDateForController,
+                hintText: "start Date for Leave",
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _selectStartDate();
+                  },
+                  icon: SvgPicture.asset("assets/svg/calender.svg"),
+                ),
+              ),
+              CustomTextField(
+                controller:leaveEndDateForController ,
+                hintText: "End Date for Leave",
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _selectEndDate();
+                  },
+                  icon: SvgPicture.asset("assets/svg/calender.svg"),
+                ),
+              ),
+              CustomTextField(
+                controller: descriptionRegardingController,
+                height: 80,
+                maxLines: 4,
+                hintText: "Description regarding Leave...",
+              ),
+              2.h.heightBox,
+           MaterialButton(
+                color: AppColor.blue224,
+                height: 51,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                minWidth: 294,
+                onPressed: () {
+                  onTapSubmitForLeave();
+                },
+                child: Text(
+                  "Submit",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+  onTapSubmitForLeave() async {
+    setState(() {
+      _isLoading = false;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, dynamic> data = {
+      'reason': reasonController.text,
+      'startDate': leaveStartDateForController.text,
+      "endDate":leaveEndDateForController.text,
+      'description':descriptionRegardingController.text,
+    };
+print(jsonEncode(data));
+    final authRepository = AuthRepository();
+    final response = await authRepository.applyLeaveApi(data);
+    ApplyLeaveModel applyLeaveModel =
+    ApplyLeaveModel.fromJson(response);
+    print("registerFormModel.id");
+    print(response);
+    print("registerFormModel.id");
+    print(applyLeaveModel.msg);
+    print("registerFormModel.id");
+    if (applyLeaveModel.leave != null) {
+      Utils.toastMassage("Leave applied successfully");
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.pop(context);
+    } else {
+      Utils.toastMassage(response!['error']);
+     // Navigator.pop(context);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _selectStartDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      // Set your desired starting date
+      lastDate: DateTime.now(),
+      // You can customize date picker appearance here if needed
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            primaryColor: Colors.blue, // Set the primary color
+            hintColor: Colors.blue, // Set the accent color
+            // You can customize other date picker styles here
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      // Create a DateFormat for the input date format
+      final inputFormat = DateFormat("EEE MMM dd y");
+
+      // Format the picked date in the desired format
+      String formattedDate = inputFormat.format(picked);
+
+      print(formattedDate);
+
+      // Update the text field with the formatted date
+      setState(() {
+        leaveStartDateForController.text = formattedDate;
+      });
+    }
+  }
+  void _selectEndDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      // Set your desired starting date
+      lastDate: DateTime(2030),
+      // You can customize date picker appearance here if needed
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            primaryColor: Colors.blue, // Set the primary color
+            hintColor: Colors.blue, // Set the accent color
+            // You can customize other date picker styles here
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      // Create a DateFormat for the input date format
+      final inputFormat = DateFormat("EEE MMM dd y");
+
+      // Format the picked date in the desired format
+      String formattedDate = inputFormat.format(picked);
+
+      print(formattedDate);
+
+      // Update the text field with the formatted date
+      setState(() {
+        leaveEndDateForController.text = formattedDate;
+      });
+    }
   }
 }

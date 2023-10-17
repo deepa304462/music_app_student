@@ -1,5 +1,5 @@
 /// success : true
-/// examRegistration : {"name":"faiz","email":"faiz@gmail.com","gender":"Male","subject":"guitar","skillLevel":"Beginner","grade":"A","panNumber":123456789,"musicBoard":"Music","user":"65290b6746e52731870cd03e","_id":"652a557680262097b53f2b36","__v":0}
+/// examRegistration : {"name":"faiz","email":"faiz@gmail.com","gender":"Male","subject":"guitar","skillLevel":"Beginner","grade":"A","panNumber":123456789,"musicBoard":"Music","user":"65290b6746e52731870cd03e","_id":"652e811cc2ae2f5da0894912","__v":0}
 
 class ExamRegistrationModel {
   ExamRegistrationModel({
@@ -43,7 +43,7 @@ ExamRegistrationModel copyWith({  bool? success,
 /// panNumber : 123456789
 /// musicBoard : "Music"
 /// user : "65290b6746e52731870cd03e"
-/// _id : "652a557680262097b53f2b36"
+/// _id : "652e811cc2ae2f5da0894912"
 /// __v : 0
 
 class ExamRegistration {

@@ -30,4 +30,8 @@ class AppUrl{
   static var getDaysUrl =  "${baseUrl}api/v1/teacher/days/";
 
   static var logInWithEmailUrl = "${baseUrl}api/user/email/login";
+
+  static var rescheduleClassUrl = "${baseUrl}api/v1/reschedule/student";
+
+  static var applyLeaveUrl = "${baseUrl}api/v1/leave/student";
 }

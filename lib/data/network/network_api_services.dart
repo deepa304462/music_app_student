@@ -109,4 +109,65 @@ class NetworkApiServices extends BaseApiServices {
                 response.statusCode.toString());
     }
   }
+
+  @override
+  Future rescheduleClass(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      responseJson = jsonDecode(response.body);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+  @override
+  Future applyLeave(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future examRegister(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
 }

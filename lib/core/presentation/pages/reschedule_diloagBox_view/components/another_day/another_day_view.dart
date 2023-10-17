@@ -5,16 +5,26 @@ import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/components/another_day/controller/anther_day_controller.dart';
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/components/some_day/some_day_controller.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_material_button.dart';
+import 'package:music_app_student/core/utils/utils.dart';
+import 'package:music_app_student/models/reschedule_class_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../../../repository/auth_repository.dart';
 import '../../../../widgets/custom_text_field.dart';
 
-class AnotherDayView extends StatelessWidget {
+class AnotherDayView extends StatefulWidget {
   AnotherDayView({super.key});
 
+  @override
+  State<AnotherDayView> createState() => _AnotherDayViewState();
+}
+
+class _AnotherDayViewState extends State<AnotherDayView> {
   final controller = Get.put(AnotherDayController());
+
   final someDayController = Get.put(SomeDayController());
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +59,6 @@ class AnotherDayView extends StatelessWidget {
                 ),
                 onPressed: () {},
               ),
-            ),
-            controller.dropDownFieldBtn(
-              onTap: () {
-                someDayController.rescheduleDiloagBox(context: context);
-              },
-              hintText: "select students",
             ),
             controller.dropDownFieldBtn(
               onTap: () {
@@ -165,7 +169,9 @@ class AnotherDayView extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
               ),
-              onPressed: () {},
+              onPressed: () {
+                onTapSubmitForAnotherDay();
+              },
               title: "Submit",
               color: AppColor.white255,
               fontSize: 24,
@@ -177,5 +183,43 @@ class AnotherDayView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  onTapSubmitForAnotherDay() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, dynamic> data = {
+      'reason': controller.reasonController.text,
+      'date': controller.dateOfClassController.text,
+      'rescheduleDate': controller.rescheduleDateOfClassController.text,
+      //todo implement class id
+      'classes': "",
+      'description': controller.descriptionController.text,
+      "rescheduleOnAnotherDay": true,
+    };
+    print(data);
+    final authRepository = AuthRepository();
+    final response = await authRepository.rescheduleClassApi(data);
+    RescheduleClassModel rescheduleClassModel =
+        RescheduleClassModel.fromJson(response);
+    print("registerFormModel.id");
+    print(rescheduleClassModel);
+    print("registerFormModel.id");
+    if (rescheduleClassModel.user != null) {
+      Utils.toastMassage("Reschedule successfully");
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.pop(context);
+    } else {
+      Utils.toastMassage(response!['error']);
+      Navigator.pop(context);
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

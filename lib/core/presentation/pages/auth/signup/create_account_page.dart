@@ -306,7 +306,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     //Navigator.pop(context);
     registerModel = RegisterModel.fromJson(response);
     print("registerFormModel.id");
-    print(registerModel.user!.id);
+    print(registerModel.user?.id);
     print("registerFormModel.id");
     if (registerModel.status == 201) {
       setState(() {
