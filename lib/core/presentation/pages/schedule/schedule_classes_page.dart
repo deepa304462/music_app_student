@@ -6,6 +6,7 @@ import 'package:music_app_student/core/presentation/pages/schedule/controller/sc
 import 'package:music_app_student/core/presentation/pages/teacher_profile/teacher_profile_page.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
 import 'package:music_app_student/models/get_all_teacher_modol.dart';
+import 'package:music_app_student/models/get_teacher_days.dart';
 import 'package:music_app_student/models/get_time_slots_model.dart';
 import 'package:music_app_student/repository/auth_repository.dart';
 import 'package:sizer/sizer.dart';
@@ -21,11 +22,14 @@ class ScheduleClassesPage extends StatefulWidget {
 class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
   final controller = Get.put(ScheduleClassesController());
   GetAllTeacherModol? getAllTeacherModol;
+  GetTeacherDays? getTeacherDays;
   GetTimeSlotsModel? getTimeSlotsModel;
   List<Teachers> allTeacherList = [];
-  List<String> result = [];
-  Classes? selectedTimeSlot;
-  String? selectedDay;
+  //List<String> result = [];
+  TimeClasses? selectedFirstTimeSlot;
+  TimeClasses? selectedSecondTimeSlot;
+  DaysClasses? selectedFirstDay;
+  DaysClasses? selectedSecondDay;
 
   @override
   void initState() {
@@ -80,7 +84,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButtonFormField<String>(
+                    child: DropdownButtonFormField<DaysClasses>(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0), // Rounded border
@@ -91,26 +95,26 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
-                        hintText: 'Select Dayt',
+                        hintText: 'Select Day',
                         hintStyle: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
                         ), // Background color
                       ),
-                      value: selectedDay,
+                      value: selectedFirstDay,
                       style: const TextStyle(
                           color: Colors.white, fontFamily: 'Inter', fontSize: 16),
                       iconSize: 0,
                       elevation: 16,
-                      onChanged: (String? newValue) {
+                      onChanged: (DaysClasses? newValue) {
                         setState(() {
-                          selectedDay = newValue;
+                          selectedFirstDay = newValue;
                         });
                       },
-                      items: result
-                          .map<DropdownMenuItem<String>>((String? value) {
-                        return DropdownMenuItem<String>(
-                            value: value, child: Text(value!));
+                      items: getTeacherDays?.classes!
+                          .map<DropdownMenuItem<DaysClasses>>((DaysClasses? value) {
+                        return DropdownMenuItem<DaysClasses>(
+                            value: value, child: Text('${value!.day?.name.toString()}'));
                       }).toList(),
                       dropdownColor: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(16),
@@ -127,7 +131,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child:  DropdownButtonFormField<Classes>(
+                    child:  DropdownButtonFormField<TimeClasses>(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius:
@@ -146,25 +150,25 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           fontSize: 14,
                         ), // Background color
                       ),
-                      value: selectedTimeSlot,
+                      value: selectedFirstTimeSlot,
                       style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
                           fontSize: 16),
                       iconSize: 0,
                       elevation: 16,
-                      onChanged: (Classes? newValue) {
+                      onChanged: (TimeClasses? newValue) {
                         setState(() {
-                          selectedTimeSlot = newValue;
+                          selectedFirstTimeSlot = newValue;
                           print("selectedTimeSlot!.id");
-                          print(selectedTimeSlot!.id);
+                          print(selectedFirstTimeSlot!.id);
                           print("selectedTimeSlot!.id");
                         });
                       },
                       items: getTimeSlotsModel?.classes!
-                          .map<DropdownMenuItem<Classes>>((Classes? value) {
-                        return DropdownMenuItem<Classes>(
-                            value: value, child: Text(value!.time.toString()));
+                          .map<DropdownMenuItem<TimeClasses>>((TimeClasses? value) {
+                        return DropdownMenuItem<TimeClasses>(
+                            value: value, child: Text('${value!.time!.slot.toString()}'));
                       }).toList(),
                       dropdownColor: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(16),
@@ -190,7 +194,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButtonFormField<String>(
+                    child: DropdownButtonFormField<DaysClasses>(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0), // Rounded border
@@ -207,20 +211,20 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           fontSize: 14,
                         ), // Background color
                       ),
-                      value: selectedDay,
+                      value: selectedSecondDay,
                       style: const TextStyle(
                           color: Colors.white, fontFamily: 'Inter', fontSize: 16),
                       iconSize: 0,
                       elevation: 16,
-                      onChanged: (String? newValue) {
+                      onChanged: (DaysClasses? newValue) {
                         setState(() {
-                          selectedDay = newValue;
+                          selectedSecondDay = newValue;
                         });
                       },
-                      items: result
-                          .map<DropdownMenuItem<String>>((String? value) {
-                        return DropdownMenuItem<String>(
-                            value: value, child: Text(value!));
+                      items: getTeacherDays?.classes!
+                          .map<DropdownMenuItem<DaysClasses>>((DaysClasses? value) {
+                        return DropdownMenuItem<DaysClasses>(
+                            value: value, child: Text(value!.day!.name.toString()));
                       }).toList(),
                       dropdownColor: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(16),
@@ -237,7 +241,7 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButtonFormField<Classes>(
+                    child: DropdownButtonFormField<TimeClasses>(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0), // Rounded border
@@ -254,20 +258,20 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           fontSize: 14,
                         ), // Background color
                       ),
-                      value: selectedTimeSlot,
+                      value: selectedSecondTimeSlot,
                       style: const TextStyle(
                           color: Colors.white, fontFamily: 'Inter', fontSize: 16),
                       iconSize: 0,
                       elevation: 16,
-                      onChanged: (Classes? newValue) {
+                      onChanged: (TimeClasses? newValue) {
                         setState(() {
-                          selectedTimeSlot = newValue;
+                          selectedSecondTimeSlot = newValue;
                         });
                       },
                       items: getTimeSlotsModel?.classes!
-                          .map<DropdownMenuItem<Classes>>((Classes? value) {
-                        return DropdownMenuItem<Classes>(
-                            value: value, child: Text(value!.time.toString()));
+                          .map<DropdownMenuItem<TimeClasses>>((TimeClasses? value) {
+                        return DropdownMenuItem<TimeClasses>(
+                            value: value, child: Text(value!.time!.slot.toString()));
                       }).toList(),
                       dropdownColor: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(16),
@@ -333,8 +337,9 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
                           )));
               if (result != null && result) {
                 setState(() {
-                  getTimeSlots(allTeacherList[index].id!);
-                  getDays(allTeacherList[index].id!);
+                  //todo id dynamic
+                  getTimeSlots(allTeacherList[index].id.toString());
+                  getTeacherAvailableDays(allTeacherList[index].id.toString());
                 });
               }
             },
@@ -487,7 +492,6 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
     setState(() {
       allTeacherList = getAllTeacherModol!.teachers!;
       print(allTeacherList.length);
-
       getAllTeacherModol = GetAllTeacherModol.fromJson(response);
     });
   }
@@ -508,22 +512,38 @@ class _ScheduleClassesPageState extends State<ScheduleClassesPage> {
     });
   }
 
-  void getDays(String teacherId) async {
+  void getTeacherAvailableDays(String teacherId) async {
     final authRepository = AuthRepository();
     final response = await authRepository.getDaysApi(teacherId);
-    List<dynamic> parsedList = response;
-    result = parsedList
-        .where((value) => value != null)
-        .map((value) => value.toString())
-        .toList();
 
     debugPrint(response.toString());
+    getTeacherDays = GetTeacherDays.fromJson(response);
+    print("response");
+    print(response);
+    print("response");
     setState(() {
 
-      result = parsedList
-          .where((value) => value != null)
-          .map((value) => value.toString())
-          .toList();
+      getTeacherDays = GetTeacherDays.fromJson(response);
+
     });
   }
+
+  // void getDays(String teacherId) async {
+  //   final authRepository = AuthRepository();
+  //   final response = await authRepository.getDaysApi(teacherId);
+  //   List<dynamic> parsedList = response;
+  //   result = parsedList
+  //       .where((value) => value != null)
+  //       .map((value) => value.toString())
+  //       .toList();
+  //
+  //   debugPrint(response.toString());
+  //   setState(() {
+  //
+  //     result = parsedList
+  //         .where((value) => value != null)
+  //         .map((value) => value.toString())
+  //         .toList();
+  //   });
+  // }
 }

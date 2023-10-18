@@ -23,7 +23,7 @@ class _SomeDayViewState extends State<SomeDayView> {
   final controller = Get.put(SomeDayController());
   bool _isLoading = true;
   GetTimeSlotsModel? getTimeSlotsModel;
-  Classes? selectedTimeSlot;
+  TimeClasses? selectedTimeSlot;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _SomeDayViewState extends State<SomeDayView> {
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10)),
-              child:  DropdownButtonFormField<Classes>(
+              child:  DropdownButtonFormField<TimeClasses>(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius:
@@ -76,7 +76,7 @@ class _SomeDayViewState extends State<SomeDayView> {
                     fontSize: 16),
                 iconSize: 0,
                 elevation: 16,
-                onChanged: (Classes? newValue) {
+                onChanged: (TimeClasses? newValue) {
                   setState(() {
                     selectedTimeSlot = newValue;
                     print("selectedTimeSlot!.id");
@@ -85,8 +85,8 @@ class _SomeDayViewState extends State<SomeDayView> {
                   });
                 },
                 items: getTimeSlotsModel?.classes!
-                    .map<DropdownMenuItem<Classes>>((Classes? value) {
-                  return DropdownMenuItem<Classes>(
+                    .map<DropdownMenuItem<TimeClasses>>((TimeClasses? value) {
+                  return DropdownMenuItem<TimeClasses>(
                       value: value, child: Text(value!.time.toString()));
                 }).toList(),
                 dropdownColor: Colors.grey.shade800,

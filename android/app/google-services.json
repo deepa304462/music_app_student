@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "21433041880",
+    "project_id": "student-app-8d1ef",
+    "storage_bucket": "student-app-8d1ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21433041880:android:d10606cb88a72a35c268ad",
+        "android_client_info": {
+          "package_name": "com.music_app_student.music_app_student"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkD2uHTNkEGMZW_K9le6_b-TsZ3QCVhgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

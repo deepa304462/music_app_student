@@ -15,4 +15,10 @@ abstract class BaseApiServices {
   Future<dynamic> applyLeave(String url, Map<String, dynamic> data);
 
   Future<dynamic> examRegister(String url, Map<String, dynamic> data);
+
+  Future<dynamic> applyCoverClass(String url, Map<String, dynamic> data);
+
+  Future<dynamic> getTimeSlotTeacher(String url);
+
+  Future<dynamic> getTeacherDays(String url);
 }

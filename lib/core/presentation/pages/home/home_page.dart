@@ -15,11 +15,13 @@ import 'package:music_app_student/core/presentation/pages/progress/piano_progres
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/rescheduale_diloag_box.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_text_field.dart';
 import 'package:music_app_student/models/all_caurses_model.dart';
+import 'package:music_app_student/models/apply_cover_class_model.dart';
 import 'package:music_app_student/models/apply_leave_model.dart';
 import 'package:music_app_student/models/my_profile_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../models/get_time_slots_model.dart';
 import '../../../../repository/auth_repository.dart';
 import '../../../utils/utils.dart';
 
@@ -38,12 +40,17 @@ class _HomePageState extends State<HomePage> {
   TextEditingController leaveStartDateForController = TextEditingController();
   TextEditingController leaveEndDateForController = TextEditingController();
   TextEditingController descriptionRegardingController = TextEditingController();
+  TextEditingController _coverClassDateController = TextEditingController();
+  TextEditingController _coverClassTimeController = TextEditingController();
   bool _isLoading = false;
+  GetTimeSlotsModel? getTimeSlotsModel;
+  TimeClasses? selectedFirstTimeSlot;
 
   @override
   void initState() {
     getAllCourses();
     getMyProfile();
+    getTimeSlots("652e78d277a46405ef44492f");
     super.initState();
   }
 
@@ -381,7 +388,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(36),
                 ),
                 onPressed: () {
-                  DiloagBox.coverClassDiloagBox();
+                  coverClassDiloagBox();
                 },
                 child: Text(
                   "apply for Cover Class",
@@ -1138,7 +1145,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               CustomTextField(
-                controller:leaveEndDateForController ,
+                controller: leaveEndDateForController,
                 hintText: "End Date for Leave",
                 suffixIcon: IconButton(
                   onPressed: () {
@@ -1154,7 +1161,7 @@ class _HomePageState extends State<HomePage> {
                 hintText: "Description regarding Leave...",
               ),
               2.h.heightBox,
-           MaterialButton(
+              MaterialButton(
                 color: AppColor.blue224,
                 height: 51,
                 shape: RoundedRectangleBorder(
@@ -1181,6 +1188,7 @@ class _HomePageState extends State<HomePage> {
       ),
     ));
   }
+
   onTapSubmitForLeave() async {
     setState(() {
       _isLoading = false;
@@ -1190,14 +1198,13 @@ class _HomePageState extends State<HomePage> {
     Map<String, dynamic> data = {
       'reason': reasonController.text,
       'startDate': leaveStartDateForController.text,
-      "endDate":leaveEndDateForController.text,
-      'description':descriptionRegardingController.text,
+      "endDate": leaveEndDateForController.text,
+      'description': descriptionRegardingController.text,
     };
-print(jsonEncode(data));
+    print(jsonEncode(data));
     final authRepository = AuthRepository();
     final response = await authRepository.applyLeaveApi(data);
-    ApplyLeaveModel applyLeaveModel =
-    ApplyLeaveModel.fromJson(response);
+    ApplyLeaveModel applyLeaveModel = ApplyLeaveModel.fromJson(response);
     print("registerFormModel.id");
     print(response);
     print("registerFormModel.id");
@@ -1211,7 +1218,7 @@ print(jsonEncode(data));
       Navigator.pop(context);
     } else {
       Utils.toastMassage(response!['error']);
-     // Navigator.pop(context);
+      // Navigator.pop(context);
       setState(() {
         _isLoading = false;
       });
@@ -1252,6 +1259,7 @@ print(jsonEncode(data));
       });
     }
   }
+
   void _selectEndDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -1286,4 +1294,222 @@ print(jsonEncode(data));
       });
     }
   }
+  void _selectCoverClassDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      // Set your desired starting date
+      lastDate: DateTime(2030),
+      // You can customize date picker appearance here if needed
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            primaryColor: Colors.blue, // Set the primary color
+            hintColor: Colors.blue, // Set the accent color
+            // You can customize other date picker styles here
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      // Create a DateFormat for the input date format
+      final inputFormat = DateFormat("y-MM-dd");
+
+      // Format the picked date in the desired format
+      String formattedDate = inputFormat.format(picked);
+
+      print(formattedDate);
+
+      // Update the text field with the formatted date
+      setState(() {
+        _coverClassDateController.text = formattedDate;
+      });
+    }
+  }
+
+  void coverClassDiloagBox() {
+     Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: SizedBox(
+          height: 333,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Cover Class",
+                style: TextStyle(
+                  color: AppColor.black,
+                  fontFamily: AppTextStyle.textStyleMulish,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              2.h.heightBox,
+             Padding(
+               padding: const EdgeInsets.all(16.0),
+               child: Column(
+                 children: [
+                   CustomTextField(
+                     controller: _coverClassDateController,
+                     hintText: "Date of class",
+                     suffixIcon: IconButton(
+                       onPressed: () {
+                         _selectCoverClassDate();
+                       },
+                       icon: SvgPicture.asset("assets/svg/calender.svg"),
+                     ),
+                   ),
+                   3.h.heightBox,
+                   Container(
+                     height: 56,
+                     decoration: BoxDecoration(
+                         border: Border.all(color: Colors.black),
+                         borderRadius: BorderRadius.circular(10)),
+                     child:  DropdownButtonFormField<TimeClasses>(
+                       decoration: InputDecoration(
+                           border: OutlineInputBorder(
+                             borderRadius:
+                             BorderRadius.circular(10.0), // Rounded border
+                             borderSide: BorderSide.none, // No border side
+                           ),
+                           contentPadding:
+                           const EdgeInsets.only(bottom: 8, left: 8),
+                           suffixIcon: const Icon(
+                             Icons.arrow_drop_down,
+                             color: Colors.black,
+                           ),
+                           hintText: 'Select to schedule',
+                           hintStyle: TextStyle(
+                             fontFamily: AppTextStyle.textStyleMulish,
+                             fontWeight: FontWeight.w600,
+                             fontSize: 16,
+                             fontStyle: FontStyle.italic,
+                             color: AppColor.black,
+                           )),
+                       value: selectedFirstTimeSlot,
+                       style: TextStyle(
+                         fontFamily: AppTextStyle.textStyleMulish,
+                         fontWeight: FontWeight.w600,
+                         fontSize: 16,
+                         fontStyle: FontStyle.italic,
+                         color: AppColor.black,
+                       ),
+                       iconSize: 0,
+                       elevation: 16,
+                       onChanged: (TimeClasses? newValue) {
+                         setState(() {
+                           selectedFirstTimeSlot = newValue;
+                           print("selectedTimeSlot!.id");
+                           print(selectedFirstTimeSlot!.id);
+                           print("selectedTimeSlot!.id");
+                         });
+                       },
+                       items: getTimeSlotsModel?.classes!
+                           .map<DropdownMenuItem<TimeClasses>>((TimeClasses? value) {
+                         return DropdownMenuItem<TimeClasses>(
+                             value: value, child: Text(value!.time!.slot.toString()));
+                       }).toList(),
+                       dropdownColor: Colors.grey.shade800,
+                       borderRadius: BorderRadius.circular(16),
+                       hint:  Text(
+                           "Select to schedule",
+                           style: TextStyle(
+                             fontFamily: AppTextStyle.textStyleMulish,
+                             fontWeight: FontWeight.w600,
+                             fontSize: 16,
+                             fontStyle: FontStyle.italic,
+                             color: AppColor.black,
+                           )
+                       ),
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+              4.h.heightBox,
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                color: AppColor.blue224,
+                minWidth: 270,
+                height: 60,
+                onPressed: () {
+                  onTapSubmitForCoverClass();
+                },
+                child: Text(
+                  "Submit",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTextStyle.textStyleMulish,
+                    fontSize: 24,
+                    color: AppColor.white255,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  onTapSubmitForCoverClass() async {
+    setState(() {
+      _isLoading = false;
+    });
+    // Utils.showNonDismissibleLoadingDialog(
+    //     context, 'Please wait...', 'Loading...');
+    Map<String, dynamic> data = {
+      'date': _coverClassDateController.text,
+      'time': selectedFirstTimeSlot,
+    };
+    print(jsonEncode(data));
+    final authRepository = AuthRepository();
+    final response = await authRepository.applyCoverClassApi(data);
+    ApplyCoverClassModel applyCoverClassModel = ApplyCoverClassModel.fromJson(response);
+    print("registerFormModel.id");
+    print(response);
+    print("registerFormModel.id");
+    print(applyCoverClassModel.date);
+    print("registerFormModel.id");
+    if (applyCoverClassModel.date != null) {
+      Utils.toastMassage("Cover class applied successfully");
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.pop(context);
+    } else {
+      Utils.toastMassage(response!['error']);
+      // Navigator.pop(context);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void getTimeSlots(String teacherId) async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getTimeSlots(teacherId);
+
+    debugPrint(response.toString());
+    getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
+    print("response");
+    print(response);
+    print("response");
+    setState(() {
+
+      getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
+
+    });
+  }
+
 }

@@ -396,12 +396,11 @@ class _ExamRegistrationPageState extends State<ExamRegistrationPage> {
     debugPrint('response: $response');
     examRegistrationModel = ExamRegistrationModel.fromJson(response);
     var options = {
-      'key': ' rzp_test_35fzmQiPzfuB15',
+      'key': 'rzp_test_35fzmQiPzfuB15',
       'amount': 100,
       'name': 'Music',
       'description': 'Music Learn',
       'timeout':60
-
     };
     _razorpay.open(options);
     //Get.to(ExamPaymentPage());

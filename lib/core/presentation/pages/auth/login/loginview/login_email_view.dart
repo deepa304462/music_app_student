@@ -144,7 +144,7 @@ bool _isLoading = false;
     print(loginWithEmailModel.user);
     print("registerFormModel.id");
     if(loginWithEmailModel.user != null){
-      Utils.toastMassage("Email register successfully");
+      Utils.toastMassage("Email login successfully");
       setState(() {
         _isLoading = false;
       });

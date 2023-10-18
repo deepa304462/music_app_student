@@ -170,4 +170,62 @@ class NetworkApiServices extends BaseApiServices {
     }
     return responseJson;
   }
+  @override
+  Future applyCoverClass(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future getTimeSlotTeacher(String url) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      final response =
+      await http.get(Uri.parse(url),
+        headers: {
+          "Authorization": 'Bearer $token',
+        }
+      ).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future getTeacherDays(String url) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      final response =
+      await http.get(Uri.parse(url),
+          headers: {
+            "Authorization": 'Bearer $token',
+          }
+      ).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
 }

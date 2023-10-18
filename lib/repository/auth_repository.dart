@@ -146,7 +146,8 @@ class AuthRepository {
   Future<dynamic> getTimeSlots(String teacherId) async {
     try {
       dynamic response = await _apiServices
-          .getGetApiResponse('${AppUrl.getTimeSlotUrl}/$teacherId');
+          .getTimeSlotTeacher('${AppUrl.getTimeSlotUrl}/$teacherId');
+      print('${AppUrl.getTimeSlotUrl}/$teacherId');
       return response;
     } catch (e) {
       throw e;
@@ -156,7 +157,8 @@ class AuthRepository {
   Future<dynamic> getDaysApi(String teacherId) async {
     try {
       dynamic response = await _apiServices
-          .getGetApiResponse('${AppUrl.getDaysUrl}/$teacherId');
+          .getTeacherDays('${AppUrl.getDaysUrl}/$teacherId');
+      print('${AppUrl.getDaysUrl}/$teacherId');
       return response;
     } catch (e) {
       throw e;
@@ -192,6 +194,17 @@ class AuthRepository {
       return response;
     } catch (e) {
       debugPrint('rescheduleClassApiError: $e');
+    }
+  }
+
+  Future<dynamic> applyCoverClassApi(dynamic data) async {
+    print(AppUrl.applyCoverClass);
+    try {
+      dynamic response =
+      await _apiServices.applyCoverClass(AppUrl.applyCoverClass, data);
+      return response;
+    } catch (e) {
+      debugPrint('applyCoverClassError: $e');
     }
   }
 }

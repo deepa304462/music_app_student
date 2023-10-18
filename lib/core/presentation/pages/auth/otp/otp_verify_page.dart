@@ -4,8 +4,6 @@ import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/pages/auth/register_with_email.dart';
-import 'package:music_app_student/core/presentation/pages/home/home_page.dart';
-import 'package:music_app_student/core/presentation/pages/register_profile/register_profile_page.dart';
 import 'package:music_app_student/models/register_otp_model.dart';
 import 'package:music_app_student/models/resend_otp_model.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -236,7 +234,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
         Utils.toastMassage(widget.otp.toString());
 
         if (widget.isFromLogin) {
-          Utils.pushToNewRoute(context, HomePage());
+          Utils.pushToNewRoute(context, NewBottomNavigationBar());
         } else {
           setState(() {
             _isLoading= false;

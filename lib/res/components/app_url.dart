@@ -34,4 +34,7 @@ class AppUrl{
   static var rescheduleClassUrl = "${baseUrl}api/v1/reschedule/student";
 
   static var applyLeaveUrl = "${baseUrl}api/v1/leave/student";
+
+  static var applyCoverClass = "${baseUrl}api/v1/cover/student";
+
 }

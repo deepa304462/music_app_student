@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login/login_page.dart';
@@ -16,8 +18,8 @@ class LoginTamplatePage extends StatefulWidget {
 }
 
 class _LoginTamplatePageState extends State<LoginTamplatePage> {
-
   bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,28 +132,32 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
                 onTap: () {
                   Get.to(LoginPage());
                 },
-                child: _isLoading?Center(child: CircularProgressIndicator(),):Container(
-                  margin: const EdgeInsets.only(top: 30),
-                  height: 60,
-                  width: 294,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: AppColor.blue224,
-                    ),
-                  ),
-                  child: Text(
-                    "Login in",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleMulish,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.blue224,
-                    ),
-                  ),
-                ),
+                child: _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(top: 30),
+                        height: 60,
+                        width: 294,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                            color: AppColor.blue224,
+                          ),
+                        ),
+                        child: Text(
+                          "Login in",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.blue224,
+                          ),
+                        ),
+                      ),
               ),
               1.h.heightBox,
               Text(
@@ -183,19 +189,25 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
                         )),
                     child: Image.asset("assets/images/facebook.png"),
                   ),
-                  Container(
-                    height: 35,
-                    width: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColor.white255,
-                        border: Border.all(
-                          color: AppColor.black74,
-                          width: 1,
-                        )),
-                    child: SvgPicture.asset("assets/svg/google.svg"),
+                  GestureDetector(
+                    onTap: () async {
+                      final user = await googleLogin();
+                      print(user!.email);
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColor.white255,
+                          border: Border.all(
+                            color: AppColor.black74,
+                            width: 1,
+                          )),
+                      child: SvgPicture.asset("assets/svg/google.svg"),
+                    ),
                   ),
                   Container(
                     height: 35,
@@ -220,5 +232,24 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
     );
   }
 
+  Future<User?> googleLogin() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
 
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User? user = result.user;
+
+      return user;
+    }
+    return null;
+  }
 }

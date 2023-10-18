@@ -1,10 +1,10 @@
 /// success : true
-/// classes : [{"_id":"64c3b3680bb50d5ce73d26d9","time":"12:00 PM to 01:00PM"},{"_id":"64c3bb72c1a44d55c4a52264","time":"03:00 PM to 04:00PM"},{"_id":"64c3bd1dc42136f840981de7","time":"05:00 PM to 06:00PM"},{"_id":"64c3bd7cb7742d19dfa7c9a3","time":"05:00 PM to 06:00PM"},{"_id":"64c3bd9cb7742d19dfa7c9a7","time":"05:00 PM to 06:00PM"},{"_id":"64c3be0bb7742d19dfa7c9ab","time":"05:00 PM to 06:00PM"},{"_id":"64c4f5676d93dcd4a10da8d1","time":"05:00 PM to 06:00PM"},{"_id":"64c507ccb10f215a721aa5d7","time":"05:00 PM to 06:00PM"},{"_id":"64c509e2e4b8a1aeb7af5721","time":"05:00 PM to 06:00PM"}]
+/// classes : [{"_id":"652e790277a46405ef444931","time":{"_id":"652e69bb54fd60ccba465118","slot":"02:00 PM to 04:00 PM","__v":0}}]
 
 class GetTimeSlotsModel {
   GetTimeSlotsModel({
       bool? success, 
-      List<Classes>? classes,}){
+      List<TimeClasses>? classes,}){
     _success = success;
     _classes = classes;
 }
@@ -14,19 +14,19 @@ class GetTimeSlotsModel {
     if (json['classes'] != null) {
       _classes = [];
       json['classes'].forEach((v) {
-        _classes?.add(Classes.fromJson(v));
+        _classes?.add(TimeClasses.fromJson(v));
       });
     }
   }
   bool? _success;
-  List<Classes>? _classes;
+  List<TimeClasses>? _classes;
 GetTimeSlotsModel copyWith({  bool? success,
-  List<Classes>? classes,
+  List<TimeClasses>? classes,
 }) => GetTimeSlotsModel(  success: success ?? _success,
   classes: classes ?? _classes,
 );
   bool? get success => _success;
-  List<Classes>? get classes => _classes;
+  List<TimeClasses>? get classes => _classes;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -39,35 +39,80 @@ GetTimeSlotsModel copyWith({  bool? success,
 
 }
 
-/// _id : "64c3b3680bb50d5ce73d26d9"
-/// time : "12:00 PM to 01:00PM"
+/// _id : "652e790277a46405ef444931"
+/// time : {"_id":"652e69bb54fd60ccba465118","slot":"02:00 PM to 04:00 PM","__v":0}
 
-class Classes {
-  Classes({
+class TimeClasses {
+  TimeClasses({
       String? id, 
-      String? time,}){
+      Time? time,}){
     _id = id;
     _time = time;
 }
 
-  Classes.fromJson(dynamic json) {
+  TimeClasses.fromJson(dynamic json) {
     _id = json['_id'];
-    _time = json['time'];
+    _time = json['time'] != null ? Time.fromJson(json['time']) : null;
   }
   String? _id;
-  String? _time;
-Classes copyWith({  String? id,
-  String? time,
-}) => Classes(  id: id ?? _id,
+  Time? _time;
+TimeClasses copyWith({  String? id,
+  Time? time,
+}) => TimeClasses(  id: id ?? _id,
   time: time ?? _time,
 );
   String? get id => _id;
-  String? get time => _time;
+  Time? get time => _time;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = _id;
-    map['time'] = _time;
+    if (_time != null) {
+      map['time'] = _time?.toJson();
+    }
+    return map;
+  }
+
+}
+
+/// _id : "652e69bb54fd60ccba465118"
+/// slot : "02:00 PM to 04:00 PM"
+/// __v : 0
+
+class Time {
+  Time({
+      String? id, 
+      String? slot, 
+      num? v,}){
+    _id = id;
+    _slot = slot;
+    _v = v;
+}
+
+  Time.fromJson(dynamic json) {
+    _id = json['_id'];
+    _slot = json['slot'];
+    _v = json['__v'];
+  }
+  String? _id;
+  String? _slot;
+  num? _v;
+Time copyWith({  String? id,
+  String? slot,
+  num? v,
+}) => Time(  id: id ?? _id,
+  slot: slot ?? _slot,
+  v: v ?? _v,
+);
+  String? get id => _id;
+  String? get slot => _slot;
+  num? get v => _v;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['_id'] = _id;
+    map['slot'] = _slot;
+    map['__v'] = _v;
     return map;
   }
 
