@@ -37,4 +37,8 @@ class AppUrl{
 
   static var applyCoverClass = "${baseUrl}api/v1/cover/student";
 
+  static var videoLessonsUrl = "${baseUrl}api/v1/study/get/image";
+
+  static var myCoursesUrl = "${baseUrl}api/user/classes/";
+
 }

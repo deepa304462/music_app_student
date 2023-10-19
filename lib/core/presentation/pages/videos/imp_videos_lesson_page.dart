@@ -1,4 +1,5 @@
 // ignore: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -6,16 +7,28 @@ import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_appbar.dart';
+import 'package:music_app_student/models/get_videos_lessons_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_video_progress/smooth_video_progress.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../repository/auth_repository.dart';
 import 'controller/imp_videos_lesson_controller.dart';
 
-class ImpVideosLessonPage extends StatelessWidget {
-  ImpVideosLessonPage({super.key});
+class ImpVideosLessonPage extends StatefulWidget {
+  ImpVideosLessonPage( {super.key});
+
+  @override
+  State<ImpVideosLessonPage> createState() => _ImpVideosLessonPageState();
+}
+
+class _ImpVideosLessonPageState extends State<ImpVideosLessonPage> {
   final controller = Get.put(ImpVideosLessonController());
+  GetVideosLessonsModel getVideosLessonsModel = GetVideosLessonsModel();
+  List<Studies>? mediaList;
+  List<Studies> videosList = [];
+  List<Studies> imagesList = [];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ImpVideosLessonController>(builder: (context) {
@@ -314,6 +327,25 @@ class ImpVideosLessonPage extends StatelessWidget {
       ),
     );
   }
+  void getVideosLessons() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getVideosLessonsApi();
+    debugPrint(response.toString());
+    getVideosLessonsModel = GetVideosLessonsModel.fromJson(response);
+    setState(() {
+      mediaList = getVideosLessonsModel.studies!;
+      mediaList?.forEach((element) {
+        if (element.image != null) {
+          imagesList.add(element);
+        } else if (element.video != null) {
+          videosList.add(element);
+        }
+      });
+
+      print('videoLength: ${videosList.length}');
+      print('imageLength: ${imagesList.length}');
+    });
+  }
 }
 
 class VideoProgressSlider extends StatelessWidget {
@@ -354,4 +386,5 @@ class VideoProgressSlider extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -228,4 +228,43 @@ class NetworkApiServices extends BaseApiServices {
     }
     return responseJson;
   }
+  @override
+  Future getVideosLessons(String url) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      final response =
+      await http.get(Uri.parse(url, ),
+
+          headers: {
+            "Authorization": 'Bearer $token',
+          }
+      ).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future getMyCourses(String url) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      final response =
+      await http.get(Uri.parse(url, ),
+
+          headers: {
+            "Authorization": 'Bearer $token',
+          }
+      ).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
 }

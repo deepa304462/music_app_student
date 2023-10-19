@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
@@ -10,6 +12,10 @@ import 'package:music_app_student/core/presentation/pages/auth/login/loginview/l
 import 'package:music_app_student/core/presentation/pages/auth/otp/otp_verify_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../../../../models/all_caurses_model.dart';
+import '../../../../nav/new_bottom_navigation_bar.dart';
+import '../../../../utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -148,19 +154,31 @@ class _LoginPageState extends State<LoginPage> {
                         )),
                     child: Image.asset("assets/images/facebook.png"),
                   ),
-                  Container(
-                    height: 35,
-                    width: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColor.white255,
-                        border: Border.all(
-                          color: AppColor.black74,
-                          width: 1,
-                        )),
-                    child: SvgPicture.asset("assets/svg/google.svg"),
+                  InkWell(
+                    onTap: () async {
+                      final user = await googleLogin();
+                      if(user !=null){
+                        print(user.email);
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>NewBottomNavigationBar()));
+                      }else{
+                        Utils.toastMassage("Something went wrong");
+                      }
+
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColor.white255,
+                          border: Border.all(
+                            color: AppColor.black74,
+                            width: 1,
+                          )),
+                      child: SvgPicture.asset("assets/svg/google.svg"),
+                    ),
                   ),
                   InkWell(
                     onTap: () {
@@ -225,7 +243,36 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  Future<User?> googleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount =
+    await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
 
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User? user = result.user;
+      setState(() {
+        _isLoading = false;
+      });
+
+      return user;
+
+    }
+    setState(() {
+      _isLoading = false;
+    });
+    return null;
+  }
 
 
 }

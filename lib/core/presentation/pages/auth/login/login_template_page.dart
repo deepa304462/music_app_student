@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
+import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
 import 'package:music_app_student/core/presentation/pages/auth/login/login_page.dart';
 import 'package:music_app_student/core/presentation/pages/auth/signup/create_account_page.dart';
 import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../../../utils/utils.dart';
 
 class LoginTamplatePage extends StatefulWidget {
   const LoginTamplatePage({super.key});
@@ -192,7 +195,13 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
                   GestureDetector(
                     onTap: () async {
                       final user = await googleLogin();
-                      print(user!.email);
+                      if(user !=null){
+                        print(user.email);
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>NewBottomNavigationBar()));
+                      }else{
+                       Utils.toastMassage("Something went wrong");
+                      }
+
                     },
                     child: Container(
                       height: 35,
@@ -233,6 +242,9 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
   }
 
   Future<User?> googleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
     final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleSignInAccount =
@@ -247,9 +259,16 @@ class _LoginTamplatePageState extends State<LoginTamplatePage> {
       // Getting users credential
       UserCredential result = await auth.signInWithCredential(authCredential);
       User? user = result.user;
+      setState(() {
+        _isLoading = false;
+      });
 
       return user;
+
     }
+    setState(() {
+      _isLoading = false;
+    });
     return null;
   }
 }

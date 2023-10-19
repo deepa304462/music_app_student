@@ -1,17 +1,17 @@
-/// studentDetails : {"user":{"profilePicture":"","gold":"0","silver":"0","bronze":"0","teachingHours":0,"level":"0","pincode":"","dateOfBirth":null,"_id":"648804ceaea1ee6a21dacad7","number":1941231230,"email":"","otp":null,"classCredited":10,"role":"user","createdAt":"2023-06-13T05:55:26.288Z","__v":0,"address":"","alternateNumber":"","city":"","classFrequency":"","classesAttended":5,"classesConsumed":8,"classesRemaining":5,"country":"","coverLeft":"011","gender":"","instruments":"","isVerified":false,"modeOFClass":"","name":"","prefferedPaymentSchedule":"","skillLevel":"","state":"","typeOfSession":"","late":4,"approvedLeave":2,"address1":"","address2":""},"classes":[{"_id":"64c507ccb10f215a721aa5d7","name":"my class","time":"05:00 PM to 06:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64c509e2e4b8a1aeb7af5721","name":"my class","time":"05:00 PM to 06:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64dc6f2550f74ecb29523811","name":"my class","time":"03:00 PM to 04:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c01791af18591891d0978d","name":"Aditya  sharma","email":"ad8@gmail.com","number":8423472807,"role":"teacher","mode":"offline","createdAt":"2023-07-25T18:42:25.091Z","__v":0,"dateofBirth":"05/06/2002","panNumber":"754778658659","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692600865/images/image/gwlwrvchvfh53whea92b.jpg"},"day":"Tuesday","subject":{"_id":"64d63c1cd4c343339c84fcda","subject":"Guitar","image":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1691761690/images/image/izpwmx2fmrjjwdfqyjnq.jpg","skillLevel":[],"__v":0}}]}
+/// studentDetails : {"user":{"profilePicture":"","gold":"0","silver":"0","bronze":"0","teachingHours":0,"level":"0","pincode":"","dateOfBirth":null,"_id":"648804ceaea1ee6a21dacad7","number":1941231230,"email":"","otp":null,"password":"$2b$10$XTQKRoMoFOBNOmzbReBu..wovpXqBpiyKyWCy69.k.pbM0ilWtip6","classCredited":10,"role":"user","createdAt":"2023-06-13T05:55:26.288Z","__v":0,"address":"","alternateNumber":"","city":"","classFrequency":"","classesAttended":5,"classesConsumed":8,"classesRemaining":5,"country":"","coverLeft":"011","gender":"","instruments":"","isVerified":false,"modeOFClass":"","name":"","prefferedPaymentSchedule":"","skillLevel":"","state":"","typeOfSession":"","late":4,"approvedLeave":2,"address1":"","address2":""},"classes":[{"_id":"64c507ccb10f215a721aa5d7","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64c509e2e4b8a1aeb7af5721","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64dc6f2550f74ecb29523811","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c01791af18591891d0978d","name":"Aditya  sharma","email":"ad8@gmail.com","number":8423472807,"role":"teacher","mode":"offline","createdAt":"2023-07-25T18:42:25.091Z","__v":0,"dateofBirth":"05/06/2002","panNumber":"754778658659","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692600865/images/image/gwlwrvchvfh53whea92b.jpg"},"subject":{"_id":"64d63c1cd4c343339c84fcda","subject":"Guitar","image":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1691761690/images/image/izpwmx2fmrjjwdfqyjnq.jpg","skillLevel":[],"__v":0}}]}
 
-class AllCoursesModel {
-  AllCoursesModel({
+class MyCoursesModel {
+  MyCoursesModel({
       StudentDetails? studentDetails,}){
     _studentDetails = studentDetails;
 }
 
-  AllCoursesModel.fromJson(dynamic json) {
+  MyCoursesModel.fromJson(dynamic json) {
     _studentDetails = json['studentDetails'] != null ? StudentDetails.fromJson(json['studentDetails']) : null;
   }
   StudentDetails? _studentDetails;
-AllCoursesModel copyWith({  StudentDetails? studentDetails,
-}) => AllCoursesModel(  studentDetails: studentDetails ?? _studentDetails,
+MyCoursesModel copyWith({  StudentDetails? studentDetails,
+}) => MyCoursesModel(  studentDetails: studentDetails ?? _studentDetails,
 );
   StudentDetails? get studentDetails => _studentDetails;
 
@@ -25,35 +25,35 @@ AllCoursesModel copyWith({  StudentDetails? studentDetails,
 
 }
 
-/// user : {"profilePicture":"","gold":"0","silver":"0","bronze":"0","teachingHours":0,"level":"0","pincode":"","dateOfBirth":null,"_id":"648804ceaea1ee6a21dacad7","number":1941231230,"email":"","otp":null,"classCredited":10,"role":"user","createdAt":"2023-06-13T05:55:26.288Z","__v":0,"address":"","alternateNumber":"","city":"","classFrequency":"","classesAttended":5,"classesConsumed":8,"classesRemaining":5,"country":"","coverLeft":"011","gender":"","instruments":"","isVerified":false,"modeOFClass":"","name":"","prefferedPaymentSchedule":"","skillLevel":"","state":"","typeOfSession":"","late":4,"approvedLeave":2,"address1":"","address2":""}
-/// classes : [{"_id":"64c507ccb10f215a721aa5d7","name":"my class","time":"05:00 PM to 06:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64c509e2e4b8a1aeb7af5721","name":"my class","time":"05:00 PM to 06:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64dc6f2550f74ecb29523811","name":"my class","time":"03:00 PM to 04:00PM","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c01791af18591891d0978d","name":"Aditya  sharma","email":"ad8@gmail.com","number":8423472807,"role":"teacher","mode":"offline","createdAt":"2023-07-25T18:42:25.091Z","__v":0,"dateofBirth":"05/06/2002","panNumber":"754778658659","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692600865/images/image/gwlwrvchvfh53whea92b.jpg"},"day":"Tuesday","subject":{"_id":"64d63c1cd4c343339c84fcda","subject":"Guitar","image":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1691761690/images/image/izpwmx2fmrjjwdfqyjnq.jpg","skillLevel":[],"__v":0}}]
+/// user : {"profilePicture":"","gold":"0","silver":"0","bronze":"0","teachingHours":0,"level":"0","pincode":"","dateOfBirth":null,"_id":"648804ceaea1ee6a21dacad7","number":1941231230,"email":"","otp":null,"password":"$2b$10$XTQKRoMoFOBNOmzbReBu..wovpXqBpiyKyWCy69.k.pbM0ilWtip6","classCredited":10,"role":"user","createdAt":"2023-06-13T05:55:26.288Z","__v":0,"address":"","alternateNumber":"","city":"","classFrequency":"","classesAttended":5,"classesConsumed":8,"classesRemaining":5,"country":"","coverLeft":"011","gender":"","instruments":"","isVerified":false,"modeOFClass":"","name":"","prefferedPaymentSchedule":"","skillLevel":"","state":"","typeOfSession":"","late":4,"approvedLeave":2,"address1":"","address2":""}
+/// classes : [{"_id":"64c507ccb10f215a721aa5d7","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64c509e2e4b8a1aeb7af5721","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"},"subject":{"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}},{"_id":"64dc6f2550f74ecb29523811","name":"my class","teacher":{"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c01791af18591891d0978d","name":"Aditya  sharma","email":"ad8@gmail.com","number":8423472807,"role":"teacher","mode":"offline","createdAt":"2023-07-25T18:42:25.091Z","__v":0,"dateofBirth":"05/06/2002","panNumber":"754778658659","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692600865/images/image/gwlwrvchvfh53whea92b.jpg"},"subject":{"_id":"64d63c1cd4c343339c84fcda","subject":"Guitar","image":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1691761690/images/image/izpwmx2fmrjjwdfqyjnq.jpg","skillLevel":[],"__v":0}}]
 
 class StudentDetails {
   StudentDetails({
-      StudentUser? user,
-      List<Classes>? classes,}){
+      User? user, 
+      List<MyClasses>? classes,}){
     _user = user;
     _classes = classes;
 }
 
   StudentDetails.fromJson(dynamic json) {
-    _user = json['user'] != null ? StudentUser.fromJson(json['user']) : null;
+    _user = json['user'] != null ? User.fromJson(json['user']) : null;
     if (json['classes'] != null) {
       _classes = [];
       json['classes'].forEach((v) {
-        _classes?.add(Classes.fromJson(v));
+        _classes?.add(MyClasses.fromJson(v));
       });
     }
   }
-  StudentUser? _user;
-  List<Classes>? _classes;
-StudentDetails copyWith({  StudentUser? user,
-  List<Classes>? classes,
+  User? _user;
+  List<MyClasses>? _classes;
+StudentDetails copyWith({  User? user,
+  List<MyClasses>? classes,
 }) => StudentDetails(  user: user ?? _user,
   classes: classes ?? _classes,
 );
-  StudentUser? get user => _user;
-  List<Classes>? get classes => _classes;
+  User? get user => _user;
+  List<MyClasses>? get classes => _classes;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -70,50 +70,42 @@ StudentDetails copyWith({  StudentUser? user,
 
 /// _id : "64c507ccb10f215a721aa5d7"
 /// name : "my class"
-/// time : "05:00 PM to 06:00PM"
 /// teacher : {"teachingHour":{"total":"0","month":"0","beginner":"0","intermediate":0,"advanced":"0"},"ratings":"0","experience":"0","rating":0,"total":0,"highflyBadge":"0","_id":"64c0ca71c8248b4beec40b50","name":"usernameController.text","email":"newresetpassword@gmail.com","number":123123789,"role":"teacher","mode":"offline","createdAt":"2023-07-26T07:25:37.846Z","__v":0,"otp":"5405","dateofBirth":"01-01-2000","panNumber":"123ABCDEF456","profilePicture":"https://res.cloudinary.com/dtijhcmaa/image/upload/v1692478963/images/image/vbdlrt7tgq7f7dffkzyc.png"}
 /// subject : {"_id":"64c3bb45c1a44d55c4a52260","subject":"Drum","skillLevel":[{"level":"Beginner","_id":"64c3bb45c1a44d55c4a52261"}],"__v":0}
 
-class Classes {
-  Classes({
+class MyClasses {
+  MyClasses({
       String? id, 
       String? name, 
-      String? time, 
       Teacher? teacher, 
       Subject? subject,}){
     _id = id;
     _name = name;
-    _time = time;
     _teacher = teacher;
     _subject = subject;
 }
 
-  Classes.fromJson(dynamic json) {
+  MyClasses.fromJson(dynamic json) {
     _id = json['_id'];
     _name = json['name'];
-    _time = json['time'];
     _teacher = json['teacher'] != null ? Teacher.fromJson(json['teacher']) : null;
     _subject = json['subject'] != null ? Subject.fromJson(json['subject']) : null;
   }
   String? _id;
   String? _name;
-  String? _time;
   Teacher? _teacher;
   Subject? _subject;
-Classes copyWith({  String? id,
+MyClasses copyWith({  String? id,
   String? name,
-  String? time,
   Teacher? teacher,
   Subject? subject,
-}) => Classes(  id: id ?? _id,
+}) => MyClasses(  id: id ?? _id,
   name: name ?? _name,
-  time: time ?? _time,
   teacher: teacher ?? _teacher,
   subject: subject ?? _subject,
 );
   String? get id => _id;
   String? get name => _name;
-  String? get time => _time;
   Teacher? get teacher => _teacher;
   Subject? get subject => _subject;
 
@@ -121,7 +113,6 @@ Classes copyWith({  String? id,
     final map = <String, dynamic>{};
     map['_id'] = _id;
     map['name'] = _name;
-    map['time'] = _time;
     if (_teacher != null) {
       map['teacher'] = _teacher?.toJson();
     }
@@ -479,6 +470,7 @@ TeachingHour copyWith({  String? total,
 /// number : 1941231230
 /// email : ""
 /// otp : null
+/// password : "$2b$10$XTQKRoMoFOBNOmzbReBu..wovpXqBpiyKyWCy69.k.pbM0ilWtip6"
 /// classCredited : 10
 /// role : "user"
 /// createdAt : "2023-06-13T05:55:26.288Z"
@@ -506,8 +498,8 @@ TeachingHour copyWith({  String? total,
 /// address1 : ""
 /// address2 : ""
 
-class StudentUser {
-  StudentUser({
+class User {
+  User({
       String? profilePicture, 
       String? gold, 
       String? silver, 
@@ -520,6 +512,7 @@ class StudentUser {
       num? number, 
       String? email, 
       dynamic otp, 
+      String? password, 
       num? classCredited, 
       String? role, 
       String? createdAt, 
@@ -558,6 +551,7 @@ class StudentUser {
     _number = number;
     _email = email;
     _otp = otp;
+    _password = password;
     _classCredited = classCredited;
     _role = role;
     _createdAt = createdAt;
@@ -586,7 +580,7 @@ class StudentUser {
     _address2 = address2;
 }
 
-  StudentUser.fromJson(dynamic json) {
+  User.fromJson(dynamic json) {
     _profilePicture = json['profilePicture'];
     _gold = json['gold'];
     _silver = json['silver'];
@@ -599,6 +593,7 @@ class StudentUser {
     _number = json['number'];
     _email = json['email'];
     _otp = json['otp'];
+    _password = json['password'];
     _classCredited = json['classCredited'];
     _role = json['role'];
     _createdAt = json['createdAt'];
@@ -638,6 +633,7 @@ class StudentUser {
   num? _number;
   String? _email;
   dynamic _otp;
+  String? _password;
   num? _classCredited;
   String? _role;
   String? _createdAt;
@@ -664,7 +660,7 @@ class StudentUser {
   num? _approvedLeave;
   String? _address1;
   String? _address2;
-StudentUser copyWith({  String? profilePicture,
+User copyWith({  String? profilePicture,
   String? gold,
   String? silver,
   String? bronze,
@@ -676,6 +672,7 @@ StudentUser copyWith({  String? profilePicture,
   num? number,
   String? email,
   dynamic otp,
+  String? password,
   num? classCredited,
   String? role,
   String? createdAt,
@@ -702,7 +699,7 @@ StudentUser copyWith({  String? profilePicture,
   num? approvedLeave,
   String? address1,
   String? address2,
-}) => StudentUser(  profilePicture: profilePicture ?? _profilePicture,
+}) => User(  profilePicture: profilePicture ?? _profilePicture,
   gold: gold ?? _gold,
   silver: silver ?? _silver,
   bronze: bronze ?? _bronze,
@@ -714,6 +711,7 @@ StudentUser copyWith({  String? profilePicture,
   number: number ?? _number,
   email: email ?? _email,
   otp: otp ?? _otp,
+  password: password ?? _password,
   classCredited: classCredited ?? _classCredited,
   role: role ?? _role,
   createdAt: createdAt ?? _createdAt,
@@ -753,6 +751,7 @@ StudentUser copyWith({  String? profilePicture,
   num? get number => _number;
   String? get email => _email;
   dynamic get otp => _otp;
+  String? get password => _password;
   num? get classCredited => _classCredited;
   String? get role => _role;
   String? get createdAt => _createdAt;
@@ -794,6 +793,7 @@ StudentUser copyWith({  String? profilePicture,
     map['number'] = _number;
     map['email'] = _email;
     map['otp'] = _otp;
+    map['password'] = _password;
     map['classCredited'] = _classCredited;
     map['role'] = _role;
     map['createdAt'] = _createdAt;

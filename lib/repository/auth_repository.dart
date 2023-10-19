@@ -207,4 +207,28 @@ class AuthRepository {
       debugPrint('applyCoverClassError: $e');
     }
   }
+
+  Future<dynamic> getVideosLessonsApi() async {
+    try {
+      dynamic response = await _apiServices
+          .getVideosLessons(AppUrl.videoLessonsUrl);
+      print(AppUrl.videoLessonsUrl);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+  Future<dynamic> getMyCoursesApi() async {
+    try {
+      String userId = await Utils.getFromSharedPreference(Constants.userId);
+      dynamic response =
+      await _apiServices.getMyCourses(AppUrl.myCoursesUrl+"648804ceaea1ee6a21dacad7");
+      print("url");
+      print(AppUrl.myCoursesUrl+"648804ceaea1ee6a21dacad7");
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
 }

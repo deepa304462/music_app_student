@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:music_app_student/models/get_videos_lessons_model.dart';
 import 'package:video_player/video_player.dart';
 
 class ImpVideosLessonController extends GetxController {
+  final videoUrl = Get.arguments;
   late VideoPlayerController controller;
+
 
   @override
   void onInit() {
@@ -13,9 +16,9 @@ class ImpVideosLessonController extends GetxController {
   }
 
   playVideos() {
+    print(videoUrl);
     try {
-      controller = VideoPlayerController.network(
-          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')
+      controller = VideoPlayerController.network(videoUrl)
         ..initialize().then((_) {
           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
           update();

@@ -8,17 +8,21 @@ import 'package:intl/intl.dart';
 import 'package:music_app_student/core/config/helpers/app_color.dart';
 import 'package:music_app_student/core/config/helpers/app_test_style.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
-import 'package:music_app_student/core/presentation/pages/diloag_box.dart/diloag_box.dart';
 import 'package:music_app_student/core/presentation/pages/home/controller/home_controller.dart';
 import 'package:music_app_student/core/presentation/pages/progress/guitar_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/progress/piano_progress_page.dart';
 import 'package:music_app_student/core/presentation/pages/reschedule_diloagBox_view/rescheduale_diloag_box.dart';
+import 'package:music_app_student/core/presentation/pages/videos/imp_videos_lesson_page.dart';
 import 'package:music_app_student/core/presentation/widgets/custom_text_field.dart';
 import 'package:music_app_student/models/all_caurses_model.dart';
 import 'package:music_app_student/models/apply_cover_class_model.dart';
 import 'package:music_app_student/models/apply_leave_model.dart';
+import 'package:music_app_student/models/get_videos_lessons_model.dart';
+import 'package:music_app_student/models/my_courses_model.dart';
 import 'package:music_app_student/models/my_profile_model.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../models/get_time_slots_model.dart';
@@ -36,33 +40,46 @@ class _HomePageState extends State<HomePage> {
   final controller = Get.put(HomeController());
   MyProfileModel myProfileModel = MyProfileModel();
   AllCoursesModel allCoursesModel = AllCoursesModel();
+  GetVideosLessonsModel getVideosLessonsModel = GetVideosLessonsModel();
+  MyCoursesModel myCoursesModel = MyCoursesModel();
   TextEditingController reasonController = TextEditingController();
   TextEditingController leaveStartDateForController = TextEditingController();
   TextEditingController leaveEndDateForController = TextEditingController();
-  TextEditingController descriptionRegardingController = TextEditingController();
+  TextEditingController descriptionRegardingController =
+      TextEditingController();
   TextEditingController _coverClassDateController = TextEditingController();
-  TextEditingController _coverClassTimeController = TextEditingController();
   bool _isLoading = false;
   GetTimeSlotsModel? getTimeSlotsModel;
   TimeClasses? selectedFirstTimeSlot;
+  List<Studies>? mediaList;
+  List<MyClasses>? myClassesList;
+  List<Studies> videosList = [];
+  List<Studies> imagesList = [];
+  DateTime focusedDay = DateTime.now();
+  var _razorpay = Razorpay();
 
   @override
   void initState() {
     getAllCourses();
     getMyProfile();
     getTimeSlots("652e78d277a46405ef44492f");
+    getVideosLessons();
+    getMyCourses();
     super.initState();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (context) {
+    return GetBuilder<HomeController>(builder: (ctx) {
       return Scaffold(
         body: Stack(
           children: [
             SingleChildScrollView(
               child: myProfileModel.user == null
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : Column(
@@ -73,30 +90,111 @@ class _HomePageState extends State<HomePage> {
                         2.h.heightBox,
                         _classesRemaining(),
                         2.h.heightBox,
-                        InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.myGuitarClassDetailPage);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            child: Image.asset("assets/images/calender-1.png"),
+
+                        Container(
+                          height: 300,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 Text("Schedule Calender",style: TextStyle(
+                                   fontSize: 30,
+                                   fontWeight: FontWeight.w400,
+                                   color: AppColor.yellow29,
+                                   fontStyle: FontStyle.italic,
+                                 ),),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  color: Colors.grey.shade900,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: TableCalendar(
+                                      calendarStyle: const CalendarStyle(
+                                        weekNumberTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        defaultTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        holidayTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        weekendTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        disabledTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        outsideTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        selectedTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        todayTextStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        todayDecoration: BoxDecoration(
+
+                                            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                                      ),
+                                      daysOfWeekStyle: const DaysOfWeekStyle(
+                                        weekdayStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                        weekendStyle: TextStyle(color: Color(0xFFF9F6FD)),
+                                      ),
+                                      headerStyle:  HeaderStyle(
+                                          headerPadding: EdgeInsets.all(1),
+                                          formatButtonVisible: false,
+                                          titleCentered: true,
+                                          rightChevronIcon: Icon(
+                                            Icons.chevron_right,
+                                            color: Color(0xFFF9F6FD),
+                                          ),
+                                          leftChevronIcon: Icon(
+                                            Icons.chevron_left,
+                                            color: Color(0xFFF9F6FD),
+                                          )),
+                                      calendarFormat: CalendarFormat.week,
+                                      firstDay: DateTime.utc(2010, 10, 16),
+                                      lastDay: DateTime.utc(2030, 3, 14),
+                                      focusedDay: focusedDay,
+                                      onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
+                                        print(selectedDay);
+                                        print(focusedDay);
+                                      },
+                                      // onPageChanged: (DateTime date) {
+                                      //   focusedDay = date;
+                                      //
+                                      //   DateTime preDateFormatStart = getDateForWeek(
+                                      //       date.subtract(Duration(days: date.weekday)));
+                                      //
+                                      //   DateTime preDateFormatEnd = getDateForWeek(date
+                                      //       .add(const Duration(days: DateTime.daysPerWeek - 3)));
+                                      //
+                                      //   getWeekData(preDateFormatStart, preDateFormatEnd);
+                                      // },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     Get.toNamed(AppRoutes.myGuitarClassDetailPage);
+                        //   },
+                        //   child: Container(
+                        //     margin: const EdgeInsets.symmetric(vertical: 10),
+                        //     child: Image.asset("assets/images/calender-1.png"),
+                        //   ),
+                        // ),
                         2.h.heightBox,
-                        _myMusicClass(
-                          onTap: () {
-                            Get.to(GuitarProgressPage());
-                          },
-                          imagePath: 'assets/images/guitar-1.png',
-                          text: "My Guitar Class",
-                        ),
-                        4.h.heightBox,
-                        _myMusicClass(
-                          onTap: () {
-                            Get.to(PianoProgressPage());
-                          },
-                          imagePath: 'assets/images/piano.png',
-                          text: "My Piano Class",
+                        SizedBox(
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: myClassesList!.length,
+                              itemBuilder: (context, index){
+                              return _myMusicClass(
+                                onTap: () {
+                                  Get.to(GuitarProgressPage());
+                                },
+                                imagePath: 'assets/images/guitar-1.png',
+                                text: myClassesList![index].name, index: index,
+                              );
+                              }),
                         ),
                         4.h.heightBox,
                         lessionClasses(),
@@ -139,12 +237,12 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 204,
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: videosList!.length,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  Get.toNamed(AppRoutes.videosLessonPage);
+                  Get.toNamed(AppRoutes.impVideosLessonPage, arguments: [videosList[index].video ?? '',videosList[index].name ?? '']);
                 },
                 child: Container(
                   height: 204,
@@ -161,7 +259,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SizedBox(
                         height: 127,
-                        child: Image.asset("assets/images/guitar-post.png"),
+                        child: Image.network(
+                            videosList![index].thumbnail.toString()),
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(
@@ -170,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Tutor Name: Loren Ipsum",
+                              "Tutor Name: ${videosList![index].name.toString()}",
                               style: TextStyle(
                                 fontFamily: AppTextStyle.textStyleMulish,
                                 fontSize: 14,
@@ -180,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              "Total Lessons: 10",
+                              "Total Lessons: ${videosList!.length}",
                               style: TextStyle(
                                 fontFamily: AppTextStyle.textStyleMulish,
                                 fontSize: 14,
@@ -578,7 +677,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: "Current Fee Band",
+                      text: "Current Fee Band  ",
                       style: TextStyle(
                         fontFamily: AppTextStyle.textStyleMulish,
                         fontSize: 12,
@@ -587,7 +686,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       children: [
                         TextSpan(
-                          text: " :\tBeginner",
+                          text: myProfileModel.user!.skillLevel,
                           style: TextStyle(
                             fontFamily: AppTextStyle.textStyleMulish,
                             fontSize: 14,
@@ -596,6 +695,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         TextSpan(
+                          //todo dynamic pending
                           text: "\t(Grade 1)",
                           style: TextStyle(
                             fontFamily: AppTextStyle.textStyleMulish,
@@ -733,7 +833,16 @@ class _HomePageState extends State<HomePage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.2),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          var options = {
+                            'key': 'rzp_test_35fzmQiPzfuB15',
+                            'amount': 100,
+                            'name': 'Music',
+                            'description': 'Music Learn',
+                            'timeout':60
+                          };
+                          _razorpay.open(options);
+                        },
                         child: Text(
                           "Pay Now",
                           style: TextStyle(
@@ -930,119 +1039,81 @@ class _HomePageState extends State<HomePage> {
   _myMusicClass({
     void Function()? onTap,
     String? imagePath,
+    required int index,
     String? text,
   }) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        height: 184,
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.9),
-          color: AppColor.white255,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      "$imagePath",
-                      height: 88.81,
-                      width: 90.9,
-                    ),
-                    MaterialButton(
-                      minWidth: 88,
-                      color: AppColor.blue224,
-                      height: 40,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          13.25,
-                        ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 184,
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.9),
+            color: AppColor.white255,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Image.asset(
+                        "$imagePath",
+                        height: 88.81,
+                        width: 90.9,
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        "Join Online\nClass",
-                        textAlign: TextAlign.center,
+                      MaterialButton(
+                        minWidth: 88,
+                        color: AppColor.blue224,
+                        height: 40,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            13.25,
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Join Online\nClass",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStylePoppins,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.22,
+                            color: AppColor.white255,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "$text",
                         style: TextStyle(
                           fontFamily: AppTextStyle.textStylePoppins,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.22,
-                          color: AppColor.white255,
+                          fontSize: 24,
+                          color: AppColor.yellow29,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.28,
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "$text",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStylePoppins,
-                        fontSize: 24,
-                        color: AppColor.yellow29,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.28,
-                      ),
-                    ),
-                    1.h.heightBox,
-                    Text(
-                      "Mentor Name : Loren ipsum",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStyleMulish,
-                        fontSize: 10,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -0.23,
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    0.4.h.heightBox,
-                    Text(
-                      "Class Timings: 12 PM-3 PM",
-                      style: TextStyle(
-                        fontFamily: AppTextStyle.textStyleMulish,
-                        fontSize: 10,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -0.23,
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    1.h.heightBox,
-                    SizedBox(
-                      width: 210,
-                      child: Text(
-                        "Your Upcoming class will be on Sunday, on guitar tuning lesson on 12 PM-3 PM.",
-                        style: TextStyle(
-                          fontFamily: AppTextStyle.textStyleMulish,
-                          fontSize: 10,
-                          fontStyle: FontStyle.italic,
-                          letterSpacing: -0.23,
-                          color: AppColor.black.withOpacity(0.5),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    1.h.heightBox,
-                    SizedBox(
-                      width: 210,
-                      child: Text(
-                        "Current Level: Level 8",
+                      1.h.heightBox,
+                      Text(
+                        "Mentor Name : ${myClassesList![index].teacher!.name}",
                         style: TextStyle(
                           fontFamily: AppTextStyle.textStyleMulish,
                           fontSize: 10,
@@ -1052,12 +1123,10 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
-                    0.4.h.heightBox,
-                    SizedBox(
-                      width: 210,
-                      child: Text(
-                        "Badges Collected: 20 badges",
+                      0.4.h.heightBox,
+                      Text(
+                        // todo data is not dynamic
+                        "Class Timings: 12 PM-3 PM",
                         style: TextStyle(
                           fontFamily: AppTextStyle.textStyleMulish,
                           fontSize: 10,
@@ -1067,13 +1136,61 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
-                    1.h.heightBox,
-                  ],
+                      1.h.heightBox,
+                      SizedBox(
+                        width: 210,
+                        child: Text(
+                          // todo data is not dynamic
+                          "Your Upcoming class will be on Sunday, on guitar tuning lesson on 12 PM-3 PM.",
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                            letterSpacing: -0.23,
+                            color: AppColor.black.withOpacity(0.5),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      1.h.heightBox,
+                      SizedBox(
+                        width: 210,
+                        child: Text(
+                          // todo data is not dynamic
+                          "Current Level: Level 8",
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                            letterSpacing: -0.23,
+                            color: AppColor.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      0.4.h.heightBox,
+                      SizedBox(
+                        width: 210,
+                        child: Text(
+                          // todo data is not dynamic
+                          "Badges Collected: 20 badges",
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                            letterSpacing: -0.23,
+                            color: AppColor.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      1.h.heightBox,
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -1294,6 +1411,7 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
   void _selectCoverClassDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -1330,7 +1448,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void coverClassDiloagBox() {
-     Get.dialog(
+    Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -1352,87 +1470,87 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               2.h.heightBox,
-             Padding(
-               padding: const EdgeInsets.all(16.0),
-               child: Column(
-                 children: [
-                   CustomTextField(
-                     controller: _coverClassDateController,
-                     hintText: "Date of class",
-                     suffixIcon: IconButton(
-                       onPressed: () {
-                         _selectCoverClassDate();
-                       },
-                       icon: SvgPicture.asset("assets/svg/calender.svg"),
-                     ),
-                   ),
-                   3.h.heightBox,
-                   Container(
-                     height: 56,
-                     decoration: BoxDecoration(
-                         border: Border.all(color: Colors.black),
-                         borderRadius: BorderRadius.circular(10)),
-                     child:  DropdownButtonFormField<TimeClasses>(
-                       decoration: InputDecoration(
-                           border: OutlineInputBorder(
-                             borderRadius:
-                             BorderRadius.circular(10.0), // Rounded border
-                             borderSide: BorderSide.none, // No border side
-                           ),
-                           contentPadding:
-                           const EdgeInsets.only(bottom: 8, left: 8),
-                           suffixIcon: const Icon(
-                             Icons.arrow_drop_down,
-                             color: Colors.black,
-                           ),
-                           hintText: 'Select to schedule',
-                           hintStyle: TextStyle(
-                             fontFamily: AppTextStyle.textStyleMulish,
-                             fontWeight: FontWeight.w600,
-                             fontSize: 16,
-                             fontStyle: FontStyle.italic,
-                             color: AppColor.black,
-                           )),
-                       value: selectedFirstTimeSlot,
-                       style: TextStyle(
-                         fontFamily: AppTextStyle.textStyleMulish,
-                         fontWeight: FontWeight.w600,
-                         fontSize: 16,
-                         fontStyle: FontStyle.italic,
-                         color: AppColor.black,
-                       ),
-                       iconSize: 0,
-                       elevation: 16,
-                       onChanged: (TimeClasses? newValue) {
-                         setState(() {
-                           selectedFirstTimeSlot = newValue;
-                           print("selectedTimeSlot!.id");
-                           print(selectedFirstTimeSlot!.id);
-                           print("selectedTimeSlot!.id");
-                         });
-                       },
-                       items: getTimeSlotsModel?.classes!
-                           .map<DropdownMenuItem<TimeClasses>>((TimeClasses? value) {
-                         return DropdownMenuItem<TimeClasses>(
-                             value: value, child: Text(value!.time!.slot.toString()));
-                       }).toList(),
-                       dropdownColor: Colors.grey.shade800,
-                       borderRadius: BorderRadius.circular(16),
-                       hint:  Text(
-                           "Select to schedule",
-                           style: TextStyle(
-                             fontFamily: AppTextStyle.textStyleMulish,
-                             fontWeight: FontWeight.w600,
-                             fontSize: 16,
-                             fontStyle: FontStyle.italic,
-                             color: AppColor.black,
-                           )
-                       ),
-                     ),
-                   ),
-                 ],
-               ),
-             ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      controller: _coverClassDateController,
+                      hintText: "Date of class",
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _selectCoverClassDate();
+                        },
+                        icon: SvgPicture.asset("assets/svg/calender.svg"),
+                      ),
+                    ),
+                    3.h.heightBox,
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButtonFormField<TimeClasses>(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10.0), // Rounded border
+                              borderSide: BorderSide.none, // No border side
+                            ),
+                            contentPadding:
+                                const EdgeInsets.only(bottom: 8, left: 8),
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black,
+                            ),
+                            hintText: 'Select to schedule',
+                            hintStyle: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: AppColor.black,
+                            )),
+                        value: selectedFirstTimeSlot,
+                        style: TextStyle(
+                          fontFamily: AppTextStyle.textStyleMulish,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                          color: AppColor.black,
+                        ),
+                        iconSize: 0,
+                        elevation: 16,
+                        onChanged: (TimeClasses? newValue) {
+                          setState(() {
+                            selectedFirstTimeSlot = newValue;
+                            print("selectedTimeSlot!.id");
+                            print(selectedFirstTimeSlot!.id);
+                            print("selectedTimeSlot!.id");
+                          });
+                        },
+                        items: getTimeSlotsModel?.classes!
+                            .map<DropdownMenuItem<TimeClasses>>(
+                                (TimeClasses? value) {
+                          return DropdownMenuItem<TimeClasses>(
+                              value: value,
+                              child: Text(value!.time!.slot.toString()));
+                        }).toList(),
+                        dropdownColor: Colors.grey.shade800,
+                        borderRadius: BorderRadius.circular(16),
+                        hint: Text("Select to schedule",
+                            style: TextStyle(
+                              fontFamily: AppTextStyle.textStyleMulish,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: AppColor.black,
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               4.h.heightBox,
               MaterialButton(
                 shape: RoundedRectangleBorder(
@@ -1462,6 +1580,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   onTapSubmitForCoverClass() async {
     setState(() {
       _isLoading = false;
@@ -1475,7 +1594,8 @@ class _HomePageState extends State<HomePage> {
     print(jsonEncode(data));
     final authRepository = AuthRepository();
     final response = await authRepository.applyCoverClassApi(data);
-    ApplyCoverClassModel applyCoverClassModel = ApplyCoverClassModel.fromJson(response);
+    ApplyCoverClassModel applyCoverClassModel =
+        ApplyCoverClassModel.fromJson(response);
     print("registerFormModel.id");
     print(response);
     print("registerFormModel.id");
@@ -1506,10 +1626,55 @@ class _HomePageState extends State<HomePage> {
     print(response);
     print("response");
     setState(() {
-
       getTimeSlotsModel = GetTimeSlotsModel.fromJson(response);
-
     });
+  }
+
+  void getVideosLessons() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getVideosLessonsApi();
+    debugPrint(response.toString());
+    getVideosLessonsModel = GetVideosLessonsModel.fromJson(response);
+    setState(() {
+      mediaList = getVideosLessonsModel.studies!;
+      mediaList?.forEach((element) {
+        if (element.image != null) {
+          imagesList.add(element);
+        } else if (element.video != null) {
+          videosList.add(element);
+        }
+      });
+
+      print('videoLength: ${videosList.length}');
+      print('imageLength: ${imagesList.length}');
+    });
+  }
+
+  void getMyCourses() async {
+    final authRepository = AuthRepository();
+    final response = await authRepository.getMyCoursesApi();
+    debugPrint(response.toString());
+    myCoursesModel = MyCoursesModel.fromJson(response);
+    setState(() {
+      myClassesList = myCoursesModel.studentDetails!.classes;
+
+      });
+
+      print('lol: ${myClassesList?.length}');
+
+
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
   }
 
 }

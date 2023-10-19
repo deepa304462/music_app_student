@@ -21,4 +21,10 @@ abstract class BaseApiServices {
   Future<dynamic> getTimeSlotTeacher(String url);
 
   Future<dynamic> getTeacherDays(String url);
+
+  Future<dynamic> getVideosLessons(String url);
+
+  Future<dynamic> getMyCourses(String url);
+
+
 }
