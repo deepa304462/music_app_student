@@ -28,5 +28,11 @@ abstract class BaseApiServices {
 
   Future<dynamic> signUpApi(String url, Map<String, dynamic> data);
 
+  Future<dynamic> login(String url, Map<String, dynamic> data);
+
+  Future<dynamic> signOtpApi(String url, Map<String, dynamic> data);
+
+
+
 
 }

@@ -15,7 +15,7 @@ class NetworkApiServices extends BaseApiServices {
 
     try {
       final response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 30));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -288,6 +288,66 @@ class NetworkApiServices extends BaseApiServices {
     }
     return responseJson;
   }
+  @override
+  Future login(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      // String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future signOtpApi(String url, dynamic data) async {
+    dynamic responseJson;
+
+    try {
+      //String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: data, )
+          .timeout(const Duration(seconds: 10));
+      print(response.body);
+      responseJson = jsonDecode(response.body);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future logInApi(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      // String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
+
+
 }
 
 

@@ -11,8 +11,8 @@ import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../repository/auth_repository.dart';
-import '../../../../utils/utils.dart';
 import '../../../../utils/constants/constants.dart';
+import '../../../../utils/utils.dart';
 import 'controller/otp_verify_controller.dart';
 
 class OtpVerifyPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class OtpVerifyPage extends StatefulWidget {
   String? otp;
   bool isFromLogin;
 
-  OtpVerifyPage({this.otp, this.phone,required this.isFromLogin, super.key});
+  OtpVerifyPage({this.otp, this.phone, required this.isFromLogin, super.key});
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
@@ -30,7 +30,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   final controller = Get.put(OtpVerifyController());
   bool _isLoading = false;
   String otpId = '';
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,28 +140,32 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   ),
                 ),
                 2.h.heightBox,
-                _isLoading ?Center(child: CircularProgressIndicator(),):MaterialButton(
-                  height: 60,
-                  minWidth: double.infinity,
-                  color: AppColor.blue224,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  onPressed: () {
-                    onTapVerify(context);
-                  },
-                  child: Text(
-                    "Verify",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTextStyle.textStyleMulish,
-                      fontSize: 24,
-                      color: AppColor.white255,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : MaterialButton(
+                        height: 60,
+                        minWidth: double.infinity,
+                        color: AppColor.blue224,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        onPressed: () {
+                          onTapVerify(context);
+                        },
+                        child: Text(
+                          "Verify",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: AppTextStyle.textStyleMulish,
+                            fontSize: 24,
+                            color: AppColor.white255,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                 2.h.heightBox,
                 Align(
                   child: Text(
@@ -180,7 +183,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 2.h.heightBox,
                 Align(
                   child: InkWell(
-                    onTap: (){
+                    onTap: () {
                       onTapResendOtp();
                     },
                     child: Text(
@@ -213,11 +216,15 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   }
 
   void onTapVerify(BuildContext context) async {
+    var data = {
+      'mobileNumber': widget.phone,
+      'otp': widget.otp
+    };
     setState(() {
       _isLoading = true;
     });
     final authRepository = AuthRepository();
-    final response = await authRepository.signUpOtpApi(widget.otp);
+    final response = await authRepository.signUpOtpApi(data);
 
     if (response != null) {
       RegisterOtpModel registerOtpModel = RegisterOtpModel.fromJson(response);
@@ -237,7 +244,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
           Utils.pushToNewRoute(context, NewBottomNavigationBar());
         } else {
           setState(() {
-            _isLoading= false;
+            _isLoading = false;
           });
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => RegisterWithEmail()));
@@ -253,7 +260,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       setState(() {
         _isLoading = false;
       });
-      Utils.toastMassage("Response is null"); // Handle the case when the response is null
+      Utils.toastMassage(
+          "Response is null"); // Handle the case when the response is null
     }
   }
 
@@ -264,7 +272,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     // Utils.showNonDismissibleLoadingDialog(
     //     context, 'Please wait...', 'Loading...');
     Map<String, String> data = {
-      'mobileNumber':widget.phone.toString(),
+      'mobileNumber': widget.phone.toString(),
     };
     print(data);
     final authRepository = AuthRepository();
@@ -274,17 +282,16 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     print("registerFormModel.id");
     print(resendOtpModel.user);
     print("registerFormModel.id");
-    if(resendOtpModel.user != null){
+    if (resendOtpModel.user != null) {
       Utils.toastMassage(resendOtpModel.user!.otp.toString());
       setState(() {
         _isLoading = false;
       });
-    }else{
+    } else {
       Utils.toastMassage(response['error']);
       setState(() {
         _isLoading = false;
       });
     }
   }
-
 }
