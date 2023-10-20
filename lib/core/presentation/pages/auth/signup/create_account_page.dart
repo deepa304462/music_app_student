@@ -295,8 +295,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     setState(() {
       _isLoading = true;
     });
-    // Utils.showNonDismissibleLoadingDialog(
-    //     context, 'Please wait...', 'Loading...');
     Map<String, String> data = {
       'mobileNumber': controller.phoneController.text,
     };
@@ -308,7 +306,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     print("registerFormModel.id");
     print(registerModel.user?.id);
     print("registerFormModel.id");
-    if (registerModel.status == 201) {
+    if (registerModel.user !=  null) {
       setState(() {
         _isLoading = false;
       });

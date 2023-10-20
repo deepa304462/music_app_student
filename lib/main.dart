@@ -5,14 +5,11 @@ import 'package:music_app_student/core/config/routes/app_pages.dart';
 import 'package:music_app_student/core/config/routes/app_routes.dart';
 import 'package:music_app_student/core/config/theme/app_theme.dart';
 import 'package:music_app_student/core/nav/new_bottom_navigation_bar.dart';
-import 'package:music_app_student/firebase_options.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  //WidgetsFlutterBinding.ensureInitialized();
+ // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

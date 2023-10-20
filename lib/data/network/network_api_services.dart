@@ -267,4 +267,27 @@ class NetworkApiServices extends BaseApiServices {
     }
     return responseJson;
   }
+
+  @override
+  Future signUpApi(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+     // String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 10));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
 }
+
+

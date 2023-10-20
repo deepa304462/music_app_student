@@ -14,13 +14,14 @@ class AuthRepository {
   Future<dynamic> signUpApi(dynamic data) async {
     try {
       dynamic response =
-          await _apiServices.getPostApiResponse(AppUrl.registerUrl, data);
+      await _apiServices.signUpApi(AppUrl.registerUrl, data);
       return response;
     } catch (e) {
-      throw e;
+      debugPrint('registerApi: $e');
+    }
 
     }
-  }
+
 
   Future<dynamic> signUpOtpApi(dynamic data) async {
     dynamic response =

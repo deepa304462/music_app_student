@@ -26,5 +26,7 @@ abstract class BaseApiServices {
 
   Future<dynamic> getMyCourses(String url);
 
+  Future<dynamic> signUpApi(String url, Map<String, dynamic> data);
+
 
 }

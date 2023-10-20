@@ -1,12 +1,12 @@
 /// status : 201
 /// message : "Signup successful"
-/// user : {"mobileNumber":"1234567789","otp":"301219","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","_id":"65213bee9a9ad24c20f32f90","createdAt":"2023-10-07T11:07:26.407Z","__v":0}
+/// user : {"mobileNumber":"5689231478","otp":"186550","isVerified":false,"profilePicture":"","name":"","email":"","classCredited":12,"coverLeft":"0","classesAttended":0,"classesRemaining":12,"classesConsumed":0,"late":0,"approvedLeave":0,"gold":"0","silver":"0","bronze":"0","badges":[],"teachingHours":0,"level":"0","gender":"","alternateNumber":"","address1":"","address2":"","city":"","state":"","country":"","pincode":"","dateOfBirth":null,"instruments":"","typeOfSession":"","skillLevel":"","classFrequency":"","modeOFClass":"","prefferedPaymentSchedule":"","role":"user","_id":"65314e254d6b7ab75da39ae2","createdAt":"2023-10-19T15:41:25.295Z","__v":0}
 /// token : ""
 
 class RegisterModel {
   RegisterModel({
-      num? status, 
-      String? message, 
+      dynamic status,
+      String? message,
       User? user, 
       String? token,}){
     _status = status;
@@ -21,7 +21,7 @@ class RegisterModel {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _token = json['token'];
   }
-  num? _status;
+  dynamic _status;
   String? _message;
   User? _user;
   String? _token;
@@ -34,7 +34,7 @@ RegisterModel copyWith({  num? status,
   user: user ?? _user,
   token: token ?? _token,
 );
-  num? get status => _status;
+  dynamic get status => _status;
   String? get message => _message;
   User? get user => _user;
   String? get token => _token;
@@ -52,8 +52,8 @@ RegisterModel copyWith({  num? status,
 
 }
 
-/// mobileNumber : "1234567789"
-/// otp : "301219"
+/// mobileNumber : "5689231478"
+/// otp : "186550"
 /// isVerified : false
 /// profilePicture : ""
 /// name : ""
@@ -87,8 +87,8 @@ RegisterModel copyWith({  num? status,
 /// modeOFClass : ""
 /// prefferedPaymentSchedule : ""
 /// role : "user"
-/// _id : "65213bee9a9ad24c20f32f90"
-/// createdAt : "2023-10-07T11:07:26.407Z"
+/// _id : "65314e254d6b7ab75da39ae2"
+/// createdAt : "2023-10-19T15:41:25.295Z"
 /// __v : 0
 
 class User {
