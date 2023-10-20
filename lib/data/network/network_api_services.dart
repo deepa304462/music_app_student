@@ -31,7 +31,7 @@ class NetworkApiServices extends BaseApiServices {
       String token = await Utils.getFromSharedPreference(Constants.accessToken);
       Response response = await post(Uri.parse(url),
               body: data, headers: {"Authorization": 'Bearer $token'})
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 30));
       print(response.body);
       responseJson = jsonDecode(response.body);
     } on SocketException {
@@ -50,7 +50,7 @@ class NetworkApiServices extends BaseApiServices {
       Response response = await put(
         Uri.parse(url),
         body: data,
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 30));
       responseJson = jsonDecode(response.body);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -121,7 +121,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       responseJson = jsonDecode(response.body);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -139,7 +139,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -161,7 +161,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -181,7 +181,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -202,7 +202,7 @@ class NetworkApiServices extends BaseApiServices {
         headers: {
           "Authorization": 'Bearer $token',
         }
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 30));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -221,7 +221,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
           }
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 30));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -240,7 +240,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
           }
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 30));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -260,7 +260,7 @@ class NetworkApiServices extends BaseApiServices {
           headers: {
             "Authorization": 'Bearer $token',
           }
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 30));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
@@ -278,7 +278,7 @@ class NetworkApiServices extends BaseApiServices {
           body: jsonEncode(data),
           headers: {
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -298,7 +298,7 @@ class NetworkApiServices extends BaseApiServices {
           body: jsonEncode(data),
           headers: {
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -317,7 +317,7 @@ class NetworkApiServices extends BaseApiServices {
       //String token = await Utils.getFromSharedPreference(Constants.accessToken);
       Response response = await post(Uri.parse(url),
           body: data, )
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 30));
       print(response.body);
       responseJson = jsonDecode(response.body);
     } on SocketException {
@@ -336,7 +336,7 @@ class NetworkApiServices extends BaseApiServices {
           body: jsonEncode(data),
           headers: {
             'Content-Type': 'application/json'
-          }).timeout(const Duration(seconds: 10));
+          }).timeout(const Duration(seconds: 30));
       print("response.body");
       print(response.statusCode);
       responseJson = jsonDecode(response.body);
@@ -347,6 +347,26 @@ class NetworkApiServices extends BaseApiServices {
     return responseJson;
   }
 
+  @override
+  Future registerEmail(String url, Map<String, dynamic> data) async {
+    dynamic responseJson;
+
+    try {
+      String token = await Utils.getFromSharedPreference(Constants.accessToken);
+      Response response = await post(Uri.parse(url),
+          body: jsonEncode(data),
+          headers: {
+            "Authorization": 'Bearer $token',
+            'Content-Type': 'application/json'
+          }).timeout(const Duration(seconds: 30));
+      print("response.body");
+      print(response.statusCode);
+      responseJson = jsonDecode(response.body);
+    } on SocketException {
+      throw FetchDataException('No internet connection');
+    }
+    return responseJson;
+  }
 
 }
 

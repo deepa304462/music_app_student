@@ -32,6 +32,8 @@ abstract class BaseApiServices {
 
   Future<dynamic> signOtpApi(String url, Map<String, dynamic> data);
 
+  Future<dynamic> registerEmail(String url, Map<String, dynamic> data);
+
 
 
 

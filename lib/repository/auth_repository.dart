@@ -126,7 +126,7 @@ class AuthRepository {
   Future<dynamic> registerEmailApi(dynamic data) async {
     try {
       dynamic response =
-          await _apiServices.getPostApiResponse(AppUrl.emailRegisterUrl, data);
+          await _apiServices.registerEmail(AppUrl.emailRegisterUrl, data);
       return response;
     } catch (e) {
       throw e;
